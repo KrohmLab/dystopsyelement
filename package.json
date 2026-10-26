@@ -2,32 +2,40 @@
   "name": "dystopsyelement",
   "private": true,
   "type": "module",
+  "scripts": {
+    "dev": "react-router dev",
+    "build": "react-router build && node scripts/postbuild.mjs && node scripts/seo-files.mjs",
+    "preview": "npm run build && wrangler dev",
+    "typecheck": "react-router typegen && tsc",
+    "lint": "eslint ."
+  },
   "engines": {
     "node": ">=24"
   },
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "npm run build && wrangler dev",
-    "check": "astro check",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
-  },
   "dependencies": {
-    "@astrojs/sitemap": "3.7.4",
     "@fontsource-variable/orbitron": "5.3.0",
     "@fontsource/rajdhani": "5.3.0",
-    "@lucide/astro": "1.55.0",
-    "@tailwindcss/vite": "4.3.3",
-    "astro": "7.3.8",
-    "tailwindcss": "4.3.3"
+    "@react-router/node": "7.18.4",
+    "isbot": "5.2.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-router": "7.18.4",
+    "zod": "4.6.6"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
-    "prettier": "3.9.10",
-    "prettier-plugin-astro": "1.1.1",
-    "prettier-plugin-tailwindcss": "0.8.1",
+    "@eslint/js": "10.0.1",
+    "@react-router/dev": "7.18.4",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "10.12.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.13.0",
+    "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
+    "typescript-eslint": "8.71.1",
+    "vite": "8.3.4",
     "wrangler": "4.149.0"
   },
   "allowScripts": {

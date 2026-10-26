@@ -2,15 +2,16 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "dystopsyelement",
   "compatibility_date": "2026-10-01",
-  // Adresse provisoire *.workers.dev et URL d'aperçu par branche / PR (Workers Builds).
+  // Adresse provisoire *.workers.dev et URL de preview par branche / PR (Workers Builds).
   "workers_dev": true,
   "preview_urls": true,
   // Requis par `wrangler preview` (commande de build des branches de preview dans Workers Builds).
   "previews": {},
-  // Site 100 % statique généré par Astro : aucun script Worker, tout est servi en assets.
-  // `_headers` et `_redirects` (dans dist/) sont appliqués nativement.
+  // Site statique pré-rendu par React Router : aucun script Worker pour l'instant, tout est servi en assets.
+  // `_headers` et `_redirects` (dans build/client) sont appliqués nativement.
   "assets": {
-    "directory": "./dist",
-    "not_found_handling": "404-page",
-  },
+    "directory": "./build/client",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  }
 }

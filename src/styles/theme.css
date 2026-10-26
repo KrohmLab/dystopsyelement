@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Polices auto-hébergées (Fontsource), sous-ensemble latin uniquement. */
+@import "@fontsource-variable/orbitron/wght.css";
+@import "@fontsource/rajdhani/latin-500.css";
+@import "@fontsource/rajdhani/latin-600.css";
+@import "@fontsource/rajdhani/latin-700.css";
+
+/* Tokens du design system (docs/DESIGN_SYSTEM.md) : palette Tailwind par défaut retirée. */
+@import "./tokens.css";
+
+/* Les docs contiennent des exemples de classes et des valeurs en dur : hors du scan Tailwind. */
+@source not "../../docs";

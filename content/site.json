@@ -1,0 +1,27 @@
+{
+  "name": "Dystopsy Element",
+  "url": "https://dystopsyelement.krohmlab.workers.dev",
+  "description": null,
+  "email": null,
+  "shopUrl": null,
+  "socials": {
+    "instagram": null,
+    "facebook": null,
+    "soundcloud": null,
+    "youtube": null
+  },
+  "tagline": null,
+  "contactSubjects": [],
+  "legal": {
+    "rna": null,
+    "address": null,
+    "publisher": null
+  },
+  "legacyRedirects": {
+    "/events": "/agenda",
+    "/events/:id": "/agenda/:id",
+    "/programmation": "/nexen",
+    "/univers": "/nexen",
+    "/infos": "/nexen"
+  }
+}
