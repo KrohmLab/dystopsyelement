@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* Les docs contiennent des exemples de classes et des valeurs en dur : hors du scan Tailwind. */
+@source not "../../docs";

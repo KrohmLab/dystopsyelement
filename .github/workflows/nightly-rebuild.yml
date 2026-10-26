@@ -1,0 +1,23 @@
+# Relance chaque nuit le build de production Workers Builds, pour que le « prochain événement »
+# bascule tout seul (CLAUDE.md §7). Secret requis : CF_DEPLOY_HOOK (URL du Deploy Hook Cloudflare).
+name: Reconstruction nocturne
+
+on:
+  schedule:
+    # 02:00 UTC = 04:00 à Paris en été, 03:00 en hiver.
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Déclencher le Deploy Hook
+        env:
+          CF_DEPLOY_HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$CF_DEPLOY_HOOK" ]; then
+            echo "::error::Secret CF_DEPLOY_HOOK manquant"
+            exit 1
+          fi
+          curl --fail --silent --show-error -X POST "$CF_DEPLOY_HOOK"

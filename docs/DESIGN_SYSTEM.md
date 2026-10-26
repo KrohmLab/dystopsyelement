@@ -1,0 +1,343 @@
+# Dystopsy Element — Design System v2
+
+> Version 2.0 · 26 octobre 2026 · Remplace le prototype Figma Make (dépôt `KrohmLab/dystopsyelement`).
+> Les valeurs exactes vivent dans `src/styles/tokens.css`. Ce document explique **quoi utiliser, où, et pourquoi**.
+
+---
+
+## 0. Ce qui change par rapport à la v1
+
+La v1 avait une direction artistique forte, mais chaque composant réinventait ses propres règles : 4 façons de faire un bouton, des arrondis `rounded-md`, `rounded-full` et des biseaux mélangés, des gris Tailwind pris au hasard (`gray-300` à `gray-900`), cyan et rose utilisés indifféremment, des textes « hacker » sur chaque bloc, un curseur custom, du scroll-jacking et ~10 Mo d'images.
+
+La v2 garde **l'ADN** (noir profond, cyan `#75feed`, rose `#fc029b`, Orbitron + Rajdhani, coins biseautés, glitch, grille, scanlines) et impose **une seule règle par décision**.
+
+| Sujet | v1 (constaté) | v2 (règle) |
+|---|---|---|
+| Couleurs d'accent | Cyan et rose interchangeables | **Rose = conversion**, **cyan = navigation / info / focus** |
+| Formes | `rounded-*` + biseaux + cercles | **Biseau partout**, aucun arrondi (sauf pastilles d'état) |
+| Boutons | 4 styles ad hoc | 1 composant `Button`, 4 variantes, 3 tailles |
+| Gris | 9 nuances Tailwind | 4 tokens texte + 2 tokens ligne |
+| Effets | Glitch, scan, parallax, curseur partout | 1 glitch par page, effets au survol seulement |
+| Texte | Paragraphes de 30–50 mots | Budget strict (voir §8), chaque section finit par un CTA |
+| Polices | Google Fonts (requête externe) | Auto-hébergées (`@fontsource`), perf + RGPD |
+
+---
+
+## 1. Principes
+
+**1. Aller à l'essentiel.** Une section = un message = une action. Si un bloc n'a pas de bouton qui mène quelque part, il n'a pas sa place.
+
+**2. Le rose fait vendre, le cyan fait naviguer.** Un visiteur doit pouvoir repérer « où je prends ma place » en un coup d'œil : c'est toujours rose.
+
+**3. L'univers est dans l'image, pas dans le texte.** L'ambiance cyberpunk passe par les visuels, les biseaux, la grille et les micro-effets, pas par des phrases du type « Le protocole de sécurité est suspendu ».
+
+**4. Rapide d'abord.** Le site doit s'afficher en moins de 2 s sur un mobile en 4G, sur un parking de festival.
+
+**5. Sobre au repos, vivant au survol.** Les effets (glitch, balayage lumineux, lueur) se déclenchent à l'interaction, jamais en boucle permanente sur toute la page.
+
+---
+
+## 2. Couleurs
+
+### 2.1 Palette
+
+| Token | Valeur | Rôle |
+|---|---|---|
+| `void` | `#020202` | Fond de page |
+| `abyss` | `#050505` | Sections alternées, header scrollé |
+| `surface` | `#0a0a0a` | Cartes, champs de formulaire |
+| `surface-raised` | `#111114` | Survol de carte, menu mobile |
+| `line` | `#1f1f24` | Bordures par défaut |
+| `line-strong` | `#2e2e36` | Bordures au survol, séparateurs |
+| `ink` | `#ffffff` | Titres, texte important |
+| `ink-soft` | `#d1d5db` | Paragraphes |
+| `ink-muted` | `#9ca3af` | Méta, légendes |
+| `ink-faint` | `#6b7280` | Décoratif ou ≥ 24 px uniquement |
+| `cyan` | `#75feed` | Navigation, info, liens, focus |
+| `pink` | `#fc029b` | Conversion : billetterie, acheter, envoyer |
+| `on-accent` | `#020202` | Texte posé sur cyan ou rose |
+| `danger` | `#ff4d6d` | Erreurs de formulaire |
+
+Variantes d'opacité prêtes : `cyan-dim` (10 %), `cyan-line` (30 %), `pink-dim` (10 %), `pink-line` (40 %).
+Les palettes Tailwind par défaut sont **désactivées** dans `tokens.css` (`--color-*: initial`) : `bg-gray-800` ou `text-purple-500` ne compileront pas. C'est voulu.
+
+### 2.2 Règles d'usage
+
+| Situation | Couleur |
+|---|---|
+| Billetterie (HelloAsso), boutique (Vinted), « Envoyer », « Demander un devis » | **pink** |
+| Liens, flèches « Voir », navigation, onglets actifs, focus clavier | **cyan** |
+| Badge « Complet » / « Passé » | `ink-muted` sur `surface` |
+| Badge « Bientôt » / « Nouveau » | cyan |
+| Badge « Dernières places » | pink |
+| Dégradé cyan → rose | **Réservé** à la barre de progression de scroll et au CTA du festival. Nulle part ailleurs. |
+
+### 2.3 Contrastes vérifiés (sur `void`)
+
+`ink` 20:1 · `ink-soft` 14:1 · `ink-muted` 7.9:1 · `cyan` 17:1 · `pink` 5.5:1 (AA texte) · `ink-faint` 4.3:1 (grand texte seulement).
+**Texte blanc sur rose = 3.7:1 → interdit.** Sur un fond rose ou cyan, le texte est toujours `on-accent` (noir).
+
+---
+
+## 3. Typographie
+
+| Famille | Token | Usage |
+|---|---|---|
+| **Orbitron** (variable 400–900) | `font-display` | Titres, boutons, navigation, sur-titres, prix |
+| **Rajdhani** (500, 600, 700) | `font-body` | Tout le reste |
+
+Installation : `@fontsource-variable/orbitron` et `@fontsource/rajdhani` (poids 500, 600, 700, sous-ensemble latin). Précharger uniquement Orbitron 900 et Rajdhani 500.
+
+### 3.1 Échelle
+
+| Token | Taille | Police / graisse | Casse | Usage |
+|---|---|---|---|---|
+| `text-display` | 40 → 88 px | Orbitron 900 | MAJ | Titre du hero d'accueil uniquement |
+| `text-h1` | 32 → 60 px | Orbitron 900 | MAJ | Titre de page |
+| `text-h2` | 28 → 48 px | Orbitron 900 | MAJ | Titre de section |
+| `text-h3` | 18 → 24 px | Orbitron 700 | MAJ | Titre de carte |
+| `text-lead` | 18 → 22 px | Rajdhani 500 | — | Accroche sous un titre (1 phrase) |
+| `text-body` | 18 px | Rajdhani 500 | — | Paragraphe |
+| `text-small` | 16 px | Rajdhani 500 | — | Texte secondaire |
+| `text-label` | 13 px · tracking 0.2em | Orbitron 700 | MAJ | Boutons, navigation |
+| `text-eyebrow` | 12 px · tracking 0.3em | Orbitron 700 | MAJ | Sur-titre `// CODE` |
+| `text-micro` | 12 px · tracking 0.1em | Rajdhani 600 | MAJ | Badges, méta (date, lieu) |
+
+Règles : pas de texte de lecture sous 16 px · jamais de paragraphe en Orbitron · une seule ligne de `text-lead` par section · `text-wrap: balance` sur les titres (déjà dans la base).
+
+### 3.2 Le sur-titre « code »
+
+C'est l'élément qui porte l'univers sans alourdir le texte. Format : `// ` + 1 à 2 mots en majuscules.
+Exemples : `// AGENDA`, `// NEXEN`, `// PRESTATIONS`, `// SHOP`, `// CONTACT`. Ce sont des libellés de navigation, pas du contenu : ils ne décrivent rien d'inventé.
+Couleur : cyan par défaut, rose si la section est orientée vente.
+
+---
+
+## 4. Espacement & mise en page
+
+Base 4 px (échelle Tailwind standard). Trois tokens structurants :
+
+| Token | Valeur | Usage |
+|---|---|---|
+| `max-w-site` | 1280 px | Conteneur de toutes les sections |
+| `px-gutter` | 20 → 64 px | Marges latérales (fluide) — **remplace** les `px-4 sm:px-6 lg:px-8` / `px-8 md:px-16` de la v1 |
+| `py-section` | 64 → 112 px | Espacement vertical de chaque section |
+
+Rythme interne d'une section : sur-titre → 12 px → titre → 16 px → accroche → 32 px → contenu → 40 px → CTA.
+
+Grilles : cartes en `grid gap-6 md:gap-8`, 1 colonne mobile, 2 en `md`, 3 en `lg`. Points de rupture Tailwind par défaut (`sm` 640, `md` 768, `lg` 1024, `xl` 1280). **Mobile-first** obligatoire.
+
+---
+
+## 5. Formes, bordures, effets
+
+### 5.1 Le biseau (signature)
+
+Tout élément « objet » (bouton, carte, image, champ, badge) a deux coins coupés : haut-gauche et bas-droit.
+
+| Utilitaire | Coupe | Usage |
+|---|---|---|
+| `chamfer-sm` | 8 px | Badges, petits boutons, champs |
+| `chamfer-md` | 12 px | Boutons md/lg, cartes |
+| `chamfer-lg` | 16 px | Visuels, grands blocs, CTA festival |
+
+`clip-path` coupe aussi les bordures CSS. Pour un contour biseauté, utiliser le **motif à deux calques** :
+
+```html
+<span class="relative block chamfer-md bg-cyan-line p-px">        <!-- calque « bordure » -->
+  <span class="block chamfer-md bg-surface">…contenu…</span>       <!-- calque « fond » -->
+</span>
+```
+
+Aucun `rounded-*` dans le code, sauf `rounded-full` pour les pastilles d'état (point « live ») et les puces de pagination.
+
+### 5.2 Coins « crochets »
+
+Deux équerres de 12 px (bordure 2 px) aux coins haut-gauche et bas-droit, en cyan à 60 % d'opacité, qui s'agrandissent à 24 px au survol. Composant `<Brackets />`. À utiliser sur les cartes et le hero, pas ailleurs.
+
+### 5.3 Textures de fond
+
+| Utilitaire | Effet | Où |
+|---|---|---|
+| `bg-grid` | Grille cyan à 5 %, pas de 40 px | Fond de 1 section sur 2, header scrollé |
+| `bg-scanlines` | Lignes horizontales à 3 % | Par-dessus les visuels plein écran |
+| Motifs `Pattern_0X` (PNG v1) | Ornements flottants | Retirés du DOM. Réutiliser **un** motif en SVG comme séparateur décoratif (`<Divider />`) |
+
+### 5.4 Lueurs
+
+`text-glow-cyan` / `text-glow-pink` et `shadow-glow-cyan` / `shadow-glow-pink` : **uniquement en état `:hover` / `:focus-visible`**, jamais au repos (sauf le prix d'un produit et le mot clé du titre hero).
+
+### 5.5 Glitch
+
+Utilitaire `glitch` + attribut `data-text`. **Un seul élément par page** : le titre du hero (accueil) ou le H1 (autres pages). Le logo du header glitche une fois quand on commence à scroller (comportement v1 conservé, en CSS pur). Désactivé automatiquement par `prefers-reduced-motion`.
+
+---
+
+## 6. Mouvement
+
+| Token | Valeur | Usage |
+|---|---|---|
+| `duration-fast` | 150 ms | Couleur, opacité |
+| `duration-base` | 300 ms | Survol, menus |
+| `duration-slow` | 600 ms | Apparition de section |
+| `ease-out-expo` | — | Entrées |
+| `ease-in-out` | — | Balayages |
+
+Autorisé : apparition en fondu + translation 16 px au premier passage dans le viewport (une fois) · balayage lumineux `animate-shine` sur le CTA principal au survol · défilement `animate-marquee` du bandeau séparateur · flèche qui avance de 4 px au survol.
+**Supprimé** : curseur personnalisé, scroll-jacking / sections « sticky » à étapes, parallax souris, carrousel automatique, rotation 3D, animations au chargement qui retardent l'affichage du texte.
+Tout passe par CSS (ou l'API Intersection Observer native). **Pas de librairie d'animation** sauf besoin prouvé.
+
+---
+
+## 7. Composants
+
+Tous dans `src/components/`, en `.astro` (zéro JavaScript envoyé) sauf mention **[île]**.
+
+### 7.1 `Button`
+
+Props : `variant` · `size` · `href` · `icon` (nom Lucide) · `iconPosition` · `external` (ajoute `target="_blank" rel="noopener"` + icône ↗) · `fullWidth`.
+Rendu `<a>` si `href`, sinon `<button>`.
+
+| Variante | Repos | Survol | Usage |
+|---|---|---|---|
+| `primary` | Fond `pink`, texte `on-accent` | Fond `pink-hover` + `shadow-glow-pink` + `animate-shine` | **1 seul par section** : l'action n°1 (le bouton Billetterie du header est la seule exception permanente) |
+| `secondary` | Contour `cyan-line`, fond `surface`/transparent, texte `ink` | Contour `cyan` plein, texte `cyan`, fond `cyan-dim` | Action alternative |
+| `ghost` | Texte `cyan` + flèche | Flèche +4 px, `text-glow-cyan` | « Voir tout », liens de carte |
+| `festival` | Contour dégradé cyan→rose (motif deux calques), fond `void` | Dégradé qui glisse | **Uniquement** le CTA Billetterie Nexen |
+
+| Taille | Hauteur | Padding X | Typo |
+|---|---|---|---|
+| `sm` | 40 px | 16 px | `text-label` 12 px |
+| `md` (défaut) | 48 px | 24 px | `text-label` |
+| `lg` | 56 px | 32 px | `text-label` 14 px |
+
+Toutes les tailles respectent une cible tactile ≥ 44 px (sauf `sm`, réservé au desktop). Forme : `chamfer-sm` (sm) / `chamfer-md` (md, lg). Libellés : verbe d'action, 1 à 3 mots (« Prendre ma place », « Voir le line-up », « Demander un devis »).
+
+### 7.2 `Header` [île légère pour le menu mobile]
+
+Hauteur `spacing-header` (72 px). Logo Dystopsy (SVG, 40 px) à gauche, liens au centre/droite, `Button primary sm` « Billetterie » à droite.
+Au repos : transparent. Après 50 px de scroll : fond `abyss/60` + `backdrop-blur` + bordure basse `cyan-line` + `bg-grid` + `shadow-header`.
+Liens : `text-label`, `ink-soft` → `ink` au survol avec crochets `[ ]` cyan qui glissent et soulignement cyan 2 px (effet v1 conservé). Lien actif : `cyan` + `aria-current="page"`.
+Mobile : bouton burger (44×44) → panneau plein écran `void`, liens en `text-h3`, bordure gauche cyan au survol, CTA Billetterie pleine largeur en bas. Fermeture : Échap, clic sur un lien, bouton ×. Focus piégé dans le panneau.
+Script : moins de 1 Ko, vanilla JS dans le composant (pas de React).
+
+### 7.3 `Footer`
+
+Trois colonnes (une seule sur mobile) : marque + 1 phrase + réseaux · navigation · contact. Puis une barre basse : © année · Mentions légales · Crédits photos.
+Icônes réseaux : carrés `chamfer-sm` 44 px, contour `cyan-line`, survol fond `cyan` + icône `on-accent`. **Liens réels uniquement** : un réseau sans URL n'est pas affiché.
+
+### 7.4 `Section` & `SectionHeader`
+
+`<Section tone="void|abyss" grid={bool} id>` : applique `py-section`, `px-gutter`, `max-w-site`, fond, et `bg-grid` si demandé. Alterner `void` / `abyss` d'une section à l'autre.
+`<SectionHeader eyebrow title lead align="left|center" action>` : sur-titre code, titre H2, accroche optionnelle (≤ 20 mots), et un `action` (Button ghost) aligné à droite en desktop, sous le titre en mobile.
+
+### 7.5 `Hero`
+
+Plein écran (`min-h-[100svh]`), visuel de fond `astro:assets` en `priority` (LCP), assombri par dégradé `void` (bas) + `void/80` (haut), `mix-blend-luminosity` à 40 % (rendu v1 conservé), `bg-scanlines` par-dessus, cadre décoratif SVG `CyberFrame` en desktop.
+Contenu : badge pulsant rose (`Badge live`) · titre `text-display glitch` · ligne méta (date · lieu) avec icônes cyan · 2 boutons (`primary` + `secondary`).
+**Pas de carrousel** : le hero affiche le **prochain événement** (calculé au build depuis la collection `events`). S'il n'y en a aucun à venir, il affiche le dernier festival Nexen en état « passé » (voir SITE_PLAN §2). Les autres événements sont dans la section Agenda juste en dessous.
+
+### 7.6 `EventCard`
+
+Visuel 16:9 `chamfer-lg` (niveaux de gris → couleur au survol, comme la v1) · badge statut (`À venir` cyan / `Dernières places` rose / `Passé` neutre) · date en `text-micro` cyan · titre `text-h3` · lieu `text-small ink-muted` · **pas de description** · CTA : `ghost` « Voir l'événement » + bouton `primary sm` « Billets » si `ticketUrl` et à venir.
+Toute la carte est cliquable (lien étendu via pseudo-élément), le bouton Billets reste un lien distinct au-dessus.
+
+### 7.7 `ShopLink`
+
+La boutique est sur **Vinted** : aucune fiche produit sur le site. Bloc court `surface` + `bg-grid` : sur-titre `// SHOP` (rose), titre `text-h2`, bouton `primary` « Voir la boutique » avec icône ↗ (`external`). Non rendu si `site.shopUrl` est vide.
+
+### 7.8 `ServiceTile`
+
+Pour Prestations. Icône Lucide 32 px dans un carré `chamfer-sm` bordé d'accent · titre `text-h3` · **une ligne** de description (≤ 15 mots, fournie par l'asso) · `Brackets` · CTA `ghost` « Découvrir ». Accents alternés cyan / rose / blanc (repris de la v1, purement décoratif).
+
+### 7.9 `CtaBanner`
+
+Bloc pleine largeur en fin de page : fond `abyss` + `bg-grid`, titre `text-h2`, une ligne, 1 bouton `primary` + 1 `secondary`. Chaque page se termine par un `CtaBanner` avant le footer.
+
+### 7.10 `Badge`
+
+`chamfer-sm`, `text-micro`, padding 4×10 px. Variantes : `live` (rose, point pulsant `animate-pulse-dot`), `info` (cyan), `neutral` (`ink-muted` sur `surface`), `outline`.
+
+### 7.11 `Ticker` (séparateur)
+
+Reprend `CyberSeparator` v1 en **une seule** variante : bandeau 48 px, `animate-marquee`, texte `text-eyebrow` alterné cyan/rose. Contenu limité aux termes présents sur les affiches officielles (« OPEN AIR FESTIVAL ✦ PSYTRANCE · TECHNO · BASS · CHILL ») et aux noms/dates d'événements réels. Les faux codes v1 (« SYNC_BPM:145 », « SYSTEM_HACKED »…) sont supprimés. `aria-hidden="true"`. Maximum 2 par page.
+
+### 7.12 `Brackets`, `CyberFrame`, `Divider`
+
+Ornements purs, `aria-hidden`, SVG inline. `CyberFrame` = le cadre du hero v1 converti en fichier SVG unique (desktop) + version mobile simplifiée. `Divider` = un motif `Pattern_0X` vectorisé, 40 % d'opacité.
+
+### 7.13 Formulaires (`Field`, `Textarea`, `Select`, `Checkbox`)
+
+Label au-dessus en `text-eyebrow ink-muted` · champ `surface`, `chamfer-sm`, hauteur 48 px, contour `line` (motif deux calques) → `cyan` au focus · erreur : contour `danger` + message `text-small danger` relié par `aria-describedby` · placeholder réaliste et en français (pas de « john.doe@network.com »). Champ honeypot anti-spam caché. Placeholders neutres (« Votre nom », « vous@exemple.fr »).
+
+### 7.14 `Accordion` (FAQ / infos pratiques)
+
+Basé sur `<details>/<summary>` natif (zéro JS). Bordure basse `line`, titre `text-h3`, icône + cyan qui pivote. Réponses ≤ 40 mots, avec lien si besoin.
+
+### 7.15 `ScrollProgress`
+
+Barre 2 px en haut de page, dégradé cyan → rose, via `animation-timeline: scroll()` en CSS (pas de JS). Masquée si non supportée.
+
+### 7.16 Icônes
+
+Lucide (`@lucide/astro` ou SVG inline), trait 1.5, tailles 16 / 20 / 24 / 32. Les icônes décoratives ont `aria-hidden="true"`. Icônes réseaux : Instagram, Facebook, SoundCloud, YouTube (si URL fournie).
+
+---
+
+## 8. Contenu : la règle « moins de texte »
+
+**Rien n'est inventé.** Tous les textes, noms, chiffres et coordonnées viennent de l'asso. Un bloc sans contenu fourni n'est pas affiché. Les contenus générés par IA dans Figma Make (artistes, membres, articles, descriptions, coordonnées) sont supprimés (voir SITE_PLAN §0).
+
+Demande du président : aller à l'essentiel, chaque section mène quelque part.
+
+| Élément | Budget max |
+|---|---|
+| Sur-titre | 2 mots |
+| Titre H1 / H2 | 6 mots |
+| Accroche (`lead`) | 1 phrase, 20 mots |
+| Texte de carte | 15 mots (souvent zéro) |
+| Paragraphe de page (rare) | 60 mots |
+| Réponse FAQ | 40 mots |
+| Libellé de bouton | 3 mots, verbe d'action |
+
+Chaque section respecte le schéma **Titre → (1 ligne) → Visuel/Cartes → CTA**. Pas de section sans CTA, sauf le hero du footer.
+
+Ton : direct, vouvoiement ou tournure impersonnelle. Les libellés de boutons (« Prendre ma place », « Voir le line-up », « Voir la boutique ») sont des éléments d'interface, pas du contenu. L'univers se dit avec les sur-titres `// CODE` et les visuels, pas avec du jargon. À bannir : « protocole », « matrice », « secteur 7 », « système hacké », faux codes hexadécimaux dans le contenu lisible.
+
+---
+
+## 9. Images
+
+Format source déposé dans `src/assets/` ; Astro génère AVIF + WebP, tailles responsives (`widths` 480 / 960 / 1440 / 1920) et `width`/`height` (zéro décalage de mise en page).
+Budgets : hero ≤ 200 Ko (AVIF 1920 px) · carte ≤ 60 Ko · page d'accueil totale ≤ 900 Ko.
+Traitement graphique uniforme : visuels d'événements en niveaux de gris + 70 % d'opacité au repos, couleur au survol (signature v1). `alt` descriptif obligatoire, `alt=""` pour les décoratifs.
+Les photos Unsplash de la v1 (artistes, membres, produits) sont **supprimées**, sans remplacement par d'autres photos de banque d'images. Seuls les visuels réels de l'asso sont utilisés.
+
+---
+
+## 10. Accessibilité (niveau visé : WCAG 2.2 AA / RGAA)
+
+`lang="fr"` · un seul `h1` par page · lien d'évitement « Aller au contenu » · focus visible cyan partout · navigation clavier complète (menu mobile compris) · cibles ≥ 44 px · contraste respecté (§2.3) · `prefers-reduced-motion` coupe glitch, marquee, shine, apparitions · les liens externes annoncent l'ouverture d'un nouvel onglet · les iframes SoundCloud sont chargées au clic (façade) avec un titre.
+
+---
+
+## 11. Performance (budgets bloquants)
+
+Lighthouse mobile ≥ 95 sur les 4 axes · LCP < 2 s (4G) · CLS < 0.05 · INP < 200 ms · JavaScript total sur l'accueil < 30 Ko gzip · polices : 2 fichiers préchargés max · aucune requête vers un domaine tiers au chargement (sauf HelloAsso au clic, analytics Cloudflare).
+
+---
+
+## 12. Correspondance v1 → v2
+
+| Composant v1 | Devient | Note |
+|---|---|---|
+| `HeroSlider` | `Hero` | Plus de carrousel, prochain événement |
+| `FestivalSection` (scroll à 4 étapes) | Supprimée | Remplacée par le bloc `NexenFeature` (logo + 3 CTA) |
+| `NexenSection` | `NexenFeature` | Liens vers `/nexen#line-up`, `#infos` (les routes v1 `/programmation` etc. n'existaient pas) |
+| `ActivitiesSection` | `ServiceTile` | Textes v1 supprimés, contenu à fournir par l'asso |
+| `MerchSection` (react-slick) + pages Shop | `ShopLink` | Boutique sur Vinted, produits v1 supprimés |
+| `CyberSeparator` (4 variantes) | `Ticker` (1 variante) | Contenu réel |
+| `FloatingPattern` | `Divider` | Un seul motif, statique |
+| `CustomCursor` | Supprimé | |
+| `CyberFrame` | `CyberFrame` (SVG fichier) | 18 Ko de chemins inline → fichier mis en cache |
+| `components/ui/*` (60 fichiers shadcn), MUI, Emotion, Radix, recharts, react-dnd… | Supprimés | Inutilisés |

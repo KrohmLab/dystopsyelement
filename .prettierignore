@@ -1,0 +1,9 @@
+dist/
+.astro/
+.wrangler/
+node_modules/
+package-lock.json
+docs/
+CLAUDE.md
+# Fichier de tokens fourni, importé tel quel (CLAUDE.md §1).
+src/styles/tokens.css

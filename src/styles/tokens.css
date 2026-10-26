@@ -1,0 +1,224 @@
+/* ==========================================================================
+   DYSTOPSY ELEMENT — Design tokens (Tailwind CSS v4)
+   Source de vérité unique. Aucune couleur, taille ou ombre en dur ailleurs.
+   Import : dans src/styles/global.css →  @import "tailwindcss"; @import "./tokens.css";
+   ========================================================================== */
+
+@theme {
+  /* ---------- Reset des palettes Tailwind : on n'utilise QUE nos couleurs ---------- */
+  --color-*: initial;
+
+  /* ---------- Fonds (du plus profond au plus élevé) ---------- */
+  --color-void: #020202;            /* fond de page */
+  --color-abyss: #050505;           /* sections alternées, header scrollé */
+  --color-surface: #0a0a0a;         /* cartes, champs */
+  --color-surface-raised: #111114;  /* survol de carte, menu mobile */
+
+  /* ---------- Lignes ---------- */
+  --color-line: #1f1f24;            /* bordures par défaut (remplace gray-800/900) */
+  --color-line-strong: #2e2e36;     /* bordures au survol, séparateurs forts */
+
+  /* ---------- Texte ---------- */
+  --color-ink: #ffffff;             /* titres, texte principal */
+  --color-ink-soft: #d1d5db;        /* paragraphes */
+  --color-ink-muted: #9ca3af;       /* méta, légendes (contraste 7.9:1) */
+  --color-ink-faint: #6b7280;       /* décoratif uniquement ou texte ≥ 24px (4.3:1) */
+
+  /* ---------- Accents de marque ---------- */
+  --color-cyan: #75feed;            /* NAVIGATION · INFO · FOCUS */
+  --color-cyan-dim: rgb(117 254 237 / 0.10);
+  --color-cyan-line: rgb(117 254 237 / 0.30);
+  --color-pink: #fc029b;            /* CONVERSION : billetterie, acheter, envoyer */
+  --color-pink-hover: #ff2fb0;
+  --color-pink-dim: rgb(252 2 155 / 0.10);
+  --color-pink-line: rgb(252 2 155 / 0.40);
+
+  /* Texte posé SUR un accent : toujours noir (blanc sur rose = 3.7:1, refusé) */
+  --color-on-accent: #020202;
+
+  /* ---------- États ---------- */
+  --color-success: #75feed;
+  --color-danger: #ff4d6d;
+  --color-danger-dim: rgb(255 77 109 / 0.10);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* ---------- Typographies (auto-hébergées via @fontsource) ---------- */
+  --font-display: "Orbitron Variable", "Orbitron", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
+
+  /* ---------- Échelle typographique (fluide) ---------- */
+  --text-display: clamp(2.5rem, 5vw + 1rem, 5.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-h1: clamp(2rem, 3vw + 1rem, 3.75rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.01em;
+
+  --text-h2: clamp(1.75rem, 2vw + 1rem, 3rem);
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: 0.02em;
+
+  --text-h3: clamp(1.125rem, 0.6vw + 1rem, 1.5rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: 0.02em;
+
+  --text-lead: clamp(1.125rem, 0.4vw + 1rem, 1.375rem);
+  --text-lead--line-height: 1.5;
+
+  --text-body: 1.125rem;            /* 18px : Rajdhani est étroite, 16px est trop petit */
+  --text-body--line-height: 1.6;
+
+  --text-small: 1rem;
+  --text-small--line-height: 1.5;
+
+  --text-label: 0.8125rem;          /* boutons, nav — Orbitron 700, majuscules */
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.2em;
+
+  --text-eyebrow: 0.75rem;          /* sur-titres « // CODE » — Orbitron 700 */
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.3em;
+
+  --text-micro: 0.75rem;            /* méta, badges — Rajdhani 600 */
+  --text-micro--line-height: 1.2;
+  --text-micro--letter-spacing: 0.1em;
+
+  /* ---------- Graisses ---------- */
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  /* ---------- Mise en page ---------- */
+  --container-site: 80rem;          /* 1280px */
+  --container-prose: 40rem;         /* textes longs (rares) */
+  --spacing-gutter: clamp(1.25rem, 4vw, 4rem);
+  --spacing-section: clamp(4rem, 8vw, 7rem);
+  --spacing-header: 4.5rem;         /* hauteur du header fixe */
+
+  /* ---------- Formes : AUCUN arrondi, sauf pastilles ---------- */
+  --radius-none: 0;
+  --radius-full: 9999px;
+
+  /* ---------- Ombres lumineuses ---------- */
+  --shadow-glow-cyan: 0 0 15px rgb(117 254 237 / 0.40), inset 0 0 10px rgb(117 254 237 / 0.10);
+  --shadow-glow-pink: 0 0 15px rgb(252 2 155 / 0.40), inset 0 0 10px rgb(252 2 155 / 0.10);
+  --shadow-header: 0 4px 30px rgb(117 254 237 / 0.10);
+
+  /* ---------- Mouvement ---------- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+
+  --animate-glitch-1: glitch-1 3s infinite linear alternate-reverse;
+  --animate-glitch-2: glitch-2 2.5s infinite linear alternate-reverse;
+  --animate-shine: shine 1.2s var(--ease-in-out) infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-pulse-dot: pulse-dot 1.6s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Utilitaires de marque
+   ========================================================================== */
+
+/* Coins biseautés — la signature de forme du site */
+@utility chamfer-sm { --cut: 8px;  clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); }
+@utility chamfer-md { --cut: 12px; clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); }
+@utility chamfer-lg { --cut: 16px; clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); }
+
+/* Lueurs de texte */
+@utility text-glow-cyan { text-shadow: 0 0 8px rgb(117 254 237 / 0.8), 0 0 20px rgb(117 254 237 / 0.4); }
+@utility text-glow-pink { text-shadow: 0 0 8px rgb(252 2 155 / 0.8), 0 0 20px rgb(252 2 155 / 0.4); }
+
+/* Trame de grille (fond de section, header scrollé) */
+@utility bg-grid {
+  background-image:
+    linear-gradient(rgb(117 254 237 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(117 254 237 / 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Scanlines (calque décoratif sur visuels) */
+@utility bg-scanlines {
+  background-image: repeating-linear-gradient(0deg, transparent 0 3px, rgb(255 255 255 / 0.03) 3px 4px);
+}
+
+/* Titre glitch : <h1 class="glitch" data-text="TITRE">TITRE</h1> — UN SEUL par page */
+@utility glitch {
+  position: relative;
+  &::before, &::after {
+    content: attr(data-text);
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  &::before { left: 2px;  text-shadow: -2px 0 var(--color-cyan); clip-path: inset(20% 0 70% 0); animation: var(--animate-glitch-1); }
+  &::after  { left: -2px; text-shadow: 2px 0 var(--color-pink);  clip-path: inset(60% 0 30% 0); animation: var(--animate-glitch-2); }
+}
+
+/* Texte visible uniquement des lecteurs d'écran */
+@utility sr-only-focusable {
+  &:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+@keyframes glitch-1 {
+  0%   { clip-path: inset(20% 0 70% 0); transform: translate(0); }
+  20%  { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 2px); }
+  40%  { clip-path: inset(40% 0 50% 0); transform: translate(2px, -2px); }
+  60%  { clip-path: inset(80% 0 10% 0); transform: translate(-2px, 0); }
+  80%  { clip-path: inset(30% 0 65% 0); transform: translate(2px, 2px); }
+  100% { clip-path: inset(50% 0 40% 0); transform: translate(0); }
+}
+@keyframes glitch-2 {
+  0%   { clip-path: inset(60% 0 30% 0); transform: translate(0); }
+  20%  { clip-path: inset(30% 0 50% 0); transform: translate(2px, -2px); }
+  40%  { clip-path: inset(70% 0 20% 0); transform: translate(-2px, 2px); }
+  60%  { clip-path: inset(10% 0 80% 0); transform: translate(2px, 0); }
+  80%  { clip-path: inset(50% 0 45% 0); transform: translate(-2px, -2px); }
+  100% { clip-path: inset(80% 0 10% 0); transform: translate(0); }
+}
+@keyframes shine     { from { transform: translateX(-120%) skewX(-20deg); } to { transform: translateX(320%) skewX(-20deg); } }
+@keyframes marquee   { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  html { color-scheme: dark; scroll-padding-top: var(--spacing-header); -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--color-void);
+    color: var(--color-ink-soft);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-weight: var(--font-weight-medium);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-ink); text-transform: uppercase; text-wrap: balance; }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-pink); color: var(--color-on-accent); }
+
+  /* Focus visible unique et cohérent sur tout le site */
+  :focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 3px; }
+
+  /* Scrollbar */
+  * { scrollbar-color: var(--color-line-strong) var(--color-void); }
+
+  /* Accessibilité : on coupe tout mouvement non essentiel */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .glitch::before, .glitch::after { display: none; }
+  }
+}
