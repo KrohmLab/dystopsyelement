@@ -1,0 +1,129 @@
+---
+/**
+ * Bouton unique du site (DESIGN_SYSTEM §7.1). Rendu en `<a>` si `href`, sinon en `<button>`.
+ * Rose (`primary`) = conversion, un seul par section. Cyan = navigation.
+ */
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../../lib/cn.ts";
+import Icon from "./Icon.astro";
+import type { IconName } from "./icons.ts";
+
+type Variant = "primary" | "secondary" | "ghost" | "festival";
+type Size = "sm" | "md" | "lg";
+
+interface Props {
+  variant?: Variant;
+  size?: Size;
+  href?: string;
+  icon?: IconName;
+  iconPosition?: "start" | "end";
+  /** Lien sortant : nouvel onglet, icône ↗ et mention pour les lecteurs d'écran. */
+  external?: boolean;
+  fullWidth?: boolean;
+  type?: "button" | "submit";
+  class?: string;
+  [key: `data-${string}`]: string | undefined;
+  "aria-controls"?: string;
+  "aria-expanded"?: HTMLAttributes<"button">["aria-expanded"];
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  icon,
+  iconPosition = "start",
+  external = false,
+  fullWidth = false,
+  type = "button",
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isGhost = variant === "ghost";
+// Les variantes « ghost » et « festival » avancent vers leur destination : flèche par défaut.
+const endIcon: IconName | undefined = external
+  ? "arrow-up-right"
+  : iconPosition === "end"
+    ? icon
+    : isGhost || variant === "festival"
+      ? "arrow-right"
+      : undefined;
+const startIcon = iconPosition === "start" && !isGhost ? icon : undefined;
+
+// Hauteur minimale : un libellé long passe à la ligne sur mobile au lieu de déborder.
+const height = { sm: "min-h-10", md: "min-h-12", lg: "min-h-14" }[size];
+const text = { sm: "text-label-sm", md: "text-label", lg: "text-label-lg" }[size];
+const padding = { sm: "px-4", md: "px-6", lg: "px-8" }[size];
+const chamfer = size === "sm" ? "chamfer-sm" : "chamfer-md";
+
+const outer = cn(
+  "group/btn relative inline-flex max-w-full cursor-pointer items-stretch text-center font-display font-bold uppercase no-underline",
+  fullWidth && "w-full",
+  !isGhost && text,
+  variant === "primary" &&
+    cn(
+      height,
+      chamfer,
+      "overflow-hidden bg-pink text-on-accent transition duration-base hover:bg-pink-hover hover:shadow-glow-pink",
+      // Balayage lumineux au survol uniquement.
+      "after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:w-2/5 after:bg-linear-to-r after:from-transparent after:via-ink/35 after:to-transparent after:opacity-0 hover:after:animate-shine hover:after:opacity-100",
+    ),
+  variant === "secondary" &&
+    cn(
+      height,
+      chamfer,
+      "bg-cyan-line p-px text-ink transition duration-base hover:bg-cyan hover:text-cyan",
+    ),
+  variant === "festival" &&
+    "min-h-16 bg-linear-to-r from-cyan via-pink to-cyan bg-size-[200%_auto] bg-left p-0.75 text-label-lg text-ink transition-[background-position] duration-slow chamfer-lg hover:bg-right",
+  isGhost && "py-1.5 text-label text-cyan transition duration-base hover:text-glow-cyan",
+  className,
+);
+
+const inner = cn(
+  "relative flex w-full items-center justify-center gap-2.5",
+  !isGhost && "py-2",
+  variant === "primary" && padding,
+  variant === "secondary" &&
+    cn(
+      padding,
+      chamfer,
+      "bg-void after:absolute after:inset-0 after:bg-cyan-dim after:opacity-0 after:transition-opacity after:duration-base group-hover/btn:after:opacity-100",
+    ),
+  variant === "festival" && "gap-3.5 bg-void px-10 chamfer-lg",
+);
+
+const iconSize = size === "lg" || variant === "festival" ? 20 : 16;
+const Tag = href ? "a" : "button";
+const linkAttrs = href
+  ? { href, ...(external ? { target: "_blank", rel: "noopener noreferrer" } : {}) }
+  : { type };
+---
+
+<Tag class={outer} {...linkAttrs} {...rest}>
+  <span class={inner}>
+    {startIcon && (
+      <Icon
+        name={startIcon}
+        size={iconSize}
+        class={cn("relative shrink-0", variant === "festival" && "text-pink")}
+      />
+    )}
+    <span class="relative">
+      <slot />
+    </span>
+    {external && <span class="sr-only">(nouvel onglet)</span>}
+    {endIcon && (
+      <Icon
+        name={endIcon}
+        size={iconSize}
+        class={cn(
+          "relative shrink-0 transition-transform duration-base ease-out-expo",
+          (isGhost || variant === "festival") && "group-hover/btn:translate-x-1",
+          variant === "festival" && "text-cyan",
+        )}
+      />
+    )}
+  </span>
+</Tag>

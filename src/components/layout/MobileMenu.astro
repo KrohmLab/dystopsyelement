@@ -1,0 +1,100 @@
+---
+/**
+ * Panneau de navigation mobile (DESIGN_SYSTEM §7.2), en `<dialog>` modal natif :
+ * le reste de la page devient inerte, Échap ferme, le focus revient au bouton d'ouverture.
+ */
+import { isCurrent, type NavItem, type Ticket } from "../../lib/navigation.ts";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+
+interface Props {
+  nav: NavItem[];
+  ticket: Ticket;
+}
+
+const { nav, ticket } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<dialog
+  id="menu-mobile"
+  aria-label="Menu"
+  class="m-0 h-dvh max-h-none w-full max-w-none bg-void p-0 text-ink backdrop:bg-void open:flex open:flex-col"
+>
+  <div class="flex h-header shrink-0 items-center justify-end px-gutter">
+    <button
+      type="button"
+      data-menu-close
+      class="grid size-11 cursor-pointer place-items-center text-ink"
+    >
+      <Icon name="x" size={24} />
+      <span class="sr-only">Fermer le menu</span>
+    </button>
+  </div>
+
+  <nav aria-label="Navigation principale" class="flex-1 overflow-y-auto px-gutter py-6">
+    <ul class="flex flex-col gap-2">
+      {nav.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            data-menu-link
+            aria-current={isCurrent(item.href, pathname) ? "page" : undefined}
+            {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            class="flex items-center gap-2 border-l-2 border-transparent py-3 pl-4 font-display text-h3 font-bold text-ink uppercase transition-colors duration-fast hover:border-cyan hover:text-cyan aria-[current=page]:border-cyan aria-[current=page]:text-cyan"
+          >
+            {item.label}
+            {item.external && <Icon name="arrow-up-right" size={24} />}
+            {item.external && <span class="sr-only">(nouvel onglet)</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="shrink-0 px-gutter pt-4 pb-8">
+    <Button
+      variant="primary"
+      size="lg"
+      icon="ticket"
+      fullWidth
+      href={ticket.href}
+      external={ticket.external}
+      data-menu-link
+    >
+      Billetterie
+    </Button>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("#menu-mobile");
+  const openers = document.querySelectorAll<HTMLElement>("[data-menu-open]");
+
+  if (dialog) {
+    const setExpanded = (value: boolean) =>
+      openers.forEach((button) => button.setAttribute("aria-expanded", String(value)));
+
+    openers.forEach((button) =>
+      button.addEventListener("click", () => {
+        dialog.showModal();
+        setExpanded(true);
+      }),
+    );
+    dialog.addEventListener("close", () => setExpanded(false));
+    dialog
+      .querySelectorAll("[data-menu-close], [data-menu-link]")
+      .forEach((element) => element.addEventListener("click", () => dialog.close()));
+
+    // Repasser en desktop referme le panneau.
+    window.matchMedia("(min-width: 64rem)").addEventListener("change", (event) => {
+      if (event.matches) dialog.close();
+    });
+  }
+</script>
+
+<style>
+  :global(html:has(#menu-mobile[open])) {
+    overflow: hidden;
+  }
+</style>

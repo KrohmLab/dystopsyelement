@@ -1,0 +1,13 @@
+---
+/** Logo Dystopsy Element en SVG inline (`currentColor`). */
+import logo from "../../../public/brand/logo-dystopsy.svg?raw";
+import { cn } from "../../lib/cn.ts";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class={cn("block [&>svg]:size-full", className)} aria-hidden="true" set:html={logo} />

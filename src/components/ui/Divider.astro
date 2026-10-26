@@ -1,0 +1,23 @@
+---
+/** Séparateur décoratif : motif de circuit de la v1, statique, à 40 % d'opacité (DESIGN_SYSTEM §5.3). */
+import { Picture } from "astro:assets";
+import pattern from "../../assets/patterns/pattern-01.png";
+import { cn } from "../../lib/cn.ts";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class={cn("flex justify-center px-gutter opacity-40", className)} aria-hidden="true">
+  <Picture
+    src={pattern}
+    formats={["avif", "webp"]}
+    alt=""
+    widths={[480, 960, 1440]}
+    sizes="(min-width: 80rem) 80rem, 100vw"
+    class="h-auto w-full max-w-site"
+  />
+</div>

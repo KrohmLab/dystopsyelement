@@ -1,5 +1,5 @@
 ---
-import logo from "../../public/brand/logo-dystopsy.svg?raw";
+import Logo from "../components/layout/Logo.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site.ts";
 ---
@@ -7,7 +7,7 @@ import { site } from "../data/site.ts";
 <BaseLayout>
   <div class="grid min-h-svh place-items-center px-gutter py-section">
     <div class="flex flex-col items-center gap-8 text-center">
-      <span class="block size-32 text-cyan [&>svg]:size-full" aria-hidden="true" set:html={logo} />
+      <Logo class="size-32 text-cyan" />
       <h1 class="glitch text-display font-black" data-text={site.name}>
         {site.name}
       </h1>

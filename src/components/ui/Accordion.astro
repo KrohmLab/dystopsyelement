@@ -1,0 +1,25 @@
+---
+/** Question / réponse repliable, en `<details>` natif : zéro JavaScript (DESIGN_SYSTEM §7.14). */
+import Icon from "./Icon.astro";
+
+interface Props {
+  question: string;
+  open?: boolean;
+}
+
+const { question, open = false } = Astro.props;
+---
+
+<details class="group border-b border-line" {open}>
+  <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-display text-h3 font-bold text-ink uppercase [&::-webkit-details-marker]:hidden">
+    <span>{question}</span>
+    <Icon
+      name="plus"
+      size={24}
+      class="shrink-0 text-cyan transition-transform duration-base group-open:rotate-45"
+    />
+  </summary>
+  <div class="max-w-prose pb-5 [&_a]:text-cyan [&_a]:underline">
+    <slot />
+  </div>
+</details>

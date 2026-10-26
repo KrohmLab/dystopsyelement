@@ -1,0 +1,35 @@
+---
+/** Barre de progression de lecture en CSS pur (`animation-timeline: scroll()`), masquée si non supportée. */
+---
+
+<div
+  class="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-linear-to-r from-cyan to-pink"
+  aria-hidden="true"
+></div>
+
+<style>
+  .scroll-progress {
+    display: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: block;
+      transform: scaleX(0);
+      animation: scroll-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+
+  @keyframes scroll-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-progress {
+      display: none;
+    }
+  }
+</style>

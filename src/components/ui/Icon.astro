@@ -1,0 +1,14 @@
+---
+import { icons, type IconName } from "./icons.ts";
+
+interface Props {
+  name: IconName;
+  size?: 16 | 20 | 24 | 32;
+  class?: string;
+}
+
+const { name, size = 20, class: className } = Astro.props;
+const Component = icons[name];
+---
+
+<Component size={size} stroke-width={1.5} class={className} aria-hidden="true" focusable="false" />

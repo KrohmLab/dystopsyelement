@@ -1,0 +1,136 @@
+---
+/**
+ * En-tête fixe (DESIGN_SYSTEM §7.2) : transparent au repos, fond flouté + grille après 50 px de scroll.
+ * Le menu mobile est un `<dialog>` natif (MobileMenu) : focus piégé et Échap gérés par le navigateur.
+ */
+import { site } from "../../data/site.ts";
+import { isCurrent, type NavItem, type Ticket } from "../../lib/navigation.ts";
+import Button from "../ui/Button.astro";
+import Icon from "../ui/Icon.astro";
+import Logo from "./Logo.astro";
+import MobileMenu from "./MobileMenu.astro";
+
+interface Props {
+  nav: NavItem[];
+  ticket: Ticket;
+}
+
+const { nav, ticket } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<header
+  data-header
+  class="fixed inset-x-0 top-0 z-40 border-b border-transparent transition duration-base data-scrolled:border-cyan-line data-scrolled:bg-abyss/60 data-scrolled:bg-grid data-scrolled:shadow-header data-scrolled:backdrop-blur-lg"
+>
+  <div class="mx-auto flex h-header max-w-site items-center justify-between gap-6 px-gutter">
+    <a
+      href="/"
+      class="group/brand flex items-center gap-3 text-ink"
+      aria-label={`${site.name}, accueil`}
+    >
+      <Logo class="logo-mark size-10 transition-[filter] duration-base group-hover/brand:drop-shadow-md group-hover/brand:drop-shadow-cyan" />
+      <span class="hidden font-display text-label font-bold uppercase xl:inline">{site.name}</span>
+    </a>
+
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href, pathname) ? "page" : undefined}
+              {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              class="group/link relative flex items-center gap-1 px-4 py-2.5 font-display text-label font-bold text-ink-soft uppercase transition-colors duration-fast hover:text-ink aria-[current=page]:text-cyan"
+            >
+              <span
+                class="absolute top-1/2 left-2 -translate-y-1/2 text-cyan opacity-0 transition-all duration-base ease-out-expo group-hover/link:left-0.5 group-hover/link:opacity-100"
+                aria-hidden="true"
+              >
+                [
+              </span>
+              {item.label}
+              {item.external && <Icon name="arrow-up-right" size={16} />}
+              {item.external && <span class="sr-only">(nouvel onglet)</span>}
+              <span
+                class="absolute top-1/2 right-2 -translate-y-1/2 text-cyan opacity-0 transition-all duration-base ease-out-expo group-hover/link:right-0.5 group-hover/link:opacity-100"
+                aria-hidden="true"
+              >
+                ]
+              </span>
+              <span
+                class="absolute inset-x-4 bottom-1 h-0.5 origin-left scale-x-0 bg-cyan transition-transform duration-base ease-out-expo group-hover/link:scale-x-100"
+                aria-hidden="true"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <div class="hidden sm:block">
+        <Button
+          variant="primary"
+          size="sm"
+          icon="ticket"
+          href={ticket.href}
+          external={ticket.external}
+        >
+          Billetterie
+        </Button>
+      </div>
+      <button
+        type="button"
+        data-menu-open
+        aria-controls="menu-mobile"
+        aria-expanded="false"
+        aria-haspopup="dialog"
+        class="grid size-11 cursor-pointer place-items-center text-ink lg:hidden"
+      >
+        <Icon name="menu" size={24} />
+        <span class="sr-only">Ouvrir le menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<MobileMenu {nav} {ticket} />
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  if (header) {
+    const update = () => header.toggleAttribute("data-scrolled", window.scrollY > 50);
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+</script>
+
+<style>
+  /* Le logo glitche une fois quand on commence à scroller (comportement v1). */
+  [data-header][data-scrolled] :global(.logo-mark) {
+    animation: logo-glitch var(--duration-slow) steps(4) 1;
+  }
+
+  @keyframes logo-glitch {
+    0% {
+      transform: translate(0);
+      filter: none;
+    }
+    25% {
+      transform: translate(-2px, 1px);
+      filter: drop-shadow(2px 0 var(--color-pink)) drop-shadow(-2px 0 var(--color-cyan));
+    }
+    50% {
+      transform: translate(2px, -1px);
+      filter: drop-shadow(-2px 0 var(--color-pink)) drop-shadow(2px 0 var(--color-cyan));
+    }
+    75% {
+      transform: translate(-1px, 0);
+    }
+    100% {
+      transform: translate(0);
+      filter: none;
+    }
+  }
+</style>

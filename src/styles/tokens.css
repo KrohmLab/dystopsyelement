@@ -77,6 +77,14 @@
   --text-label--line-height: 1;
   --text-label--letter-spacing: 0.2em;
 
+  /* Variantes de taille des boutons sm / lg (DESIGN_SYSTEM §7.1 : 12 px et 14 px) */
+  --text-label-sm: 0.75rem;
+  --text-label-sm--line-height: 1;
+  --text-label-sm--letter-spacing: 0.2em;
+  --text-label-lg: 0.875rem;
+  --text-label-lg--line-height: 1;
+  --text-label-lg--letter-spacing: 0.2em;
+
   --text-eyebrow: 0.75rem;          /* sur-titres « // CODE » — Orbitron 700 */
   --text-eyebrow--line-height: 1;
   --text-eyebrow--letter-spacing: 0.3em;

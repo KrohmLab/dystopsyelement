@@ -1,0 +1,31 @@
+---
+/** Pastille d'état (DESIGN_SYSTEM §7.10). `live` = rose avec point pulsant. */
+import { cn } from "../../lib/cn.ts";
+
+interface Props {
+  variant?: "live" | "info" | "neutral" | "outline";
+  class?: string;
+}
+
+const { variant = "info", class: className } = Astro.props;
+
+const tone = {
+  live: "bg-pink-dim text-pink inset-ring inset-ring-pink-line",
+  info: "bg-cyan-dim text-cyan inset-ring inset-ring-cyan-line",
+  neutral: "bg-surface text-ink-muted",
+  outline: "text-ink-soft inset-ring inset-ring-line-strong",
+}[variant];
+---
+
+<span
+  class={cn(
+    "inline-flex items-center gap-2 px-2.5 py-1 font-body text-micro font-bold uppercase chamfer-sm",
+    tone,
+    className,
+  )}
+>
+  {variant === "live" && (
+    <span class="size-2 rounded-full bg-pink animate-pulse-dot" aria-hidden="true" />
+  )}
+  <slot />
+</span>

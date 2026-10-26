@@ -1,0 +1,25 @@
+---
+/** Case à cocher avec son libellé (consentement RGPD du formulaire). */
+interface Props {
+  name: string;
+  id?: string;
+  required?: boolean;
+  checked?: boolean;
+}
+
+const { name, id = `case-${name}`, required = false, checked = false } = Astro.props;
+---
+
+<div class="flex items-start gap-3 text-small">
+  <input
+    {id}
+    {name}
+    {required}
+    {checked}
+    type="checkbox"
+    class="mt-0.5 size-5 shrink-0 accent-cyan"
+  />
+  <label for={id}>
+    <slot />
+  </label>
+</div>

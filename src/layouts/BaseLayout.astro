@@ -6,7 +6,12 @@ import "@fontsource/rajdhani/latin-700.css";
 import "../styles/global.css";
 import orbitron from "@fontsource-variable/orbitron/files/orbitron-latin-wght-normal.woff2?url";
 import rajdhani from "@fontsource/rajdhani/files/rajdhani-latin-500-normal.woff2?url";
+import Footer from "../components/layout/Footer.astro";
+import Header from "../components/layout/Header.astro";
+import ScrollProgress from "../components/layout/ScrollProgress.astro";
+import SkipLink from "../components/layout/SkipLink.astro";
 import { site } from "../data/site.ts";
+import { getNavigation, type Ticket } from "../lib/navigation.ts";
 import { buildSeo } from "../lib/seo.ts";
 
 interface Props {
@@ -18,6 +23,9 @@ interface Props {
 
 const { title, description, image, noindex } = Astro.props;
 const seo = buildSeo({ title, description, image, noindex, path: Astro.url.pathname });
+const nav = getNavigation();
+// TODO(phase 2) : ticketUrl du prochain événement qui en a un (lib/events.ts), sinon /agenda.
+const ticket: Ticket = { href: "/agenda", external: false };
 ---
 
 <!doctype html>
@@ -46,9 +54,13 @@ const seo = buildSeo({ title, description, image, noindex, path: Astro.url.pathn
     {seo.image && <meta property="og:image" content={seo.image} />}
     <meta name="twitter:card" content={seo.image ? "summary_large_image" : "summary"} />
   </head>
-  <body class="min-h-svh">
-    <main id="contenu">
+  <body class="flex min-h-svh flex-col">
+    <SkipLink />
+    <ScrollProgress />
+    <Header {nav} {ticket} />
+    <main id="contenu" tabindex="-1" class="flex-1 outline-none">
       <slot />
     </main>
+    <Footer {nav} {ticket} />
   </body>
 </html>

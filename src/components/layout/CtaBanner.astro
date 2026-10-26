@@ -1,0 +1,41 @@
+---
+/** Bandeau d'appel à l'action de fin de page (DESIGN_SYSTEM §7.9) : 1 bouton rose + 1 secondaire. */
+import Button from "../ui/Button.astro";
+import Section from "./Section.astro";
+
+interface Action {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  primary: Action;
+  secondary?: Action;
+}
+
+const { eyebrow, title, lead, primary, secondary } = Astro.props;
+---
+
+<Section tone="abyss" grid class="border-t border-line text-center">
+  <div class="flex flex-col items-center">
+    {eyebrow && (
+      <p class="mb-3 font-display text-eyebrow font-bold text-cyan uppercase">// {eyebrow}</p>
+    )}
+    <h2 class="text-h2 font-black">{title}</h2>
+    {lead && <p class="mt-4 max-w-prose text-lead text-ink-soft">{lead}</p>}
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <Button variant="primary" size="lg" href={primary.href} external={primary.external}>
+        {primary.label}
+      </Button>
+      {secondary && (
+        <Button variant="secondary" size="lg" href={secondary.href} external={secondary.external}>
+          {secondary.label}
+        </Button>
+      )}
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,44 @@
+---
+/**
+ * En-tête de section (DESIGN_SYSTEM §7.4) : sur-titre « // CODE », titre H2, accroche optionnelle,
+ * et une action (`slot="action"`, un Button ghost) à droite en desktop, dessous en mobile.
+ */
+import { cn } from "../../lib/cn.ts";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  align?: "left" | "center";
+  /** Sur-titre rose si la section est orientée vente. */
+  tone?: "cyan" | "pink";
+  /** Identifiant du H2, pour `aria-labelledby` de la section. */
+  id?: string;
+}
+
+const { eyebrow, title, lead, align = "left", tone = "cyan", id } = Astro.props;
+const hasAction = Astro.slots.has("action");
+---
+
+<div
+  class={cn(
+    "mb-10 flex flex-wrap items-end gap-x-8 gap-y-4",
+    align === "center" ? "justify-center text-center" : "justify-between",
+  )}
+>
+  <div class={cn(align === "center" && "flex flex-col items-center")}>
+    <p
+      class={cn(
+        "mb-3 font-display text-eyebrow font-bold uppercase",
+        tone === "pink" ? "text-pink" : "text-cyan",
+      )}
+    >
+      // {eyebrow}
+    </p>
+    <h2 {id} class="text-h2 font-black">
+      {title}
+    </h2>
+    {lead && <p class="mt-4 max-w-prose text-lead text-ink-soft">{lead}</p>}
+  </div>
+  {hasAction && <slot name="action" />}
+</div>

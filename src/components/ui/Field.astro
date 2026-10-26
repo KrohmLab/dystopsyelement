@@ -1,0 +1,91 @@
+---
+/**
+ * Champ de formulaire (DESIGN_SYSTEM §7.13) : texte, e-mail, zone de texte ou liste.
+ * Contour biseauté en deux calques : `line-strong` au repos, `cyan` au focus, `danger` en erreur.
+ */
+import { cn } from "../../lib/cn.ts";
+
+interface Props {
+  label: string;
+  name: string;
+  type?: "text" | "email" | "textarea" | "select";
+  id?: string;
+  value?: string;
+  placeholder?: string;
+  autocomplete?: string;
+  required?: boolean;
+  rows?: number;
+  /** Options de la liste (`type="select"`). */
+  options?: string[];
+  /** Message d'erreur : passe le champ en état invalide. */
+  error?: string;
+}
+
+const {
+  label,
+  name,
+  type = "text",
+  id = `champ-${name}`,
+  value,
+  placeholder,
+  autocomplete,
+  required = false,
+  rows = 5,
+  options = [],
+  error,
+} = Astro.props;
+
+const errorId = `${id}-erreur`;
+const control =
+  "block w-full bg-surface px-4 py-3 font-body text-body text-ink outline-none chamfer-sm placeholder:text-ink-faint";
+const aria = error ? { "aria-invalid": "true" as const, "aria-describedby": errorId } : {};
+---
+
+<div>
+  <label for={id} class="mb-2 block font-display text-eyebrow font-bold text-ink-muted uppercase">
+    {label}
+  </label>
+  <div
+    class={cn(
+      "p-px transition-colors duration-fast chamfer-sm",
+      error ? "bg-danger" : "bg-line-strong focus-within:bg-cyan",
+    )}
+  >
+    {type === "textarea" ? (
+      <textarea
+        {id}
+        {name}
+        {rows}
+        {placeholder}
+        {required}
+        class={cn(control, "resize-y")}
+        {...aria}
+      >
+          {value}
+        </textarea>
+    ) : type === "select" ? (
+      <select {id} {name} {required} class={cn(control, "h-12")} {...aria}>
+        {options.map((option) => (
+          <option selected={option === value}>{option}</option>
+        ))}
+      </select>
+    ) : (
+      <input
+        {id}
+        {name}
+        {type}
+        {value}
+        {placeholder}
+        {autocomplete}
+        {required}
+        class={cn(control, "h-12")}
+        {...aria}
+      />
+    )}
+  </div>
+  {error && (
+    <p id={errorId} class="mt-1.5 text-small text-danger">
+      {error}
+    </p>
+  )}
+</div>

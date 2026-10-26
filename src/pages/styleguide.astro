@@ -1,0 +1,314 @@
+---
+/**
+ * Page interne du design system (CLAUDE.md §8, phase 1) : tous les composants ui/ et layout/ dans leurs états.
+ * Non indexée et exclue du sitemap. Exemples tirés des données réelles (SITE_PLAN §9) et des libellés d'interface.
+ */
+import CtaBanner from "../components/layout/CtaBanner.astro";
+import Section from "../components/layout/Section.astro";
+import SectionHeader from "../components/layout/SectionHeader.astro";
+import Accordion from "../components/ui/Accordion.astro";
+import Badge from "../components/ui/Badge.astro";
+import Brackets from "../components/ui/Brackets.astro";
+import Button from "../components/ui/Button.astro";
+import Checkbox from "../components/ui/Checkbox.astro";
+import Divider from "../components/ui/Divider.astro";
+import Field from "../components/ui/Field.astro";
+import Icon from "../components/ui/Icon.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const swatches = [
+  { name: "void", role: "fond", class: "bg-void" },
+  { name: "abyss", role: "alterné", class: "bg-abyss" },
+  { name: "surface", role: "cartes", class: "bg-surface" },
+  { name: "surface-raised", role: "survol", class: "bg-surface-raised" },
+  { name: "line", role: "bordures", class: "bg-line" },
+  { name: "line-strong", role: "séparateurs", class: "bg-line-strong" },
+  { name: "ink", role: "titres", class: "bg-ink" },
+  { name: "ink-soft", role: "texte", class: "bg-ink-soft" },
+  { name: "ink-muted", role: "méta", class: "bg-ink-muted" },
+  { name: "ink-faint", role: "décor", class: "bg-ink-faint" },
+  { name: "cyan", role: "navigation", class: "bg-cyan" },
+  { name: "pink", role: "conversion", class: "bg-pink" },
+  { name: "danger", role: "erreurs", class: "bg-danger" },
+];
+
+const typeScale = [
+  {
+    token: "display",
+    spec: "40 → 88 px · 900",
+    class: "font-display text-display font-black text-ink uppercase",
+    sample: "Nexen",
+  },
+  {
+    token: "h1",
+    spec: "32 → 60 px · 900",
+    class: "font-display text-h1 font-black text-ink uppercase",
+    sample: "Agenda",
+  },
+  {
+    token: "h2",
+    spec: "28 → 48 px · 900",
+    class: "font-display text-h2 font-black text-ink uppercase",
+    sample: "Prochaines dates",
+  },
+  {
+    token: "h3",
+    spec: "18 → 24 px · 700",
+    class: "font-display text-h3 font-bold text-ink uppercase",
+    sample: "Nexen's Home",
+  },
+  {
+    token: "lead",
+    spec: "18 → 22 px · 500",
+    class: "text-lead text-ink-soft",
+    sample: "Open air festival · Psytrance, techno, bass, chill.",
+  },
+  {
+    token: "body",
+    spec: "18 px · 500",
+    class: "text-body",
+    sample: "Nexen's Home, jeudi 7 mai 2026, à La Maison Café, Nantes.",
+  },
+  {
+    token: "small",
+    spec: "16 px · 500",
+    class: "text-small text-ink-muted",
+    sample: "La Maison Café, Nantes",
+  },
+  {
+    token: "label",
+    spec: "13 px · 700 · 0.2em",
+    class: "font-display text-label font-bold text-ink uppercase",
+    sample: "Voir le line-up",
+  },
+  {
+    token: "eyebrow",
+    spec: "12 px · 700 · 0.3em",
+    class: "font-display text-eyebrow font-bold text-cyan uppercase",
+    sample: "// Prestations",
+  },
+  {
+    token: "micro",
+    spec: "12 px · 600 · 0.1em",
+    class: "text-micro font-semibold text-ink-muted uppercase",
+    sample: "Jeu. 7 mai 2026 · Nantes",
+  },
+];
+
+const demoLabel = "mb-3 text-micro font-semibold text-ink-muted uppercase";
+---
+
+<BaseLayout title="Design system" noindex>
+  <div class="pt-header">
+    <Section labelledby="styleguide-titre">
+      <p class="mb-3 font-display text-eyebrow font-bold text-cyan uppercase">
+        // Design system v2
+      </p>
+      <h1 id="styleguide-titre" class="glitch text-h1 font-black" data-text="Design system">
+        Design system
+      </h1>
+      <p class="mt-4 max-w-prose text-lead">
+        Page interne, non indexée : composants ui/ et layout/ dans tous leurs états.
+      </p>
+    </Section>
+
+    <Section tone="abyss" labelledby="sg-couleurs">
+      <SectionHeader id="sg-couleurs" eyebrow="Couleurs" title="Deux accents, deux rôles" />
+      <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        {swatches.map((swatch) => (
+          <li class="bg-surface chamfer-md">
+            <div class:list={["h-20 border-b border-line", swatch.class]} />
+            <p class="px-3 pt-2.5 pb-3 text-small">
+              <b class="block font-display text-eyebrow text-ink uppercase">{swatch.name}</b>
+              {swatch.role}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </Section>
+
+    <Section labelledby="sg-typo">
+      <SectionHeader id="sg-typo" eyebrow="Typographie" title="Orbitron parle fort" />
+      <dl>
+        {typeScale.map((row) => (
+          <div class="grid items-baseline gap-1.5 border-b border-line py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+            <dt class="text-small text-ink-muted">
+              <b class="block font-semibold text-cyan">{row.token}</b>
+              {row.spec}
+            </dt>
+            <dd class={row.class}>{row.sample}</dd>
+          </div>
+        ))}
+      </dl>
+    </Section>
+
+    <Section tone="abyss" labelledby="sg-boutons">
+      <SectionHeader id="sg-boutons" eyebrow="Boutons" title="Quatre variantes" />
+      <div class="grid gap-8">
+        <div>
+          <p class={demoLabel}>primary · sm / md / lg · icône</p>
+          <div class="flex flex-wrap items-center gap-4">
+            <Button size="sm" href="#sg-boutons">
+              Billets
+            </Button>
+            <Button icon="ticket" href="#sg-boutons">
+              Prendre ma place
+            </Button>
+            <Button size="lg" href="#sg-boutons">
+              Demander un devis
+            </Button>
+            <Button type="submit">Envoyer</Button>
+          </div>
+        </div>
+        <div>
+          <p class={demoLabel}>secondary · lien externe</p>
+          <div class="flex flex-wrap items-center gap-4">
+            <Button variant="secondary" size="sm" href="#sg-boutons">
+              Line-up
+            </Button>
+            <Button variant="secondary" href="#sg-boutons">
+              Voir l'événement
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              href="https://www.facebook.com/events/1363260745173238"
+              external
+            >
+              Événement Facebook
+            </Button>
+          </div>
+        </div>
+        <div>
+          <p class={demoLabel}>ghost</p>
+          <div class="flex flex-wrap items-center gap-6">
+            <Button variant="ghost" href="#sg-boutons">
+              Tout l'agenda
+            </Button>
+            <Button variant="ghost" href="#sg-boutons">
+              Découvrir
+            </Button>
+          </div>
+        </div>
+        <div>
+          <p class={demoLabel}>festival · réservé au CTA Nexen</p>
+          <div class="flex flex-wrap items-center gap-4">
+            <Button variant="festival" icon="ticket" href="#sg-boutons">
+              Billetterie
+            </Button>
+            <Button variant="festival" href="#sg-boutons">
+              Voir le festival
+            </Button>
+          </div>
+        </div>
+        <div>
+          <p class={demoLabel}>pleine largeur</p>
+          <div class="max-w-sm">
+            <Button fullWidth size="lg" icon="ticket" href="#sg-boutons">
+              Billetterie
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <Section labelledby="sg-badges">
+      <SectionHeader id="sg-badges" eyebrow="Badges" title="États et ornements" />
+      <p class={demoLabel}>live · info · neutral · outline</p>
+      <div class="flex flex-wrap items-center gap-4">
+        <Badge variant="live">Dernières places</Badge>
+        <Badge variant="info">À venir</Badge>
+        <Badge variant="neutral">Passé</Badge>
+        <Badge variant="outline">Complet</Badge>
+      </div>
+
+      <p class:list={[demoLabel, "mt-10"]}>Brackets · survoler le bloc</p>
+      <div class="group relative max-w-md bg-surface p-7 transition-colors duration-base hover:bg-surface-raised">
+        <Brackets />
+        <p class="text-micro font-semibold text-cyan uppercase">5 – 7 juin 2026</p>
+        <h3 class="mt-2 text-h3 font-bold">Nexen Festival 2026</h3>
+        <p class="mt-2 inline-flex items-center gap-2 text-small text-ink-muted">
+          <Icon name="map-pin" size={16} class="text-cyan" />
+          Maine-et-Loire
+        </p>
+      </div>
+
+      <p class:list={[demoLabel, "mt-10"]}>Divider</p>
+    </Section>
+    <Divider />
+
+    <Section tone="abyss" labelledby="sg-formulaire">
+      <div class="grid gap-14 lg:grid-cols-2">
+        <div>
+          <SectionHeader id="sg-formulaire" eyebrow="Formulaire" title="Nous écrire" />
+          <form class="grid max-w-xl gap-5" action="#sg-formulaire">
+            <Field label="Nom" name="nom" placeholder="Votre nom" autocomplete="name" />
+            <Field
+              label="E-mail"
+              name="email"
+              type="email"
+              value="vous@"
+              autocomplete="email"
+              error="Ajoutez le domaine de votre adresse, par exemple vous@exemple.fr."
+            />
+            <Field
+              label="Sujet"
+              name="sujet"
+              type="select"
+              options={["Billetterie", "Prestation"]}
+            />
+            <Field
+              label="Message"
+              name="message"
+              type="textarea"
+              rows={4}
+              placeholder="Votre message"
+            />
+            <Checkbox name="rgpd">
+              J'accepte que mes données soient utilisées pour répondre à ma demande.
+            </Checkbox>
+            <div>
+              <Button type="submit">Envoyer</Button>
+            </div>
+          </form>
+        </div>
+        <div>
+          <SectionHeader eyebrow="Accordion" title="Avant de venir" />
+          <Accordion question="Où a lieu le Nexen Festival 2026 ?" open>
+            <p>En Maine-et-Loire, du 5 au 7 juin 2026.</p>
+          </Accordion>
+          <Accordion question="Où acheter les billets ?">
+            <p>
+              Sur{" "}
+              <a href="https://www.helloasso.com/associations/dystopsy-elements/evenements/nexen-festival-2026">
+                HelloAsso
+              </a>
+              .
+            </p>
+          </Accordion>
+        </div>
+      </div>
+    </Section>
+
+    <Section grid labelledby="sg-section">
+      <SectionHeader
+        id="sg-section"
+        eyebrow="Agenda"
+        title="Prochaines dates"
+        lead="Section avec trame de grille et action alignée à droite."
+      >
+        <Button slot="action" variant="ghost" href="#sg-section">
+          Tout l'agenda
+        </Button>
+      </SectionHeader>
+      <SectionHeader eyebrow="Shop" tone="pink" title="La boutique est sur Vinted" align="center" />
+    </Section>
+
+    <CtaBanner
+      eyebrow="Contact"
+      title="Nous écrire"
+      primary={{ label: "Nous écrire", href: "#sg-formulaire" }}
+      secondary={{ label: "Voir l'agenda", href: "#sg-section" }}
+    />
+  </div>
+</BaseLayout>

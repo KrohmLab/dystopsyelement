@@ -1,0 +1,29 @@
+---
+/** Conteneur de section : marges, largeur max, fond alterné `void` / `abyss` (DESIGN_SYSTEM §7.4). */
+import { cn } from "../../lib/cn.ts";
+
+interface Props {
+  tone?: "void" | "abyss";
+  grid?: boolean;
+  id?: string;
+  labelledby?: string;
+  class?: string;
+}
+
+const { tone = "void", grid = false, id, labelledby, class: className } = Astro.props;
+---
+
+<section
+  {id}
+  aria-labelledby={labelledby}
+  class={cn(
+    "relative px-gutter py-section",
+    tone === "abyss" ? "bg-abyss" : "bg-void",
+    grid && "bg-grid",
+    className,
+  )}
+>
+  <div class="relative mx-auto max-w-site">
+    <slot />
+  </div>
+</section>
