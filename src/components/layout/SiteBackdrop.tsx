@@ -86,9 +86,14 @@ export function SiteBackdrop() {
       <span className="site-backdrop__vignette" />
       {/* Le sol passe au-dessus du vignettage, sinon le bas de l'écran l'éteint. */}
       <div className="site-backdrop__floor">
-        <div className="site-backdrop__plane">
-          <div className="site-backdrop__lines" />
-          <div className="site-backdrop__lines site-backdrop__lines--run" />
+        {/* Enveloppe de la plongée de fin du hero hologramme (ambiance « holo », animation liée au défilement). */}
+        <div className="site-backdrop__dive">
+          <div className="site-backdrop__plane">
+            <div className="site-backdrop__lines" />
+            <div className="site-backdrop__lines site-backdrop__lines--run" />
+            <div className="site-backdrop__pink" />
+          </div>
+          <span className="site-backdrop__floor-glow" />
         </div>
         <span className="site-backdrop__horizon" />
       </div>

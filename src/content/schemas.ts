@@ -54,6 +54,11 @@ export const eventFrontmatterSchema = z
     venue: z.string().min(1),
     city: nullable(z.string()),
     cover: nullable(imageKey),
+    /** Cadrage du visuel au centre du radar du hero (valeur CSS object-position, ex. « 72% 40% »). */
+    heroFocus: z
+      .string()
+      .regex(/^\d{1,3}% \d{1,3}%$/, "heroFocus attend « X% Y% »")
+      .default("50% 50%"),
     ticketUrl: nullable(url),
     facebookUrl: nullable(url),
     status: nullable(z.enum(["complet", "dernieres-places", "annule"])),

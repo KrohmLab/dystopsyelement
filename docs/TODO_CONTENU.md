@@ -5,6 +5,8 @@ Remplacer un contenu = modifier le fichier indiqué, sans toucher au code. `npm 
 
 ## Contenus provisoires à remplacer
 
+- **Événement simulé « Nexen's Home 2 »** (`content/events/nexens-home-2.md`, ajouté le 28/10/2026 pour présenter le hero hologramme) : date (12/12/2026), lieu, horaires et billetterie **fictifs**, visuel repris de Nexen's Home. À confirmer ou à supprimer par l'asso avant la mise en ligne publique.
+
 | Élément | Fichier | Aujourd'hui |
 |---|---|---|
 | Phrase de présentation pour Google et les partages (≤ 155 caractères) | `content/site.json` → `description` | Texte provisoire |

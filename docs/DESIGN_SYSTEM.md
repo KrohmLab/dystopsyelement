@@ -194,9 +194,10 @@ L'accueil doit produire un effet « waouh » dès l'arrivée. Animations prévue
 
 | Où | Effet | Technique |
 |---|---|---|
-| Lancement du site (1re page de la session, ≈ 1,5 s) | `SiteIntro` : écran noir, horizon néon qui se trace, sol quadrillé qui se lève, logo qui s'allume, puis le rideau s'ouvre sur la page ; les animations du hero attendent la fin de l'intro | CSS pur (`html[data-intro]`) |
-| Hero, à l'arrivée (≈ 1 s) | Le cadre néon se trace, le titre se décode lettre par lettre (`DecodeText`) puis glitche, le sol quadrillé global brille sous le hero, scanlines par-dessus | CSS + `motion` |
-| Hero, ensuite | Parallaxe légère du visuel à la souris (desktop) et au défilement | `motion` (`useScroll`, ressorts) |
+| Lancement du site (1re page de la session, ≈ 3,1 s) | `SiteIntro` : ligne cathodique qui s'allume et flashe, logo en scintillement néon, « Dystopsy Element présente » qui se resserre, trois ondes de choc, puis l'écran s'ouvre en deux ; les animations du hero attendent la fin de l'intro (`--intro-offset`) | CSS pur (`html[data-intro]`) |
+| Hero hologramme, à l'arrivée (≈ 1,5 s) | Le radar se déploie en tournant, badge en fondu montant, titre dévoilé ligne par ligne, méta et boutons, puis l'indication « Défiler » (desktop, tablette) | CSS |
+| Hero hologramme, au défilement | Sortie en étapes sur 260svh (§7.5) : glitch du texte, radar qui glisse au centre puis s'éteint en ligne et en point, sol qui s'aplatit puis plonge (festival), voile noir | CSS (`view-timeline --hero`) |
+| Hero, en continu | Parallaxe légère du visuel à la souris (desktop) | `Parallax` (JS natif) |
 | Bandeau | Défilement continu `animate-marquee` | CSS |
 | Portails | Apparition en cascade au défilement ; au survol : glitch RGB, balayage lumineux, équerres qui s'agrandissent, visuel qui passe du gris à la couleur | CSS + `Reveal` |
 | Nexen | Le logo s'allume comme un néon qui grésille, le fond d'écailles se décale au défilement | CSS + `Parallax` |
@@ -204,7 +205,7 @@ L'accueil doit produire un effet « waouh » dès l'arrivée. Animations prévue
 
 Garde-fous (bloquants) :
 - **Le contenu est dans le HTML dès le départ** : titre, dates, liens sont rendus au pré-rendu ; l'animation les décore, elle ne retarde ni leur affichage, ni le LCP, ni le référencement. Sans JavaScript, tout est visible.
-- **Le visiteur garde la main** : pas de scroll-jacking, pas de section « sticky » à étapes, pas de carrousel automatique.
+- **Le visiteur garde la main** : pas de scroll-jacking, pas de section « sticky » à étapes, pas de carrousel automatique. **Exceptions validées** : la carte 3D de la page Nexen (§6.3) et le **hero hologramme de l'accueil** (maquettes validées par l'asso le 28/10/2026, `docs/hero-hologramme/`) : le défilement reste natif, seule la scène réagit.
 - **`prefers-reduced-motion`** : toutes les animations sont coupées (décodage, parallaxe, néons, défilements), le contenu s'affiche directement.
 - **Mobile allégé** : pas d'effet à la souris, parallaxe réduite, moins de couches animées.
 - **Uniquement `transform` et `opacity`** pour les animations continues (pas de `filter` ni de `box-shadow` animés en boucle).
@@ -256,11 +257,16 @@ Icônes réseaux : carrés `chamfer-sm` 44 px, contour `cyan-line`, survol fond 
 `<Section tone="void|abyss" grid id>` : applique `py-section`, `px-gutter`, `max-w-site`, fond, et `bg-grid` si demandé. Alterner `void` / `abyss` d'une section à l'autre.
 `<SectionHeader eyebrow title lead align="left|center" action>` : sur-titre code, titre H2, accroche optionnelle (≤ 20 mots), et un `action` (Button ghost) aligné à droite en desktop, sous le titre en mobile.
 
-### 7.5 `Hero`
+### 7.5 `Hero` (accueil : hologramme)
 
-Plein écran (`min-h-[100svh]`), visuel de fond chargé en priorité (`fetchPriority="high"`, LCP), assombri par dégradé `void` (bas) + `void/80` (haut), `mix-blend-luminosity` à 40 % (rendu v1 conservé), `bg-scanlines` par-dessus, sol quadrillé global au sol. Cadre : `CyberFrame` (grand cadre v1) à partir de `lg` ; en dessous, `NeonFrame` (équerres) **sur toute la hauteur de l'écran, en-tête compris** (logo, billetterie, menu dans le cadre ; au repos, l'en-tête descend de 12–16 px pour respirer, il remonte au défilement). **Garde-fou** : le cadre épouse une boîte qui contient le texte avec des marges intérieures calées sur ses ornements ; si le texte grandit (fenêtre étroite ou basse, titre long), la boîte et le cadre grandissent avec, le texte ne passe jamais dessus. Contenu centré sur mobile et tablette, aligné à gauche à partir de `lg`, avec des écarts indexés sur la hauteur d'écran. Animations d'arrivée et parallaxe : §6.2.
-Contenu : badge pulsant rose (`Badge live`) · titre `text-display glitch` · ligne méta (date · lieu) avec icônes cyan · 2 boutons (`primary` + `secondary`).
-**Pas de carrousel** : le hero affiche le **prochain événement** (calculé au build depuis la collection `events`). S'il n'y en a aucun à venir, il affiche le dernier festival Nexen en état « passé » (voir SITE_PLAN §2). Les autres événements sont dans la section Agenda juste en dessous.
+Brief complet et maquettes validées : `docs/hero-hologramme/`. Section de **260svh** avec un étage collant de 100svh ; une seule `view-timeline --hero` (déclarée sur `body` par `timeline-scope` pour que le sol du fond la suive) pilote toute la sortie, en CSS.
+**Deux variantes selon `kind`** de l'événement mis en avant :
+- **festival** : logo Nexen en hologramme au centre du radar, radar posé sur l'horizon rose du sol quadrillé global (ambiance `holo` de `SiteBackdrop`), titre en deux lignes (1er mot plein + glitch, suite espacée en cyan) ;
+- **soirée** : visuel de l'événement dans un médaillon circulaire (recadré par le champ `heroFocus`, valeur `object-position`), visuel flouté en fond, grille plate estompée, pas de sol ; titre en deux lignes (suite en contour néon). Sans visuel : logo Dystopsy en néon.
+
+Contenu : badge pulsant rose · titre · ligne méta (date · lieu) · 2 boutons (`primary` + `secondary`), logique inchangée (prochain événement, sinon dernier festival « passé », SITE_PLAN §2).
+Géométrie partagée par le hero et le sol (`--holo-r`, `--holo-top`, `--holo-cx`, `--holo-horizon`) : mobile et tablette, radar en haut et texte centré dessous ; grand écran, texte à gauche et radar à droite. **Garde-fous** : la taille du radar dépend de la hauteur disponible une fois le texte placé ; sur grand écran, la colonne de texte s'arrête avant le radar et le titre est dimensionné sur la largeur de sa colonne (`cqi`) : jamais de chevauchement.
+Accessibilité : un seul `h1` ; calque RGB du glitch `aria-hidden` + `inert` ; le texte disparu passe en `visibility: hidden` (boutons ni cliquables ni atteignables au clavier, ils reviennent en remontant). Mouvement réduit ou navigateur sans `animation-timeline` : hero statique de 100svh, sans intro ni sortie.
 
 ### 7.6 `EventCard`
 

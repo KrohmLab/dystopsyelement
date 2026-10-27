@@ -9,7 +9,7 @@ import { ResponsiveImage } from "../ui/ResponsiveImage";
 
 export type EventSummary = Pick<
   DystopsyEvent,
-  "slug" | "title" | "kind" | "startDate" | "endDate" | "venue" | "city" | "cover" | "ticketUrl" | "status"
+  "slug" | "title" | "kind" | "startDate" | "endDate" | "venue" | "city" | "cover" | "heroFocus" | "ticketUrl" | "status"
 > & { upcoming: boolean };
 
 function StatusBadge({ event }: { event: EventSummary }) {

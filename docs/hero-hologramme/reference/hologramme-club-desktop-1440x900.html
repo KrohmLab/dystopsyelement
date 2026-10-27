@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Hero 06 Hologramme club — Desktop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&amp;family=Rajdhani:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#020202}
+a{color:#75feed}a:hover{color:#ffffff}
+.r{position:relative;overflow:hidden;background:#020202;color:#d1d5db;font-family:'Rajdhani',ui-sans-serif,system-ui,sans-serif;font-weight:500;isolation:isolate}
+.r *{box-sizing:border-box}
+.abs{position:absolute}
+.disp{font-family:'Orbitron',ui-sans-serif,system-ui,sans-serif;text-transform:uppercase;color:#ffffff;margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden;white-space:nowrap;text-decoration:none;font-family:'Orbitron',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.2em;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);transition:background .3s,color .3s,box-shadow .3s}
+.btn-p{background:#fc029b;color:#020202}
+.btn-p:hover{background:#ff2fb0;color:#020202;box-shadow:0 0 24px rgba(252,2,155,.55)}
+.btn-p::after{content:"";position:absolute;top:0;left:0;width:35%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-140%) skewX(-20deg);animation:shine 4.5s cubic-bezier(.65,0,.35,1) infinite}
+.btn-s{background:rgba(117,254,237,.45);color:#ffffff}
+.btn-s::before{content:"";position:absolute;inset:1px;background:rgba(2,2,2,.82);clip-path:polygon(11px 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%,0 11px);transition:background .3s}
+.btn-s>*{position:relative}
+.btn-s:hover{background:#75feed;color:#75feed}
+.btn-s:hover::before{background:rgba(6,16,15,.92)}
+.badge{display:inline-flex;align-items:center;gap:10px;font-family:'Orbitron',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.24em;color:#fc029b;background:rgba(252,2,155,.12);box-shadow:inset 0 0 0 1px rgba(252,2,155,.5);clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
+.dot{width:8px;height:8px;border-radius:9999px;background:#fc029b;box-shadow:0 0 10px #fc029b;animation:pulse 1.6s ease-in-out infinite}
+.glow{text-shadow:0 0 10px rgba(117,254,237,.75),0 0 34px rgba(117,254,237,.35)}
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none}
+.glitch::before{left:3px;text-shadow:-3px 0 #75feed;clip-path:inset(20% 0 70% 0);animation:g1 3s infinite linear alternate-reverse}
+.glitch::after{left:-3px;text-shadow:3px 0 #fc029b;clip-path:inset(60% 0 30% 0);animation:g2 2.5s infinite linear alternate-reverse}
+.scanlines{background-image:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.035) 3px 4px)}
+.menu-btn{display:inline-flex;align-items:center;gap:12px;background:none;border:0;color:#ffffff;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;height:44px;padding:0 4px}
+.meta{display:flex;flex-wrap:wrap;align-items:center}
+.meta span{display:inline-flex;align-items:center;gap:10px}
+@keyframes shine{0%,60%{transform:translateX(-140%) skewX(-20deg)}100%{transform:translateX(380%) skewX(-20deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes g1{0%{clip-path:inset(20% 0 70% 0);transform:translate(0)}20%{clip-path:inset(10% 0 60% 0);transform:translate(-3px,2px)}40%{clip-path:inset(40% 0 50% 0);transform:translate(3px,-2px)}60%{clip-path:inset(80% 0 10% 0);transform:translate(-3px,0)}80%{clip-path:inset(30% 0 65% 0);transform:translate(3px,2px)}100%{clip-path:inset(50% 0 40% 0);transform:translate(0)}}
+@keyframes g2{0%{clip-path:inset(60% 0 30% 0);transform:translate(0)}20%{clip-path:inset(30% 0 50% 0);transform:translate(3px,-2px)}40%{clip-path:inset(70% 0 20% 0);transform:translate(-3px,2px)}60%{clip-path:inset(10% 0 80% 0);transform:translate(3px,0)}80%{clip-path:inset(50% 0 45% 0);transform:translate(-3px,-2px)}100%{clip-path:inset(80% 0 10% 0);transform:translate(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes marqueeY{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinRev{to{transform:rotate(-360deg)}}
+.still *,.still *::before,.still *::after{animation-play-state:paused !important}
+@media (prefers-reduced-motion: reduce){.r *,.r *::before,.r *::after{animation:none !important;transition:none !important}}
+
+
+.ringc{position:absolute;border-radius:9999px;inset:0}
+.r1{border:1px dashed rgba(117,254,237,.45);animation:spin 60s linear infinite}
+.r2{inset:9%;border:2px dotted rgba(252,2,155,.6);animation:spinRev 38s linear infinite}
+.r3{inset:18%;border:1px solid rgba(117,254,237,.25)}
+.r3::before,.r3::after{content:"";position:absolute;width:10px;height:10px;background:#75feed;box-shadow:0 0 12px #75feed;top:50%;left:-5px;margin-top:-5px}
+.r3::after{left:auto;right:-5px;background:#fc029b;box-shadow:0 0 12px #fc029b}
+.r3w{position:absolute;inset:0;animation:spin 14s linear infinite}
+.arc{position:absolute;inset:4%;border-radius:9999px;border:3px solid transparent;border-top-color:#75feed;border-right-color:rgba(117,254,237,.35);filter:drop-shadow(0 0 8px #75feed);animation:spin 7s linear infinite}
+.arc2{inset:13%;border-top-color:transparent;border-bottom-color:#fc029b;border-left-color:rgba(252,2,155,.35);filter:drop-shadow(0 0 8px #fc029b);animation:spinRev 11s linear infinite}
+.sweep{position:absolute;inset:0;border-radius:9999px;background:conic-gradient(from 0deg,rgba(117,254,237,.38),rgba(117,254,237,.08) 40deg,transparent 70deg);animation:spin 5s linear infinite;-webkit-mask-image:radial-gradient(circle,#000 62%,transparent 63%);mask-image:radial-gradient(circle,#000 62%,transparent 63%)}
+.ticks{position:absolute;inset:-3%;border-radius:9999px;background:repeating-conic-gradient(rgba(117,254,237,.55) 0 .5deg,transparent .5deg 6deg);-webkit-mask-image:radial-gradient(circle,transparent 66%,#000 67%,#000 70%,transparent 71%);mask-image:radial-gradient(circle,transparent 66%,#000 67%,#000 70%,transparent 71%);animation:spinRev 120s linear infinite}
+.holo{animation:bob 6s ease-in-out infinite,holoflick 5s steps(1) infinite;filter:drop-shadow(0 0 18px rgba(117,254,237,.55)) saturate(1.2)}
+@keyframes bob{0%,100%{transform:translateY(-6px)}50%{transform:translateY(8px)}}
+@keyframes holoflick{0%,88%{opacity:.95}89%{opacity:.5}90%{opacity:.95}93%{opacity:.7}94%,100%{opacity:.95}}
+.holo-lines{background:repeating-linear-gradient(0deg,rgba(117,254,237,.18) 0 1px,transparent 1px 4px);mix-blend-mode:screen;animation:hl 2s linear infinite}
+@keyframes hl{from{background-position:0 0}to{background-position:0 40px}}
+.cone{background:linear-gradient(to top,rgba(117,254,237,.35),rgba(117,254,237,0) 85%);clip-path:polygon(38% 100%,62% 100%,100% 0,0 0);animation:cone 3s ease-in-out infinite}
+@keyframes cone{0%,100%{opacity:.55}50%{opacity:.9}}
+.plat{border-radius:9999px;border:2px solid #75feed;box-shadow:0 0 30px rgba(117,254,237,.7),inset 0 0 30px rgba(252,2,155,.5);background:radial-gradient(ellipse,rgba(252,2,155,.35),transparent 70%)}
+.pt{position:absolute;bottom:0;width:3px;height:3px;background:#75feed;box-shadow:0 0 8px #75feed;animation:rise 6s linear infinite;opacity:0}
+.pt.p{background:#fc029b;box-shadow:0 0 8px #fc029b}
+@keyframes rise{0%{transform:translateY(0);opacity:0}10%{opacity:1}100%{transform:translateY(-420px);opacity:0}}
+.callout{font-family:'Orbitron',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#ffffff;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.cl-line{height:1px;background:linear-gradient(90deg,#75feed,rgba(117,254,237,.2))}
+.node{width:9px;height:9px;border:2px solid #75feed;background:#020202;animation:pulse 2s ease-in-out infinite}
+.grid-bg{background-image:linear-gradient(rgba(117,254,237,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(117,254,237,.06) 1px,transparent 1px);background-size:44px 44px}
+
+
+.sc{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-timeline:--pg block;overscroll-behavior:contain}
+.sc::-webkit-scrollbar{display:none}
+.stage{position:sticky;top:0;overflow:hidden}
+/* ---------- intro (temps) ---------- */
+.intro{position:absolute;inset:0;z-index:60;pointer-events:none;animation:introGone .01s linear 3.7s forwards}
+@keyframes introGone{to{visibility:hidden}}
+.half{position:absolute;left:0;right:0;height:50.5%;background:#020202}
+.half.t{top:0;animation:halfUp .7s cubic-bezier(.7,0,.2,1) 3.0s forwards}
+.half.b{bottom:0;animation:halfDown .7s cubic-bezier(.7,0,.2,1) 3.0s forwards}
+@keyframes halfUp{to{transform:translateY(-101%)}}
+@keyframes halfDown{to{transform:translateY(101%)}}
+.crt{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:#75feed;box-shadow:0 0 20px 4px rgba(117,254,237,.9),0 0 80px 10px rgba(117,254,237,.4);transform:scaleX(0);animation:crt 3.2s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes crt{0%{transform:scaleX(0)}14%{transform:scaleX(1) scaleY(1)}20%{transform:scaleX(1) scaleY(40);opacity:.9;background:#ffffff}26%{transform:scaleX(1) scaleY(1);background:#75feed}88%{transform:scaleX(1);opacity:1}94%{transform:scaleX(1) scaleY(3);background:#fc029b;opacity:1}100%{transform:scaleX(1.2);opacity:0}}
+.ilogo{position:absolute;left:50%;top:50%;opacity:0;animation:ilogo 2.4s steps(1) .75s forwards}
+@keyframes ilogo{0%{opacity:0}4%{opacity:1}7%{opacity:.2}10%{opacity:1}14%{opacity:.5}17%,82%{opacity:1}86%{opacity:.3}89%,100%{opacity:0}}
+.itext{position:absolute;left:0;right:0;text-align:center;font-family:'Orbitron',sans-serif;font-weight:700;text-transform:uppercase;color:#ffffff;white-space:nowrap;opacity:0;letter-spacing:1.2em;animation:itext 1.9s cubic-bezier(.16,1,.3,1) 1.05s forwards}
+@keyframes itext{0%{opacity:0;letter-spacing:1.2em;filter:blur(10px)}30%{opacity:1;filter:blur(0)}80%{opacity:1;letter-spacing:.32em}100%{opacity:0;letter-spacing:.3em}}
+.burst{position:absolute;left:50%;top:50%;border-radius:9999px;border:2px solid #75feed;opacity:0;animation:burst 1.1s cubic-bezier(.16,1,.3,1) forwards}
+.burst.p{border-color:#fc029b}
+@keyframes burst{0%{opacity:0;transform:translate(-50%,-50%) scale(.1)}10%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(4)}}
+/* ---------- entrée du hero après l'intro ---------- */
+.enter{opacity:0;animation:enter .9s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes enter{from{opacity:0;transform:translateY(26px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+.reveal{clip-path:inset(0 100% 0 0);animation:reveal 1s cubic-bezier(.7,0,.2,1) forwards}
+@keyframes reveal{to{clip-path:inset(0 0 0 0)}}
+.radar-in{opacity:0;animation:radarIn 1.4s cubic-bezier(.16,1,.3,1) 3.1s forwards}
+@keyframes radarIn{from{opacity:0;transform:scale(.4) rotate(-90deg)}to{opacity:1;transform:none}}
+.cue{display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'Orbitron',sans-serif;font-weight:700;font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:#9ca3af}
+.mouse{width:22px;height:34px;border:2px solid rgba(117,254,237,.7);border-radius:11px;position:relative}
+.mouse::after{content:"";position:absolute;left:50%;top:6px;width:2px;height:7px;margin-left:-1px;background:#75feed;animation:wheel 1.6s ease-in-out infinite}
+@keyframes wheel{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+.replay{position:absolute;z-index:70;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;background:rgba(5,5,5,.85);color:#75feed;border:0;box-shadow:inset 0 0 0 1px rgba(117,254,237,.45);font-family:'Orbitron',sans-serif;font-weight:700;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
+.replay:hover{background:#75feed;color:#020202}
+.prog{position:absolute;width:2px;background:rgba(117,254,237,.18)}
+.prog-fill{position:absolute;inset:0;background:linear-gradient(to bottom,#75feed,#fc029b);transform-origin:top;transform:scaleY(0)}
+.prog-lbl{position:absolute;font-family:'Orbitron',sans-serif;font-weight:700;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:#6b7280;white-space:nowrap}
+.prog-dot{position:absolute;left:-4px;width:10px;height:10px;background:#020202;border:2px solid #75feed}
+.lu-card{display:flex;flex-direction:column;gap:6px;padding:16px 18px;background:rgba(5,5,5,.82);box-shadow:inset 0 0 0 1px rgba(117,254,237,.45);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);backdrop-filter:blur(8px)}
+.lu-name{font-family:'Orbitron',sans-serif;font-weight:800;text-transform:uppercase;color:#ffffff;letter-spacing:.06em}
+.lu-tag{font-family:'Orbitron',sans-serif;font-weight:700;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:#fc029b}
+.ph{color:#9ca3af;font-style:italic;text-transform:none;letter-spacing:0}
+.flash{position:absolute;inset:0;background:radial-gradient(ellipse at center,#ffffff 0%,#75feed 25%,rgba(252,2,155,.6) 55%,transparent 75%);mix-blend-mode:screen;opacity:0;pointer-events:none}
+.eyebrow{font-family:'Orbitron',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.3em;color:#75feed}
+/* ---------- animations liées au défilement ---------- */
+@keyframes s-out{from{opacity:1}to{opacity:0;transform:translateY(-40px);filter:blur(10px)}}
+@keyframes s-outL{from{opacity:1}to{opacity:0;transform:translateX(-90px);filter:blur(10px)}}
+@keyframes s-in{from{opacity:0;transform:translateY(40px);filter:blur(10px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes s-inClip{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+@keyframes s-fadeout{to{opacity:0;filter:blur(8px)}}
+@keyframes s-spin{to{transform:rotate(240deg)}}
+@keyframes s-collapse{0%{transform:scale(1,1);opacity:1}55%{transform:scale(1.3,.012);opacity:1}100%{transform:scale(3.2,.012);opacity:0}}
+@keyframes s-flash{0%{opacity:0}45%{opacity:.95}100%{opacity:0}}
+@keyframes s-fill{to{transform:scaleY(1)}}
+@keyframes s-bgzoom{from{transform:scale(1.06)}to{transform:scale(1.4)}}
+@keyframes s-bgreveal{from{opacity:0}to{opacity:1}}
+@keyframes s-final{from{opacity:0;transform:scale(.86);filter:blur(14px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes s-line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.tl{animation-duration:1ms;animation-timing-function:linear;animation-fill-mode:both}
+@supports (animation-timeline: scroll()){
+  .tl{animation-timeline:--pg}
+}
+@supports not (animation-timeline: scroll()){
+  .tl{animation:none !important}
+  .only-scroll{display:none !important}
+}
+
+
+.maison{position:absolute;border-radius:9999px;overflow:hidden;-webkit-mask-image:radial-gradient(circle,#000 42%,rgba(0,0,0,.6) 56%,transparent 70%);mask-image:radial-gradient(circle,#000 42%,rgba(0,0,0,.6) 56%,transparent 70%)}
+.maison img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.3) contrast(1.15);animation:mz 14s ease-in-out infinite alternate}
+@keyframes mz{from{transform:scale(1.05)}to{transform:scale(1.18) translate(-2%,1%)}}
+.maison-tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(117,254,237,.25),rgba(122,60,224,.15) 50%,rgba(252,2,155,.3));mix-blend-mode:color}
+.chroma{position:absolute;inset:0;mix-blend-mode:screen;opacity:.35;filter:hue-rotate(160deg) saturate(2);transform:translateX(5px);animation:chroma 4s steps(1) infinite}
+@keyframes chroma{0%,85%{transform:translateX(5px)}86%{transform:translateX(-9px)}90%{transform:translateX(12px)}93%,100%{transform:translateX(5px)}}
+.title2{line-height:.92}
+
+.trk{position:relative;view-timeline:--hero block}
+@supports (animation-timeline: view()){
+  .ht{animation-timeline:--hero}
+  .vw{animation-timeline:view()}
+}
+@supports not (animation-timeline: view()){
+  .ht,.vw{animation:none !important}
+}
+.ht,.vw{animation-duration:1ms;animation-timing-function:linear;animation-fill-mode:both}
+@keyframes h-glitch{0%{opacity:1;clip-path:inset(0 0 0 0);transform:none;filter:none}
+12%{clip-path:inset(8% 0 58% 0);transform:translateX(-14px)}
+22%{clip-path:inset(0 0 0 0);transform:translateX(9px);filter:hue-rotate(90deg) saturate(2)}
+36%{clip-path:inset(58% 0 6% 0);transform:translateX(-22px) skewX(-8deg)}
+50%{clip-path:inset(0 0 42% 0);transform:translateX(16px);opacity:.85;filter:hue-rotate(-60deg)}
+66%{clip-path:inset(28% 0 30% 0);transform:translateX(-32px) scaleY(.6);opacity:.65}
+84%{clip-path:inset(47% 0 47% 0);transform:translateX(42px) scaleX(1.3);opacity:.5}
+100%{clip-path:inset(50% 0 50% 0);transform:scaleX(2.2);opacity:0}}
+@keyframes h-rgb{0%{opacity:0;transform:none}20%{opacity:.9;transform:translateX(-10px)}45%{opacity:.6;transform:translateX(14px)}70%{opacity:.8;transform:translateX(-24px)}100%{opacity:0;transform:translateX(30px)}}
+@keyframes h-off{0%{transform:scale(1,1);filter:brightness(1);opacity:1}
+14%{filter:brightness(2.4)}18%{filter:brightness(.3)}24%{filter:brightness(1.9)}30%{filter:brightness(.6)}36%{filter:brightness(1.4);transform:scale(1,1)}
+62%{transform:scale(1.25,.012);filter:brightness(3.5)}
+84%{transform:scale(.03,.012);filter:brightness(4)}
+100%{transform:scale(0,0);opacity:0}}
+@keyframes h-dot{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}40%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(.1)}}
+@keyframes h-dark{from{opacity:0}to{opacity:1}}
+@keyframes v-up{from{opacity:0;transform:translateY(80px);filter:blur(12px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes v-clip{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.afterdot{position:absolute;width:14px;height:14px;border-radius:9999px;background:#ffffff;box-shadow:0 0 20px 8px #75feed,0 0 60px 20px rgba(117,254,237,.5)}
+.tile{position:relative;display:flex;align-items:flex-end;overflow:hidden;text-decoration:none;background:#0a0a0a;clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);opacity:.45;transition:filter .5s,opacity .5s,transform .6s}
+.tile:hover img{filter:none;opacity:.8;transform:scale(1.06)}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(2,2,2,.92),transparent 70%)}
+.tile span{position:relative;z-index:1;font-family:'Orbitron',sans-serif;font-weight:800;text-transform:uppercase;color:#ffffff;letter-spacing:.08em}
+.tile b{display:block;font-weight:700;color:#75feed;font-size:.6em;letter-spacing:.3em;margin-bottom:6px}
+
+@keyframes h-move{to{transform:translate(-360px, 0px) scale(1.15)}}
+
+</style>
+<style>body{display:flex;justify-content:center;align-items:flex-start;min-height:100vh;background:#111;padding:24px 0}</style>
+</head>
+<body>
+<section class="r" aria-labelledby="hero-titre" style="width: 1440px; height: 900px">
+<div style="position: absolute; inset: 0; z-index: 40; pointer-events: none"><div style="pointer-events: auto"><header class="abs" style="top: 0; left: 0; right: 0; height: 84px; z-index: 30; display: flex; align-items: center; justify-content: space-between; padding: 0 56px">
+<a href="#accueil" aria-label="Dystopsy Element, accueil" style="display: flex; align-items: center; gap: 14px; text-decoration: none; color: #ffffff"><svg aria-hidden="true" viewBox="0 0 872.113 871.513" style="width: 42px; height: 42px; color: #ffffff; display: block; " fill="currentColor"><g transform="translate(0 871.513) scale(1 -1)"><path d="M400.967 870.855C295.5 861.388 201.1 817.655 127.767 744.321C55.6333 672.188 11.9 579.655 1.5 477.788C-0.5 457.255 -0.5 414.321 1.5 393.788C9.76667 312.988 38.9667 238.055 87.2333 173.921C158.3 79.6546 260.967 19.5212 378.967 3.12124C400.167 0.187905 449.9 -1.0121 472.3 0.987905C576.033 10.1879 670.033 53.7879 743.1 126.455C763.633 146.988 775.233 160.588 790.967 182.455C871.233 294.721 893.5 438.321 850.833 570.055C836.967 613.121 817.1 652.721 790.967 689.121C775.233 710.988 763.633 724.588 743.1 745.121C670.833 817.121 576.833 860.855 474.967 870.321C460.833 871.655 413.5 871.921 400.967 870.855ZM476.967 839.655C568.833 830.721 656.3 789.121 722.3 723.121C778.7 666.855 816.3 598.055 832.833 520.988C839.633 489.521 840.833 476.321 840.967 435.788C840.967 395.121 839.767 382.455 832.833 350.455C799.233 194.321 676.433 71.7879 520.3 38.5879C412.167 15.6546 297.233 38.4546 206.3 100.855C165.767 128.721 123.633 171.655 96.8333 212.455C48.7 286.055 24.9667 374.188 30.7 459.521C37.2333 559.921 76.3 648.055 145.5 718.988C181.233 755.521 213.9 778.988 259.633 801.255C327.5 834.188 400.7 847.121 476.967 839.655Z"/><path d="M410.967 833.121C316.7 826.988 228.567 788.321 160.167 722.855C103.367 668.455 62.4333 595.121 46.5667 519.121C40.1667 488.988 38.4333 470.988 38.4333 435.788C38.4333 381.121 46.4333 337.655 65.2333 290.455C111.5 174.055 207.767 86.8546 328.167 52.4546C386.3 35.7879 454.567 33.3879 515.633 45.7879C633.5 69.6546 735.367 146.988 790.167 254.455C810.3 293.788 822.833 332.855 829.9 377.788C832.433 393.921 832.833 401.788 832.833 435.788C832.833 480.055 831.1 495.788 822.433 531.121C791.233 657.121 701.5 759.121 579.9 806.988C529.1 826.988 466.567 836.721 410.967 833.121ZM457.9 817.121C538.033 811.921 612.7 783.521 673.633 734.855C688.967 722.588 715.5 696.721 729.233 680.455C754.7 650.055 780.3 606.188 794.033 568.721C804.967 539.121 813.1 503.655 816.3 471.921C818.033 454.188 818.033 417.388 816.3 399.655C808.7 323.921 778.567 250.855 730.7 192.855C717.233 176.588 689.633 149.388 673.633 136.721C574.433 57.6546 440.7 33.2546 319.5 71.9213C261.233 90.5879 209.9 121.921 166.167 165.655C100.967 230.988 62.9667 312.855 54.9667 405.788C49.7667 466.988 60.9667 532.455 86.4333 590.055C144.033 720.321 269.633 807.921 411.367 816.988C434.833 818.588 436.3 818.588 457.9 817.121Z"/><path d="M411.233 809.121C291.9 800.588 186.967 738.855 121.9 639.121C92.1667 593.521 73.2333 542.455 64.8333 484.455C61.5 462.055 61.5 409.521 64.8333 387.121C79.9 283.521 130.167 197.921 211.767 136.321C255.233 103.655 307.5 80.0546 360.3 69.2546C408.3 59.5213 464.033 59.5213 511.633 69.2546C567.5 80.8546 620.833 105.788 668.3 142.455C683.5 154.321 715.1 185.521 727.5 201.121C769.367 253.655 795.9 314.855 806.567 383.388C809.767 403.788 809.767 467.788 806.567 488.188C795.9 556.588 769.233 618.188 727.5 670.455C715.9 684.988 685.5 715.388 670.967 726.988C634.433 756.055 588.3 780.588 545.633 793.521C503.767 806.321 452.967 812.188 411.233 809.121ZM557.367 612.855L556.833 555.121L553.233 543.388C541.5 505.521 518.567 481.788 483.233 470.588C476.033 468.455 468.7 466.188 466.7 465.788L462.967 465.121V435.788V406.455H493.1H523.1L541.1 391.121L558.967 375.655V340.455C558.967 320.988 558.567 305.121 558.167 305.121C557.633 305.121 544.7 315.655 529.367 328.455L501.5 351.921L482.567 351.521L463.633 351.121L463.233 316.721L462.967 282.455H437.633H412.3V317.121V351.788H390.967H369.633V300.721V249.655L344.7 229.121C330.967 217.788 318.3 207.388 316.7 206.055L313.633 203.655V290.055V376.455L331.767 391.521L349.9 406.455H379.767H409.633V436.188V465.788L398.967 468.188C392.7 469.655 382.7 473.388 375.1 477.121C335.633 496.988 313.633 539.255 313.633 595.788V611.121L342.967 640.455L372.3 669.788V624.188C372.3 575.388 372.833 569.788 378.967 556.455C386.3 540.321 400.167 529.655 418.567 525.788C443.633 520.455 469.633 526.455 482.967 540.588C494.833 553.121 498.967 567.121 498.967 594.855V611.788H462.3H425.633V641.121V670.455H491.767H557.767L557.367 612.855ZM557.5 231.388L557.633 202.188L554.433 204.721C552.567 206.055 540.3 216.188 527.1 227.121L502.967 247.121V276.721V306.455L530.167 283.388L557.5 260.455V231.388Z"/></g></svg><span style="font-family: Orbitron, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase">Dystopsy Element</span></a>
+<div style="display: flex; align-items: center; gap: 22px">
+<a class="btn btn-p" href="https://www.helloasso.com/associations/dystopsy-elements" style="height: 40px; padding: 0 18px; font-size: 11px"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; flex: none"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2M13 17v2M13 11v2"></path></svg><span>Billetterie</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; flex: none"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+<button class="menu-btn" type="button" aria-label="Ouvrir le menu">Menu <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; flex: none"><path d="M4 7h16M4 12h16M9 17h11"></path></svg></button>
+</div>
+</header></div></div>
+<div class="intro" aria-hidden="true">
+<div class="half t"></div><div class="half b"></div>
+<span class="crt"></span>
+<div class="ilogo" style="width: 130px; height: 130px; margin-left: -65px; margin-top: -125px; filter: drop-shadow(0 0 20px rgba(117,254,237,.9))"><svg aria-hidden="true" viewBox="0 0 872.113 871.513" style="width: 130px; height: 130px; color: #ffffff; display: block; " fill="currentColor"><g transform="translate(0 871.513) scale(1 -1)"><path d="M400.967 870.855C295.5 861.388 201.1 817.655 127.767 744.321C55.6333 672.188 11.9 579.655 1.5 477.788C-0.5 457.255 -0.5 414.321 1.5 393.788C9.76667 312.988 38.9667 238.055 87.2333 173.921C158.3 79.6546 260.967 19.5212 378.967 3.12124C400.167 0.187905 449.9 -1.0121 472.3 0.987905C576.033 10.1879 670.033 53.7879 743.1 126.455C763.633 146.988 775.233 160.588 790.967 182.455C871.233 294.721 893.5 438.321 850.833 570.055C836.967 613.121 817.1 652.721 790.967 689.121C775.233 710.988 763.633 724.588 743.1 745.121C670.833 817.121 576.833 860.855 474.967 870.321C460.833 871.655 413.5 871.921 400.967 870.855ZM476.967 839.655C568.833 830.721 656.3 789.121 722.3 723.121C778.7 666.855 816.3 598.055 832.833 520.988C839.633 489.521 840.833 476.321 840.967 435.788C840.967 395.121 839.767 382.455 832.833 350.455C799.233 194.321 676.433 71.7879 520.3 38.5879C412.167 15.6546 297.233 38.4546 206.3 100.855C165.767 128.721 123.633 171.655 96.8333 212.455C48.7 286.055 24.9667 374.188 30.7 459.521C37.2333 559.921 76.3 648.055 145.5 718.988C181.233 755.521 213.9 778.988 259.633 801.255C327.5 834.188 400.7 847.121 476.967 839.655Z"/><path d="M410.967 833.121C316.7 826.988 228.567 788.321 160.167 722.855C103.367 668.455 62.4333 595.121 46.5667 519.121C40.1667 488.988 38.4333 470.988 38.4333 435.788C38.4333 381.121 46.4333 337.655 65.2333 290.455C111.5 174.055 207.767 86.8546 328.167 52.4546C386.3 35.7879 454.567 33.3879 515.633 45.7879C633.5 69.6546 735.367 146.988 790.167 254.455C810.3 293.788 822.833 332.855 829.9 377.788C832.433 393.921 832.833 401.788 832.833 435.788C832.833 480.055 831.1 495.788 822.433 531.121C791.233 657.121 701.5 759.121 579.9 806.988C529.1 826.988 466.567 836.721 410.967 833.121ZM457.9 817.121C538.033 811.921 612.7 783.521 673.633 734.855C688.967 722.588 715.5 696.721 729.233 680.455C754.7 650.055 780.3 606.188 794.033 568.721C804.967 539.121 813.1 503.655 816.3 471.921C818.033 454.188 818.033 417.388 816.3 399.655C808.7 323.921 778.567 250.855 730.7 192.855C717.233 176.588 689.633 149.388 673.633 136.721C574.433 57.6546 440.7 33.2546 319.5 71.9213C261.233 90.5879 209.9 121.921 166.167 165.655C100.967 230.988 62.9667 312.855 54.9667 405.788C49.7667 466.988 60.9667 532.455 86.4333 590.055C144.033 720.321 269.633 807.921 411.367 816.988C434.833 818.588 436.3 818.588 457.9 817.121Z"/><path d="M411.233 809.121C291.9 800.588 186.967 738.855 121.9 639.121C92.1667 593.521 73.2333 542.455 64.8333 484.455C61.5 462.055 61.5 409.521 64.8333 387.121C79.9 283.521 130.167 197.921 211.767 136.321C255.233 103.655 307.5 80.0546 360.3 69.2546C408.3 59.5213 464.033 59.5213 511.633 69.2546C567.5 80.8546 620.833 105.788 668.3 142.455C683.5 154.321 715.1 185.521 727.5 201.121C769.367 253.655 795.9 314.855 806.567 383.388C809.767 403.788 809.767 467.788 806.567 488.188C795.9 556.588 769.233 618.188 727.5 670.455C715.9 684.988 685.5 715.388 670.967 726.988C634.433 756.055 588.3 780.588 545.633 793.521C503.767 806.321 452.967 812.188 411.233 809.121ZM557.367 612.855L556.833 555.121L553.233 543.388C541.5 505.521 518.567 481.788 483.233 470.588C476.033 468.455 468.7 466.188 466.7 465.788L462.967 465.121V435.788V406.455H493.1H523.1L541.1 391.121L558.967 375.655V340.455C558.967 320.988 558.567 305.121 558.167 305.121C557.633 305.121 544.7 315.655 529.367 328.455L501.5 351.921L482.567 351.521L463.633 351.121L463.233 316.721L462.967 282.455H437.633H412.3V317.121V351.788H390.967H369.633V300.721V249.655L344.7 229.121C330.967 217.788 318.3 207.388 316.7 206.055L313.633 203.655V290.055V376.455L331.767 391.521L349.9 406.455H379.767H409.633V436.188V465.788L398.967 468.188C392.7 469.655 382.7 473.388 375.1 477.121C335.633 496.988 313.633 539.255 313.633 595.788V611.121L342.967 640.455L372.3 669.788V624.188C372.3 575.388 372.833 569.788 378.967 556.455C386.3 540.321 400.167 529.655 418.567 525.788C443.633 520.455 469.633 526.455 482.967 540.588C494.833 553.121 498.967 567.121 498.967 594.855V611.788H462.3H425.633V641.121V670.455H491.767H557.767L557.367 612.855ZM557.5 231.388L557.633 202.188L554.433 204.721C552.567 206.055 540.3 216.188 527.1 227.121L502.967 247.121V276.721V306.455L530.167 283.388L557.5 260.455V231.388Z"/></g></svg></div>
+<p class="itext" style="top: calc(50% + 55px); font-size: 16px; margin: 0">Dystopsy Element présente</p>
+<span class="burst" style="width: 240px; height: 240px; animation-delay: 2.55s"></span>
+<span class="burst p" style="width: 240px; height: 240px; animation-delay: 2.7s"></span>
+<span class="burst" style="width: 240px; height: 240px; animation-delay: 2.85s"></span>
+</div><div class="sc"><div class="trk" style="height: 2340px">
+<div class="stage" style="height: 900px">
+<div class="abs ht" aria-hidden="true" style="inset: -4%; z-index: -6; animation-name: s-bgzoom; animation-range: contain 0% contain 100%"><img src="img/nexens-home-banner.webp" alt="" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: blur(3px) saturate(1.3); display: block"></div>
+<div class="abs" aria-hidden="true" style="inset: 0; z-index: -5; background: radial-gradient(ellipse at 30% 50%, rgba(2,2,2,.92), rgba(2,2,2,.55) 55%, rgba(2,2,2,.75))"></div>
+<div class="abs grid-bg" aria-hidden="true" style="inset: 0; z-index: -4; -webkit-mask-image: radial-gradient(ellipse at 60% 50%, #000, transparent 70%); mask-image: radial-gradient(ellipse at 60% 50%, #000, transparent 70%)"></div>
+<div class="abs scanlines" aria-hidden="true" style="inset: 0; z-index: -2"></div><div class="abs ht" aria-hidden="true" style="left: 800px; top: 170px; width: 560px; height: 560px; z-index: 3; animation-name: h-move; animation-range: contain 4% contain 42%">
+<div class="ht" style="width: 100%; height: 100%; animation-name: h-off; animation-range: contain 50% contain 80%">
+<div class="radar-in" style="width: 100%; height: 100%"><div style="position: relative; width: 560px; height: 560px">
+<div class="ticks"></div>
+<div class="ringc r1"></div>
+<div class="ringc r2"></div>
+<div class="r3w"><div class="ringc r3"></div></div>
+<div class="arc"></div>
+<div class="arc arc2"></div>
+<div class="sweep"></div>
+<div class="abs cone" style="left: 15%; right: 15%; top: 30%; bottom: -6%"></div>
+<div class="abs plat" style="left: 26%; right: 26%; bottom: -9%; height: 50px"></div>
+<div class="abs" style="left: 0; right: 0; bottom: -6%; height: 70%; overflow: hidden"><span class="pt p" style="left: 39.5%; animation-delay: -3.3s; animation-duration: 5.8s"></span>
+<span class="pt" style="left: 54.2%; animation-delay: -3.8s; animation-duration: 4.7s"></span>
+<span class="pt" style="left: 30.5%; animation-delay: -5.0s; animation-duration: 5.4s"></span>
+<span class="pt p" style="left: 39.4%; animation-delay: -6.0s; animation-duration: 6.1s"></span>
+<span class="pt" style="left: 63.5%; animation-delay: -2.9s; animation-duration: 6.7s"></span>
+<span class="pt" style="left: 36.0%; animation-delay: -3.8s; animation-duration: 7.5s"></span>
+<span class="pt p" style="left: 50.9%; animation-delay: -4.4s; animation-duration: 6.8s"></span>
+<span class="pt" style="left: 32.6%; animation-delay: -4.5s; animation-duration: 6.6s"></span>
+<span class="pt" style="left: 42.1%; animation-delay: -0.2s; animation-duration: 7.5s"></span>
+<span class="pt p" style="left: 48.9%; animation-delay: -4.3s; animation-duration: 7.6s"></span>
+<span class="pt" style="left: 58.6%; animation-delay: -5.5s; animation-duration: 5.9s"></span>
+<span class="pt" style="left: 62.0%; animation-delay: -2.7s; animation-duration: 7.8s"></span>
+<span class="pt p" style="left: 65.2%; animation-delay: -0.6s; animation-duration: 5.0s"></span>
+<span class="pt" style="left: 38.7%; animation-delay: -5.8s; animation-duration: 6.0s"></span>
+<span class="pt" style="left: 55.1%; animation-delay: -1.8s; animation-duration: 6.3s"></span>
+<span class="pt p" style="left: 45.4%; animation-delay: -2.1s; animation-duration: 6.5s"></span></div>
+<div class="abs holo" style="left: 50%; top: 50%; width: 414px; height: 414px; margin-left: -207px; margin-top: -207px">
+<div class="maison" style="inset: 0"><img src="img/nexens-home-maison.webp" alt=""><img class="chroma" src="img/nexens-home-maison.webp" alt=""><div class="maison-tint"></div><div class="abs holo-lines" style="inset: 0"></div></div>
+</div>
+</div></div>
+</div></div><div class="abs" style="left: 112px; top: 210px; width: 600px; z-index: 5">
+<div class="ht" style="animation-name: h-glitch; animation-range: contain 6% contain 30%"><div style="display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 22px">
+<span class="eyebrow enter" style="font-size: 12px; animation-delay: 3.25s">Dystopsy Element présente</span>
+<span class="enter" style="animation-delay: 3.35s"><span class="badge" style="font-size: 11px; padding: 8px 14px"><span class="dot" aria-hidden="true"></span>Soirée club</span></span>
+<h1 id="hero-titre" class="disp" style="display: flex; flex-direction: column; align-items: flex-start; line-height: .92">
+<span class="reveal" style="animation-delay: 3.4s"><span class="glitch glow" data-text="Nexen's" style="font-size: 104px; font-weight: 900">Nexen's</span></span>
+<span class="reveal" style="animation-delay: 3.55s"><span style="font-size: 104px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px #75feed; text-shadow: 0 0 24px rgba(117,254,237,.35)">Home</span></span>
+</h1>
+<div class="enter" style="animation-delay: 3.7s"><p class="meta" style="margin: 0; gap: 10px 26px; justify-content: flex-start; font-size: 21px">
+<span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#75feed" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; flex: none"><rect x="3" y="4" width="18" height="18"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Jeudi 7 mai 2026</span>
+<span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#75feed" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex: none"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>21h → 1h30</span>
+<span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#75feed" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; flex: none"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>La Maison Café, Nantes</span>
+</p></div>
+<div class="enter" style="animation-delay: 3.85s; "><div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 14px; justify-content: flex-start; ">
+<a class="btn btn-p" href="https://www.helloasso.com/associations/dystopsy-elements" style="height: 58px; padding: 0 28px; font-size: 13px; "><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; flex: none"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2M13 17v2M13 11v2"></path></svg><span>Billetterie</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 15px; height: 15px; flex: none"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+<a class="btn btn-s" href="https://www.facebook.com/events/1132770079034517" style="height: 58px; padding: 0 28px; font-size: 13px; "><span>Événement Facebook</span><span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 15px; height: 15px; flex: none"><path d="M7 17 17 7M8 7h9v9"></path></svg></span></a>
+</div></div>
+</div></div>
+<div class="abs ht" aria-hidden="true" inert="" style="inset: 0; pointer-events: none; mix-blend-mode: screen; filter: sepia(1) hue-rotate(130deg) saturate(6); opacity: 0; animation-name: h-rgb; animation-range: contain 6% contain 30%"><div style="display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 22px">
+<span class="eyebrow enter" style="font-size: 12px; animation-delay: 3.25s">Dystopsy Element présente</span>
+<span class="enter" style="animation-delay: 3.35s"><span class="badge" style="font-size: 11px; padding: 8px 14px"><span class="dot" aria-hidden="true"></span>Soirée club</span></span>
+<h1  class="disp" style="display: flex; flex-direction: column; align-items: flex-start; line-height: .92">
+<span class="reveal" style="animation-delay: 3.4s"><span class="glitch glow" data-text="Nexen's" style="font-size: 104px; font-weight: 900">Nexen's</span></span>
+<span class="reveal" style="animation-delay: 3.55s"><span style="font-size: 104px; font-weight: 900; color: transparent; -webkit-text-stroke: 2px #75feed; text-shadow: 0 0 24px rgba(117,254,237,.35)">Home</span></span>
+</h1>
+<div class="enter" style="animation-delay: 3.7s"><p class="meta" style="margin: 0; gap: 10px 26px; justify-content: flex-start; font-size: 21px">
+<span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#75feed" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; flex: none"><rect x="3" y="4" width="18" height="18"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Jeudi 7 mai 2026</span>
+<span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#75feed" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex: none"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>21h → 1h30</span>
+<span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#75feed" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; flex: none"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>La Maison Café, Nantes</span>
+</p></div>
+<div class="enter" style="animation-delay: 3.85s; "><div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 14px; justify-content: flex-start; ">
+<a class="btn btn-p" href="https://www.helloasso.com/associations/dystopsy-elements" style="height: 58px; padding: 0 28px; font-size: 13px; "><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; flex: none"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2M13 17v2M13 11v2"></path></svg><span>Billetterie</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 15px; height: 15px; flex: none"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+<a class="btn btn-s" href="https://www.facebook.com/events/1132770079034517" style="height: 58px; padding: 0 28px; font-size: 13px; "><span>Événement Facebook</span><span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 15px; height: 15px; flex: none"><path d="M7 17 17 7M8 7h9v9"></path></svg></span></a>
+</div></div>
+</div></div>
+</div><span class="afterdot ht" aria-hidden="true" style="left: 720px; top: 450px; z-index: 6; opacity: 0; animation-name: h-dot; animation-range: contain 72% contain 92%"></span><div class="abs ht" style="left: 0; right: 0; bottom: 34px; display: flex; justify-content: center; z-index: 6; animation-name: s-fadeout; animation-range: contain 0% contain 6%"><div class="cue enter" style="animation-delay: 4.1s" aria-hidden="true"><span class="mouse"></span>Défiler</div></div><div class="abs ht" aria-hidden="true" style="inset: 0; z-index: 8; background: #020202; opacity: 0; animation-name: h-dark; animation-range: contain 82% contain 100%"></div>
+</div></div>
+<section aria-label="Explorer le site" style="position: relative; background: #020202; padding: 120px 112px 120px; min-height: 900px">
+<div class="abs grid-bg" aria-hidden="true" style="inset: 0; -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent)"></div>
+<div class="vw" style="position: relative; animation-name: v-up; animation-range: entry 0% entry 50%">
+<p class="eyebrow" style="margin: 0 0 12px; font-size: 12px">// Explorer</p>
+<h2 class="disp vw" style="font-size: 48px; font-weight: 900; margin: 0 0 44px; animation-name: v-clip; animation-range: entry 10% entry 60%">Explorer le site</h2>
+</div>
+<div style="position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px"><a class="tile vw" href="#nexen" style="height: 220px; padding: 22px; animation-name: v-up; animation-range: entry 10% entry 70%"><img src="img/fond.webp" alt=""><span style="font-size: 24px"><b>// 01</b>Nexen</span></a><a class="tile vw" href="#agenda" style="height: 220px; padding: 22px; animation-name: v-up; animation-range: entry 16% entry 76%"><img src="img/nexens-home-banner.webp" alt=""><span style="font-size: 24px"><b>// 02</b>Agenda</span></a><a class="tile vw" href="#prestations" style="height: 220px; padding: 22px; animation-name: v-up; animation-range: entry 22% entry 82%"><img src="img/photo-jour.webp" alt=""><span style="font-size: 24px"><b>// 03</b>Prestations</span></a><a class="tile vw" href="#shop" style="height: 220px; padding: 22px; animation-name: v-up; animation-range: entry 28% entry 88%"><span style="font-size: 24px"><b>// 04</b>Shop</span></a><a class="tile vw" href="#contact" style="height: 220px; padding: 22px; animation-name: v-up; animation-range: entry 34% entry 94%"><img src="img/ecailles.webp" alt=""><span style="font-size: 24px"><b>// 05</b>Contact</span></a><a class="tile vw" href="#instagram" style="height: 220px; padding: 22px; animation-name: v-up; animation-range: entry 40% entry 100%"><span style="font-size: 24px"><b>// 06</b>Instagram</span></a></div>
+</section></div>
+</section>
+</body>
+</html>
