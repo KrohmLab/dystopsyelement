@@ -72,13 +72,13 @@ export function Menu({ open, onClose, nav, ticket, next, socials, email, headerR
       </div>
       <span aria-hidden="true" className="menu__scanbar" />
 
-      <div className="relative mx-auto grid min-h-full max-w-site grid-cols-1 gap-12 px-gutter pt-28 pb-16 lg:grid-cols-[3fr_2fr] lg:items-center lg:gap-16 [&>*]:min-w-0">
+      <div className="relative grid min-h-full grid-cols-1 gap-12 px-site pt-28 pb-16 lg:grid-cols-[3fr_2fr] lg:items-center lg:gap-16 [&>*]:min-w-0">
         <nav aria-label="Navigation principale">
           <ol className="flex flex-col">
             {[{ label: "Accueil", href: "/" }, ...nav].map((item, i) => {
               const content = (
                 <>
-                  <span className="font-display text-eyebrow font-bold text-cyan">{String(i).padStart(2, "0")}</span>
+                  <span className="w-7 shrink-0 font-display text-eyebrow font-bold text-cyan tabular-nums">{String(i).padStart(2, "0")}</span>
                   <span aria-hidden="true" className="menu__sweep" />
                   <span className="menu__label glitch-hover font-display text-h1 font-black text-ink uppercase" data-text={item.label}>
                     {item.label}

@@ -17,7 +17,7 @@ export function TeamGrid({ team }: { team: Member[] }) {
   return (
     <>
       <FilterBar label="Filtrer par pôle" options={POLES} value={pole} onChange={setPole} className="mb-10" />
-      <ul className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4" aria-live="polite">
+      <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4" aria-live="polite">
         {visible.map((member) => (
           <li key={member.slug} className="animate-[fade-up_var(--duration-slow)_var(--ease-out-expo)_both]">
             <PersonCard name={member.name} badge={member.pole} line={member.role} photo={member.photo} onOpen={() => setOpenSlug(member.slug)} />

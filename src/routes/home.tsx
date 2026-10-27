@@ -42,6 +42,9 @@ export function loader() {
 
 export const meta: Route.MetaFunction = () => pageMeta({ path: "/" });
 
+// Grille 2 colonnes (sous lg) : le premier portail est large, et le dernier aussi s'il resterait seul sur sa ligne.
+const wide = (i: number, count: number) => i === 0 || (i === count - 1 && (count - 1) % 2 === 1);
+
 /** Accueil « mode spectacle » (SITE_PLAN §3) : visuels et liens, aucune section de présentation. */
 export default function Home({ loaderData }: Route.ComponentProps) {
   const { featured, upcoming, nexen, portals, products, instagramUrl } = loaderData;
@@ -56,7 +59,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </h2>
         <ul className="portals grid gap-4 sm:grid-cols-2 md:gap-6">
           {portals.map((portal, i) => (
-            <Reveal as="li" key={portal.href} delay={i * 90} data-default={i === 0 || undefined} className={i === 0 ? "sm:col-span-2" : undefined}>
+            <Reveal as="li" key={portal.href} delay={i * 90} data-default={i === 0 || undefined} className={wide(i, portals.length) ? "sm:col-span-2" : undefined}>
               <Portal label={portal.label} eyebrow={String(i + 1).padStart(2, "0")} href={portal.href} image={portal.image} className={i === 0 ? "min-h-72" : undefined} />
             </Reveal>
           ))}

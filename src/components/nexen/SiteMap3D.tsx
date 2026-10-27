@@ -76,7 +76,7 @@ export function SiteMap3D({ map }: { map: Festival["map"] }) {
   return (
     <section ref={sectionRef} aria-labelledby="carte-titre" data-animate={animate || undefined} className="map3d relative">
       <div className="map3d__viewport">
-        <div className="relative z-10 mx-auto w-full max-w-site px-gutter pt-header">
+        <div className="relative z-10 w-full px-site pt-header">
           <Eyebrow tone="pink">Map festival 2026</Eyebrow>
           <h2 id="carte-titre" className="text-h2 font-black">
             La carte du site
@@ -143,7 +143,7 @@ export function SiteMap3D({ map }: { map: Festival["map"] }) {
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-site px-gutter pb-6">
+        <div className="relative z-10 w-full px-site pb-6">
           <div className="map3d__panel ml-auto max-w-md bg-surface/85 p-4 backdrop-blur-sm inset-ring inset-ring-nexen-lilac-line chamfer-md md:p-5">
             <ul className="-mx-1 mb-3 flex gap-2 overflow-x-auto px-1 pb-1 md:mx-0 md:mb-4 md:flex-wrap md:overflow-visible md:px-0" aria-label="Zones du site">
               {zones.map((zone) => (

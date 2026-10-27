@@ -42,13 +42,13 @@ export function Header({ nav, ticket, next, socials, email }: Props) {
         data-scrolled={scrolled || undefined}
         data-menu={menuOpen || undefined}
         className={cn(
-          "fixed inset-x-0 top-0 z-40 border-b transition duration-base",
+          "fixed inset-x-0 top-0 z-40 border-b px-gutter transition duration-base",
           menuOpen
             ? "border-transparent"
             : "border-transparent data-scrolled:border-cyan-line data-scrolled:bg-abyss/60 data-scrolled:bg-grid data-scrolled:shadow-header data-scrolled:backdrop-blur-lg",
         )}
       >
-        <div className="mx-auto flex h-header max-w-site items-center justify-between gap-6 px-gutter">
+        <div className="mx-auto flex h-header max-w-site items-center justify-between gap-6">
           <Link to="/" className="group/brand flex items-center gap-3 text-ink no-underline" aria-label={`${site.name}, accueil`}>
             <Logo className="logo-mark size-10 transition-[filter] duration-base group-hover/brand:drop-shadow-md group-hover/brand:drop-shadow-cyan" />
             <span className="hidden font-display text-label font-bold uppercase lg:inline">{site.name}</span>

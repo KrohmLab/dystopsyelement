@@ -39,7 +39,7 @@ export function NexenFeature({ dates, place, ticketUrl }: Props) {
         <p className="mt-2 text-lead">
           {dates} · {place}
         </p>
-        <Reveal className="my-9 grid w-full max-w-2xl gap-3 sm:grid-cols-3">
+        <Reveal className="my-9 grid w-full max-w-3xl gap-3 sm:grid-cols-3">
           <Button variant="secondary" icon={MusicIcon} href="/nexen#line-up" fullWidth>
             Line-up
           </Button>

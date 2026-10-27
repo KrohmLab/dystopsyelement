@@ -60,7 +60,7 @@ export default function Contact({ loaderData }: Route.ComponentProps) {
         </Button>
       </PageHero>
 
-      <Section id="formulaire" labelledBy="formulaire-titre">
+      <Section id="formulaire" labelledBy="formulaire-titre" floor="calm">
         <div className="grid gap-14 lg:grid-cols-[3fr_2fr]">
           <div>
             <SectionHeader id="formulaire-titre" eyebrow="Terminal" title="Nous écrire" />
@@ -106,7 +106,7 @@ export default function Contact({ loaderData }: Route.ComponentProps) {
       </Section>
 
       {team.length > 0 && (
-        <Section tone="abyss" labelledBy="equipe-titre">
+        <Section tone="abyss" labelledBy="equipe-titre" floor="pink">
           <SectionHeader id="equipe-titre" eyebrow="L'asso" title="L'équipe" align="center" />
           <TeamGrid team={team} />
         </Section>

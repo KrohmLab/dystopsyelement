@@ -79,7 +79,7 @@ export default function App() {
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   const title = isRouteErrorResponse(error) ? `Erreur ${error.status}` : "Erreur";
   return (
-    <main id="contenu" className="mx-auto flex min-h-svh max-w-site flex-col justify-center gap-5 px-gutter py-section">
+    <main id="contenu" className="flex min-h-svh flex-col justify-center gap-5 px-site py-section">
       <p className="font-display text-eyebrow font-bold text-cyan uppercase">// {title}</p>
       <h1 className="text-h1 font-black">Une erreur est survenue</h1>
       <Link className="font-display text-label font-bold text-cyan uppercase" to="/">

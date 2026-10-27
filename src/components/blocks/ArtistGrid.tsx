@@ -16,7 +16,7 @@ export function ArtistGrid({ artists }: { artists: Artist[] }) {
 
   return (
     <>
-      <ul className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
         {artists.map((artist, i) => (
           <Reveal as="li" key={artist.slug} delay={(i % 4) * 80}>
             <PersonCard name={artist.name} badge={artist.format} line={artist.genre} photo={artist.photo} onOpen={() => setOpenSlug(artist.slug)} />

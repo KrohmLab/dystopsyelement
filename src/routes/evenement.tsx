@@ -100,7 +100,7 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
       </section>
 
       {summaryHtml && (
-        <Section labelledBy="resume-titre">
+        <Section labelledBy="resume-titre" floor="calm">
           <SectionHeader id="resume-titre" eyebrow="Transmission" title="L'essentiel" />
           <ReadMore html={summaryHtml} />
           {facebookUrl && (
@@ -121,7 +121,7 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
       )}
 
       {festivalPage && (
-        <Section tone="abyss" labelledBy="festival-titre">
+        <Section tone="abyss" labelledBy="festival-titre" floor="lilac">
           <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="mb-3 font-display text-eyebrow font-bold text-nexen-lilac uppercase">// Programmation</p>
@@ -137,7 +137,7 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
       )}
 
       {others.length > 0 && (
-        <Section grid labelledBy="autres-titre">
+        <Section grid labelledBy="autres-titre" floor="calm">
           <SectionHeader
             id="autres-titre"
             eyebrow="Agenda"
@@ -164,9 +164,13 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
         primary={canBuy ? { label: "Billetterie", href: event.ticketUrl ?? "/agenda" } : { label: "Nous écrire", href: "/contact" }}
         secondary={canBuy ? { label: "Nous écrire", href: "/contact" } : undefined}
       />
-      {/* Espace sous la barre collante mobile. */}
-      <div className="h-20 md:hidden" />
-      <StickyTicketBar ticketUrl={canBuy ? event.ticketUrl : null} title={event.title} />
+      {/* Barre collante mobile seulement quand la billetterie est ouverte (le partage est déjà dans le hero), avec son espace dessous. */}
+      {canBuy && event.ticketUrl && (
+        <>
+          <div className="h-20 md:hidden" />
+          <StickyTicketBar ticketUrl={event.ticketUrl} title={event.title} />
+        </>
+      )}
     </>
   );
 }

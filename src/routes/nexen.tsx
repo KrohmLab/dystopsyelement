@@ -142,9 +142,9 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </section>
 
       {/* L'expérience */}
-      <Section labelledBy="experience-titre" floor="lilac">
+      <Section id="univers" labelledBy="experience-titre" floor="lilac">
         <SectionHeader id="experience-titre" eyebrow="L'expérience" tone="lilac" title="Trois jours hors du temps" />
-        <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        <ul className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
           {festival.experience.map((item, i) => {
             const Icon = EXPERIENCE_ICONS[item.icon] ?? InfoIcon;
             return (

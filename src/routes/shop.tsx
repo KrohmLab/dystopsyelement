@@ -29,12 +29,12 @@ export default function Shop({ loaderData }: Route.ComponentProps) {
       <PageHero eyebrow="Supportez l'asso" title="Black market" lead="Texte provisoire : une phrase sur la boutique, en vente sur Vinted.">
         {shopUrl && <Button href={shopUrl}>Voir la boutique Vinted</Button>}
       </PageHero>
-      <Section labelledBy="produits-titre">
+      <Section labelledBy="produits-titre" floor="pink">
         <h2 id="produits-titre" className="sr-only">
           Produits
         </h2>
         <FilterBar label="Filtrer par catégorie" options={CATEGORIES} value={category} onChange={setCategory} className="mb-12" />
-        <ul className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4" aria-live="polite">
+        <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4" aria-live="polite">
           {visible.map((product) => (
             <li key={product.slug} className="animate-[fade-up_var(--duration-slow)_var(--ease-out-expo)_both]">
               <ProductCard product={product} />

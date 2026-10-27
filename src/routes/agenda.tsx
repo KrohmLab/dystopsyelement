@@ -37,7 +37,7 @@ export default function Agenda({ loaderData }: Route.ComponentProps) {
     <>
       <PageHero eyebrow="Billetterie" title="Agenda" lead="Texte provisoire : une phrase d'introduction à l'agenda." image="events/nexens-home-2026-banner" />
       <Ticker items={["Open air festival", "Psytrance · Techno · Bass · Chill"]} />
-      <Section labelledBy="agenda-liste">
+      <Section labelledBy="agenda-liste" floor="calm">
         <h2 id="agenda-liste" className="sr-only">
           Événements {tab.toLowerCase()}
         </h2>

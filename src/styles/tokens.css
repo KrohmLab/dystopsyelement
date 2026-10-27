@@ -139,6 +139,8 @@
 @utility chamfer-sm { --cut: 8px;  clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); }
 @utility chamfer-md { --cut: 12px; clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); }
 @utility chamfer-lg { --cut: 16px; clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); }
+/* Marge latérale d'un bloc pleine largeur qui aligne son contenu sur la colonne du site (max-w-site + gouttière). */
+@utility px-site { padding-inline: max(var(--spacing-gutter), calc((100% - var(--container-site)) / 2)); }
 
 /* Lueurs de texte */
 @utility text-glow-cyan { text-shadow: 0 0 8px rgb(117 254 237 / 0.8), 0 0 20px rgb(117 254 237 / 0.4); }

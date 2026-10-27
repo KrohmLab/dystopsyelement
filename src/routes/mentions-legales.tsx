@@ -32,7 +32,7 @@ export default function MentionsLegales({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <PageHero eyebrow="Informations légales" title="Mentions légales" />
-      <div className="mx-auto max-w-3xl px-gutter py-section">
+      <div data-floor="calm" className="mx-auto max-w-3xl px-gutter py-section">
         <Block id="editeur" title="Éditeur du site">
           <p>
             {legal.publisher ?? name}, association loi 1901.

@@ -1037,9 +1037,20 @@ html[data-intro="done"] .site-intro {
   position: absolute;
   top: 0.45rem;
   left: 0;
-  right: -1rem;
+  right: 0;
   height: 1px;
   background: linear-gradient(90deg, var(--color-nexen-peach-line), var(--color-nexen-lilac-line));
+}
+/* En colonnes, le filet rejoint l'étape suivante à travers la gouttière, sauf en fin de ligne (3 colonnes en md, 6 en lg). */
+@media (min-width: 48rem) {
+  .timeline__step:not(:last-child)::before {
+    right: -1rem;
+  }
+}
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .timeline__step:nth-child(3n)::before {
+    right: 0;
+  }
 }
 .timeline__dot {
   position: absolute;
