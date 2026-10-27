@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "prestation-1",
+    "title": "Prestation 1",
+    "tagline": "Texte provisoire : accroche de la prestation 1.",
+    "points": [
+      "Point 1",
+      "Point 2",
+      "Point 3"
+    ],
+    "image": null,
+    "placeholder": true
+  },
+  {
+    "slug": "prestation-2",
+    "title": "Prestation 2",
+    "tagline": "Texte provisoire : accroche de la prestation 2.",
+    "points": [
+      "Point 1",
+      "Point 2",
+      "Point 3"
+    ],
+    "image": null,
+    "placeholder": true
+  },
+  {
+    "slug": "prestation-3",
+    "title": "Prestation 3",
+    "tagline": "Texte provisoire : accroche de la prestation 3.",
+    "points": [
+      "Point 1",
+      "Point 2",
+      "Point 3"
+    ],
+    "image": null,
+    "placeholder": true
+  }
+]

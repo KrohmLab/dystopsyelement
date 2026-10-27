@@ -1,4 +1,4 @@
-import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
 import orbitron from "@fontsource-variable/orbitron/files/orbitron-latin-wght-normal.woff2?url";
 import rajdhani from "@fontsource/rajdhani/files/rajdhani-latin-500-normal.woff2?url";
 import type { Route } from "./+types/root";
@@ -7,7 +7,9 @@ import { Header } from "./components/layout/Header";
 import { ScrollProgress } from "./components/layout/ScrollProgress";
 import { SkipLink } from "./components/layout/SkipLink";
 import { DEPLOY_SKEW_SCRIPT, useDeploySkewGuard } from "./lib/deploySkew";
+import { getFeatured } from "./lib/events";
 import { getNavigation, type Ticket } from "./lib/navigation";
+import { events, services } from "./content/load.server";
 import { useScrollTopOnNavigate } from "./lib/useScrollTopOnNavigate";
 import "./styles/theme.css";
 
@@ -43,11 +45,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-const nav = getNavigation();
-// TODO(phase 2) : ticketUrl du prochain événement qui en a un (lib/events.ts), sinon /agenda.
-const ticket: Ticket = { href: "/agenda", external: false };
+// Calculé au build (pages pré-rendues, reconstruites chaque nuit) : navigation et bouton Billetterie.
+export function loader() {
+  const featured = getFeatured(events, new Date());
+  const ticketUrl = featured?.upcoming ? featured.event.ticketUrl : null;
+  const ticket: Ticket = ticketUrl ? { href: ticketUrl, external: true } : { href: "/agenda", external: false };
+  return { nav: getNavigation({ hasServices: services.length > 0 }), ticket };
+}
 
 export default function App() {
+  const { nav, ticket } = useLoaderData<typeof loader>();
   useDeploySkewGuard();
   useScrollTopOnNavigate();
   return (

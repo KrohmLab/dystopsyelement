@@ -1,0 +1,154 @@
+import { Link } from "react-router";
+import { ArtistGrid } from "../components/blocks/ArtistGrid";
+import { EventCard } from "../components/blocks/EventCard";
+import { ReadMore } from "../components/blocks/ReadMore";
+import { ShareButton } from "../components/blocks/ShareButton";
+import { StickyTicketBar } from "../components/blocks/StickyTicketBar";
+import { ArrowRightIcon, CalendarIcon, MapPinIcon, TicketIcon } from "../components/icons";
+import { CtaBanner } from "../components/layout/CtaBanner";
+import { Section } from "../components/layout/Section";
+import { SectionHeader } from "../components/layout/SectionHeader";
+import { Reveal } from "../components/motion/Reveal";
+import { Badge } from "../components/ui/Badge";
+import { Button } from "../components/ui/Button";
+import { ResponsiveImage } from "../components/ui/ResponsiveImage";
+import { artists, events, getEvent } from "../content/load.server";
+import { toSummary } from "../content/summaries";
+import { formatDateRange, getUpcoming } from "../lib/events";
+import { pageMeta } from "../lib/seo";
+import type { Route } from "./+types/evenement";
+
+export function loader({ params }: Route.LoaderArgs) {
+  const event = getEvent(params.slug);
+  if (!event) throw new Response("Événement introuvable", { status: 404 });
+  const now = new Date();
+  const summary = toSummary(event, now);
+  // Deux autres événements : à venir d'abord, sinon les plus récents.
+  const others = [...getUpcoming(events, now), ...events].filter((e, i, all) => e.slug !== event.slug && all.indexOf(e) === i).slice(0, 2);
+  return {
+    event: summary,
+    dates: formatDateRange(event),
+    timeRange: event.timeRange,
+    facebookUrl: event.facebookUrl,
+    summaryHtml: event.summaryHtml,
+    lineup: event.lineup.flatMap((slug) => artists.filter((a) => a.slug === slug)),
+    others: others.map((e) => toSummary(e, now)),
+  };
+}
+
+export const meta: Route.MetaFunction = ({ data }) =>
+  data
+    ? pageMeta({ title: data.event.title, description: `${data.dates} · ${[data.event.venue, data.event.city].filter(Boolean).join(", ")}`, path: `/agenda/${data.event.slug}`, type: "article" })
+    : [{ title: "Événement introuvable" }];
+
+/** Fiche événement (SITE_PLAN §5) : hero, résumé dépliable, line-up + modales, autres événements. */
+export default function Evenement({ loaderData }: Route.ComponentProps) {
+  const { event, dates, timeRange, facebookUrl, summaryHtml, lineup, others } = loaderData;
+  const canBuy = event.upcoming && event.ticketUrl && event.status !== "complet" && event.status !== "annule";
+  const place = [event.venue, event.city].filter(Boolean).join(", ");
+
+  return (
+    <>
+      <section aria-labelledby="evenement-titre" className="relative isolate flex min-h-[80svh] items-end overflow-hidden border-b border-line bg-void px-gutter pt-header">
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <ResponsiveImage image={event.cover} alt="" sizes="100vw" priority fallbackLabel={event.title} className="opacity-50 mix-blend-luminosity" />
+          <span className="absolute inset-0 bg-linear-to-t from-void via-void/50 to-void/70" />
+          <span className="absolute inset-0 bg-scanlines" />
+        </div>
+        <div className="mx-auto w-full max-w-site py-section">
+          <Link to="/agenda" className="mb-8 inline-flex min-h-11 items-center gap-2 font-display text-label font-bold text-cyan uppercase no-underline">
+            <ArrowRightIcon size={16} className="rotate-180" />
+            Retour à l'agenda
+          </Link>
+          <div className="mb-5">
+            {event.upcoming ? (
+              event.status === "dernieres-places" ? <Badge variant="live">Dernières places</Badge> : <Badge variant="info">À venir</Badge>
+            ) : (
+              <Badge variant="neutral">Passé</Badge>
+            )}
+          </div>
+          <h1 id="evenement-titre" className="glitch max-w-4xl text-h1 font-black" data-text={event.title}>
+            {event.title}
+          </h1>
+          <p className="mt-5 flex flex-wrap gap-x-7 gap-y-3 text-lead">
+            <span className="inline-flex items-center gap-2.5">
+              <CalendarIcon className="text-cyan" />
+              {dates}
+              {timeRange && ` · ${timeRange}`}
+            </span>
+            <span className="inline-flex items-center gap-2.5">
+              <MapPinIcon className="text-cyan" />
+              {place}
+            </span>
+          </p>
+          <div className="mt-8 hidden flex-wrap gap-4 md:flex">
+            {canBuy && (
+              <Button size="lg" icon={TicketIcon} href={event.ticketUrl ?? undefined}>
+                Prendre ma place
+              </Button>
+            )}
+            {facebookUrl && (
+              <Button variant="secondary" size="lg" href={facebookUrl}>
+                Événement Facebook
+              </Button>
+            )}
+            <ShareButton title={event.title} />
+          </div>
+        </div>
+      </section>
+
+      {summaryHtml && (
+        <Section labelledBy="resume-titre">
+          <SectionHeader id="resume-titre" eyebrow="Transmission" title="L'essentiel" />
+          <ReadMore html={summaryHtml} />
+          {facebookUrl && (
+            <div className="mt-8 md:hidden">
+              <Button variant="secondary" href={facebookUrl}>
+                Événement Facebook
+              </Button>
+            </div>
+          )}
+        </Section>
+      )}
+
+      {lineup.length > 0 && (
+        <Section tone="abyss" labelledBy="lineup-titre">
+          <SectionHeader id="lineup-titre" eyebrow="Programmation" title="Line-up" />
+          <ArtistGrid artists={lineup} />
+        </Section>
+      )}
+
+      {others.length > 0 && (
+        <Section grid labelledBy="autres-titre">
+          <SectionHeader
+            id="autres-titre"
+            eyebrow="Agenda"
+            title="Autres dates"
+            action={
+              <Button variant="ghost" href="/agenda">
+                Tout l'agenda
+              </Button>
+            }
+          />
+          <ul className="grid gap-6 md:grid-cols-2 md:gap-8">
+            {others.map((other, i) => (
+              <Reveal as="li" key={other.slug} delay={i * 120}>
+                <EventCard event={other} />
+              </Reveal>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      <CtaBanner
+        eyebrow="Contact"
+        title="Une question ?"
+        primary={canBuy ? { label: "Prendre ma place", href: event.ticketUrl ?? "/agenda" } : { label: "Nous écrire", href: "/contact" }}
+        secondary={canBuy ? { label: "Nous écrire", href: "/contact" } : undefined}
+      />
+      {/* Espace sous la barre collante mobile. */}
+      <div className="h-20 md:hidden" />
+      <StickyTicketBar ticketUrl={canBuy ? event.ticketUrl : null} title={event.title} />
+    </>
+  );
+}

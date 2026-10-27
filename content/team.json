@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "membre-1",
+    "name": "Membre 1",
+    "role": "Rôle 1",
+    "pole": "Direction",
+    "photo": null,
+    "bio": "Texte provisoire : présentation du membre 1.",
+    "placeholder": true
+  },
+  {
+    "slug": "membre-2",
+    "name": "Membre 2",
+    "role": "Rôle 2",
+    "pole": "Organisation",
+    "photo": null,
+    "bio": "Texte provisoire : présentation du membre 2.",
+    "placeholder": true
+  },
+  {
+    "slug": "membre-3",
+    "name": "Membre 3",
+    "role": "Rôle 3",
+    "pole": "Technique",
+    "photo": null,
+    "bio": "Texte provisoire : présentation du membre 3.",
+    "placeholder": true
+  },
+  {
+    "slug": "membre-4",
+    "name": "Membre 4",
+    "role": "Rôle 4",
+    "pole": "Direction",
+    "photo": null,
+    "bio": "Texte provisoire : présentation du membre 4.",
+    "placeholder": true
+  },
+  {
+    "slug": "membre-5",
+    "name": "Membre 5",
+    "role": "Rôle 5",
+    "pole": "Organisation",
+    "photo": null,
+    "bio": "Texte provisoire : présentation du membre 5.",
+    "placeholder": true
+  },
+  {
+    "slug": "membre-6",
+    "name": "Membre 6",
+    "role": "Rôle 6",
+    "pole": "Technique",
+    "photo": null,
+    "bio": "Texte provisoire : présentation du membre 6.",
+    "placeholder": true
+  },
+  {
+    "slug": "membre-7",
+    "name": "Membre 7",
+    "role": "Rôle 7",
+    "pole": "Direction",
+    "photo": null,
+    "bio": "Texte provisoire : présentation du membre 7.",
+    "placeholder": true
+  },
+  {
+    "slug": "membre-8",
+    "name": "Membre 8",
+    "role": "Rôle 8",
+    "pole": "Organisation",
+    "photo": null,
+    "bio": "Texte provisoire : présentation du membre 8.",
+    "placeholder": true
+  }
+]

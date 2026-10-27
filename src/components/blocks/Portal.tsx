@@ -3,16 +3,15 @@ import { cn } from "../../lib/cn";
 import { isExternal } from "../../lib/navigation";
 import { ArrowRightIcon, ExternalIcon } from "../icons";
 import { Brackets } from "../ui/Brackets";
-
-type Image = { src: string; srcSet?: string; sizes?: string; width: number; height: number };
+import { ResponsiveImage } from "../ui/ResponsiveImage";
 
 type Props = {
   label: string;
   href: string;
   /** Sur-titre code (« // 01 »…), facultatif. */
   eyebrow?: string;
-  /** Visuel réel de l'asso ; sans visuel, traitement graphique (grille + lueur). */
-  image?: Image;
+  /** Visuel réel de l'asso (clé de assets/images.json) ; sans visuel, traitement graphique (grille + lueur). */
+  image?: string | null;
   className?: string;
 };
 
@@ -32,17 +31,14 @@ export function Portal({ label, href, eyebrow, image, className }: Props) {
   const content = (
     <>
       {image ? (
-        <img
-          src={image.src}
-          srcSet={image.srcSet}
-          sizes={image.sizes}
-          width={image.width}
-          height={image.height}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 size-full object-cover opacity-60 grayscale transition duration-slow ease-out-expo group-hover:scale-105 group-hover:opacity-90 group-hover:grayscale-0"
-        />
+        <span aria-hidden="true" className="absolute inset-0">
+          <ResponsiveImage
+            image={image}
+            alt=""
+            sizes="(min-width: 64rem) 40rem, 100vw"
+            className="opacity-60 grayscale transition duration-slow ease-out-expo group-hover:scale-105 group-hover:opacity-90 group-hover:grayscale-0"
+          />
+        </span>
       ) : (
         <span aria-hidden="true" className="absolute inset-0 bg-grid transition-opacity duration-slow group-hover:opacity-60">
           <span className="absolute inset-0 bg-radial-[at_80%_100%] from-cyan-line to-transparent to-70% transition-opacity duration-slow group-hover:opacity-0" />

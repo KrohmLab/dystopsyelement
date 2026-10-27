@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "produit-1",
+    "name": "Produit 1",
+    "category": "T-shirts",
+    "price": "00,00 €",
+    "image": null,
+    "vintedUrl": "https://www.vinted.fr",
+    "placeholder": true
+  },
+  {
+    "slug": "produit-2",
+    "name": "Produit 2",
+    "category": "Pulls",
+    "price": "00,00 €",
+    "image": null,
+    "vintedUrl": "https://www.vinted.fr",
+    "placeholder": true
+  },
+  {
+    "slug": "produit-3",
+    "name": "Produit 3",
+    "category": "Autres",
+    "price": "00,00 €",
+    "image": null,
+    "vintedUrl": "https://www.vinted.fr",
+    "placeholder": true
+  },
+  {
+    "slug": "produit-4",
+    "name": "Produit 4",
+    "category": "T-shirts",
+    "price": "00,00 €",
+    "image": null,
+    "vintedUrl": "https://www.vinted.fr",
+    "placeholder": true
+  },
+  {
+    "slug": "produit-5",
+    "name": "Produit 5",
+    "category": "Pulls",
+    "price": "00,00 €",
+    "image": null,
+    "vintedUrl": "https://www.vinted.fr",
+    "placeholder": true
+  },
+  {
+    "slug": "produit-6",
+    "name": "Produit 6",
+    "category": "Autres",
+    "price": "00,00 €",
+    "image": null,
+    "vintedUrl": "https://www.vinted.fr",
+    "placeholder": true
+  },
+  {
+    "slug": "produit-7",
+    "name": "Produit 7",
+    "category": "T-shirts",
+    "price": "00,00 €",
+    "image": null,
+    "vintedUrl": "https://www.vinted.fr",
+    "placeholder": true
+  },
+  {
+    "slug": "produit-8",
+    "name": "Produit 8",
+    "category": "Pulls",
+    "price": "00,00 €",
+    "image": null,
+    "vintedUrl": "https://www.vinted.fr",
+    "placeholder": true
+  }
+]

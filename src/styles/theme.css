@@ -211,3 +211,43 @@
     stroke-dashoffset: 0;
   }
 }
+
+/* Ouverture des modales */
+.modal-in {
+  animation: modal-in var(--duration-base) var(--ease-out-expo) both;
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+/* Bandeau défilant (Ticker) : deux copies du contenu, translation de -50 % */
+.ticker-track {
+  animation: var(--animate-marquee);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}
+
+/* Grand cadre cyber du hero : apparition en fondu + léger zoom */
+.cyber-frame {
+  animation: cyber-frame-in 1.2s var(--ease-out-expo) 0.2s both;
+}
+@keyframes cyber-frame-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+/* Réapparition des cartes après un filtrage */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}

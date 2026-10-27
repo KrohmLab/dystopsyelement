@@ -1,5 +1,5 @@
 // Après le build : sitemap.xml (toutes les pages pré-rendues sauf la 404), robots.txt et _redirects
-// (anciennes URL de la v1 → pages v2, en 301, depuis content/site.json → legacyRedirects et shopUrl).
+// (anciennes URL de la v1 → pages v2, en 301, depuis content/site.json → legacyRedirects).
 import { readdir, readFile, writeFile } from "node:fs/promises";
 
 const root = new URL("../", import.meta.url);
@@ -32,10 +32,7 @@ await writeFile(new URL("sitemap.xml", client), xml);
 
 await writeFile(new URL("robots.txt", client), `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`);
 
-// La boutique est sur Vinted : /shop y renvoie, ou vers l'accueil tant que l'URL n'est pas fournie.
-const shop = site.shopUrl ?? "/";
-const rules = { ...site.legacyRedirects, "/shop": shop, "/shop/:id": shop };
-const redirects = Object.entries(rules).map(([from, to]) => `${from} ${to} 301`);
+const redirects = Object.entries(site.legacyRedirects).map(([from, to]) => `${from} ${to} 301`);
 await writeFile(new URL("_redirects", client), `# Anciennes URL de la v1 (content/site.json)\n${redirects.join("\n")}\n`);
 
 console.log(`seo: sitemap (${paths.length} pages), robots.txt, _redirects (${redirects.length} règles)`);

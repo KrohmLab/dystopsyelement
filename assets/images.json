@@ -1,0 +1,66 @@
+{
+  "events/nexen-2026-banner": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/nexens-home-2026-banner": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "festival/logo-nexen": {
+    "width": 1350,
+    "height": 1080,
+    "widths": [
+      480,
+      960
+    ]
+  },
+  "festival/fond": {
+    "width": 1080,
+    "height": 1080,
+    "widths": [
+      480,
+      960,
+      1080
+    ]
+  },
+  "festival/ecailles": {
+    "width": 736,
+    "height": 1103,
+    "widths": [
+      480,
+      736
+    ]
+  },
+  "festival/photo-jour": {
+    "width": 2048,
+    "height": 1365,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "festival/lineup-2026": {
+    "width": 1080,
+    "height": 1350,
+    "widths": [
+      480,
+      960,
+      1080
+    ]
+  }
+}

@@ -127,7 +127,7 @@ La v1 est dans le dépôt `KrohmLab/dystopsyelement` (branche `main`, dernier co
   `wrangler` en `devDependency` (version épinglée). Script `preview` : `npm run build && wrangler dev`.
 - **Workers Builds** (connexion Git, réglée par l'utilisateur dans le tableau de bord) : dépôt `KrohmLab/dystopsyelement`, branche de production `main`, commande de build `npm run build`, déploiement `npx wrangler deploy` ; onglet *Previews* : builds des autres branches activés, commande `npx wrangler preview` (d'où le bloc `"previews": {}`) → URL d'aperçu par branche et par PR. La version de Node est lue dans `.node-version` (pas de variable `NODE_VERSION`). Variable de build : `VITE_WEB3FORMS_KEY` (variable **de build**, pas d'exécution : Vite l'intègre au code).
 - **Reconstruction quotidienne** (pour que le « prochain événement » bascule tout seul) : créer un *Deploy Hook* dans Workers Builds (Settings → Builds → Deploy Hooks, branche `main`), le stocker en secret GitHub `CF_DEPLOY_HOOK`, et `nightly-rebuild.yml` l'appelle chaque nuit à 02:00 UTC (04:00 à Paris en été, 03:00 en hiver) via `curl -X POST`. Bouton `workflow_dispatch` pour lancer à la main.
-- `_headers` (dans `public/`) et `_redirects` (généré par `scripts/seo-files.mjs` depuis `content/site.json` → `legacyRedirects` et `shopUrl`) sont appliqués nativement par les assets statiques Workers.
+- `_headers` (dans `public/`) et `_redirects` (généré par `scripts/seo-files.mjs` depuis `content/site.json` → `legacyRedirects`) sont appliqués nativement par les assets statiques Workers.
 - L'ancien projet **Pages** `dystopsyelement` (`dystopsyelements.pages.dev`) n'est plus relié au dépôt ; l'utilisateur le supprimera une fois la v2 en ligne.
 - `public/_headers` :
   ```

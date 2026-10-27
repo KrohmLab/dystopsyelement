@@ -1,0 +1,22 @@
+[
+  {
+    "question": "Question 1 ?",
+    "answer": "Réponse provisoire 1.",
+    "placeholder": true
+  },
+  {
+    "question": "Question 2 ?",
+    "answer": "Réponse provisoire 2.",
+    "placeholder": true
+  },
+  {
+    "question": "Question 3 ?",
+    "answer": "Réponse provisoire 3.",
+    "placeholder": true
+  },
+  {
+    "question": "Question 4 ?",
+    "answer": "Réponse provisoire 4.",
+    "placeholder": true
+  }
+]
