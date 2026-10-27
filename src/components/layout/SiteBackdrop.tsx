@@ -14,21 +14,34 @@ export function SiteBackdrop() {
 
   useEffect(() => {
     const backdrop = ref.current;
-    if (!backdrop || !("IntersectionObserver" in window)) return;
-    const sections = [...document.querySelectorAll<HTMLElement>("[data-floor]")];
-    const visible = new Map<HTMLElement, boolean>();
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => visible.set(entry.target as HTMLElement, entry.isIntersecting));
-        // La section qui croise la ligne du milieu de l'écran donne l'ambiance ; sinon, ambiance par défaut.
-        const current = sections.find((section) => visible.get(section));
-        if (current?.dataset.floor) backdrop.dataset.floor = current.dataset.floor;
-        else delete backdrop.dataset.floor;
-      },
-      { rootMargin: "-50% 0px -50% 0px" },
-    );
-    sections.forEach((section) => io.observe(section));
-    return () => io.disconnect();
+    if (!backdrop) return;
+    // L'ambiance vient de l'élément [data-floor] situé au milieu de l'écran. Lu à chaque image de défilement
+    // plutôt qu'avec un IntersectionObserver : après une navigation, l'ancienne page est encore dans le DOM
+    // quand cet effet tourne et le défilement revient en haut ensuite, l'observateur ratait le nouveau hero.
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      // En haut de page, l'ambiance du hero (les heros de pages secondaires font moins d'un demi-écran).
+      const top = window.scrollY < 40 ? document.querySelector<HTMLElement>("main [data-floor]")?.dataset.floor : undefined;
+      const middle = top ? [] : document.elementsFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+      const floor = top ?? middle.map((el) => el.closest<HTMLElement>("[data-floor]")?.dataset.floor).find(Boolean);
+      // Rien sous le milieu (menu ouvert : la page est inerte) : on garde l'ambiance en cours.
+      if (floor) backdrop.dataset.floor = floor;
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    schedule();
+    // Deuxième lecture une fois la nouvelle page peinte et le défilement restauré.
+    const settle = window.setTimeout(schedule, 120);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(settle);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
   }, [pathname]);
 
   return (
