@@ -39,14 +39,14 @@ export function NexenFeature({ dates, place, ticketUrl }: Props) {
         <p className="mt-2 text-lead">
           {dates} · {place}
         </p>
-        <Reveal className="my-9 grid w-full max-w-3xl gap-3 sm:grid-cols-3">
-          <Button variant="secondary" icon={MusicIcon} href="/nexen#line-up" fullWidth>
+        <Reveal className="my-9 flex w-full max-w-3xl flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+          <Button variant="secondary" icon={MusicIcon} href="/nexen#line-up">
             Line-up
           </Button>
-          <Button variant="secondary" href="/nexen#univers" fullWidth>
+          <Button variant="secondary" href="/nexen#univers">
             L'univers
           </Button>
-          <Button variant="secondary" icon={InfoIcon} href="/nexen#infos" fullWidth>
+          <Button variant="secondary" icon={InfoIcon} href="/nexen#infos">
             Infos pratiques
           </Button>
         </Reveal>

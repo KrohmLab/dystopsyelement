@@ -49,10 +49,12 @@ export const MapPinIcon = (p: IconProps) => (
   </Icon>
 );
 
+// Billet aux coins biseautés (comme les chamfers du site), encoches latérales, souche pointillée et losange.
 export const TicketIcon = (p: IconProps) => (
   <Icon {...p}>
-    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-    <path d="M13 5v2M13 17v2M13 11v2" />
+    <path d="M4 5h16l2 2v3a2 2 0 0 0 0 4v3l-2 2H4l-2-2v-3a2 2 0 0 0 0-4V7Z" />
+    <path d="M15.5 5.5v2M15.5 11v2M15.5 16.5v2" />
+    <path d="m8.5 9 2.5 3-2.5 3L6 12Z" />
   </Icon>
 );
 

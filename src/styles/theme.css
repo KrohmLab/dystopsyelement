@@ -574,6 +574,23 @@ html[data-intro="done"] .site-intro {
   animation: neon-on 0.9s steps(1) 0.5s both;
 }
 
+/* Hero d'accueil, grand écran : marges intérieures calées sur le grand cadre v1 (filet gauche à ~10 % de la
+   largeur, droit à ~94 %, ornements du haut et barres du bas). La boîte grandit avec le contenu, le cadre aussi. */
+@media (min-width: 64rem) {
+  .hero-frame-content {
+    /* Écarts entre badge, titre, infos et boutons indexés sur la hauteur d'écran : le bloc occupe le cadre. */
+    --hero-gap: clamp(1.75rem, 5.5svh, 4.5rem);
+    padding-inline: 13% 10%;
+    padding-block: max(6.5rem, 12svh) max(8rem, 15svh);
+  }
+  .hero-frame-content > h1 {
+    margin-block: var(--hero-gap);
+  }
+  .hero-frame-content > p {
+    margin-bottom: calc(var(--hero-gap) * 1.3);
+  }
+}
+
 /* Le hero attend la fin de l'intro pour lancer ses propres animations */
 .hero-enter {
   animation: fade-up var(--duration-slow) var(--ease-out-expo) var(--intro-offset) both;
@@ -651,6 +668,11 @@ html[data-intro="done"] .site-intro {
     margin-inline: calc(-1 * var(--spacing-gutter));
     padding-inline: var(--spacing-gutter);
     scrollbar-width: none;
+    /* Défilement horizontal seulement : un conteneur qui défile en x défile aussi en y dès que ses cartes
+       dépassent (équerres, soulèvement au survol). On coupe l'axe vertical et on laisse de l'air aux cartes. */
+    overflow-y: hidden;
+    padding-block: 1rem;
+    margin-block: -1rem;
   }
   .rail::-webkit-scrollbar {
     display: none;
