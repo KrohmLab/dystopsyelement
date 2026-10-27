@@ -86,6 +86,12 @@
   --text-label: 0.8125rem;          /* boutons, nav — Orbitron 700, majuscules */
   --text-label--line-height: 1;
   --text-label--letter-spacing: 0.2em;
+  --text-label-sm: 0.75rem;         /* boutons sm, sélecteurs (DESIGN_SYSTEM §7.1) */
+  --text-label-sm--line-height: 1;
+  --text-label-sm--letter-spacing: 0.2em;
+  --text-label-lg: 0.875rem;        /* boutons lg */
+  --text-label-lg--line-height: 1;
+  --text-label-lg--letter-spacing: 0.2em;
 
   --text-eyebrow: 0.75rem;          /* sur-titres « // CODE » — Orbitron 700 */
   --text-eyebrow--line-height: 1;

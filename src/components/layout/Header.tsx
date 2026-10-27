@@ -60,6 +60,8 @@ export function Header({ nav, ticket, next, socials, email }: Props) {
                 Billetterie
               </Button>
             </div>
+            {/* Mobile : billetterie en icône seule, à gauche du menu (le libellé complet est dans le menu). */}
+            <TicketShortcut ticket={ticket} hidden={menuOpen} />
             <button
               ref={burgerRef}
               type="button"
@@ -95,5 +97,22 @@ export function Header({ nav, ticket, next, socials, email }: Props) {
         returnFocusRef={burgerRef}
       />
     </>
+  );
+}
+
+function TicketShortcut({ ticket, hidden }: { ticket: Ticket; hidden: boolean }) {
+  const className = cn(
+    "grid size-11 place-items-center bg-pink text-on-accent no-underline transition duration-base chamfer-sm hover:bg-pink-hover hover:shadow-glow-pink sm:hidden",
+    hidden && "pointer-events-none opacity-0",
+  );
+  const label = ticket.external ? "Billetterie (nouvel onglet)" : "Billetterie";
+  return ticket.external ? (
+    <a href={ticket.href} target="_blank" rel="noopener noreferrer" aria-label={label} className={className} tabIndex={hidden ? -1 : undefined}>
+      <TicketIcon />
+    </a>
+  ) : (
+    <Link to={ticket.href} prefetch="intent" aria-label={label} className={className} tabIndex={hidden ? -1 : undefined}>
+      <TicketIcon />
+    </Link>
   );
 }

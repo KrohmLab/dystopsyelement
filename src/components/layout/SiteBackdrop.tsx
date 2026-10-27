@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router";
+import { useMotionLevel } from "../../lib/useMotionLevel";
 
 /**
  * Fond vivant de tout le site (DESIGN_SYSTEM §5.3) : lueurs cyan / rose qui dérivent, sol quadrillé
@@ -11,6 +12,38 @@ import { useLocation } from "react-router";
 export function SiteBackdrop() {
   const ref = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
+  const level = useMotionLevel();
+
+  // PC à la souris : les lueurs du fond (visibles à travers les sections) glissent avec le curseur,
+  // et un halo cyan → rose le suit. Mouvement lissé ; coupé sur tactile et en mouvement réduit.
+  useEffect(() => {
+    const backdrop = ref.current;
+    if (!backdrop || level !== "full") return;
+    let targetX = 0;
+    let targetY = 0;
+    let x = 0;
+    let y = 0;
+    let frame = 0;
+    const tick = () => {
+      x += (targetX - x) * 0.07;
+      y += (targetY - y) * 0.07;
+      backdrop.style.setProperty("--mx", x.toFixed(3));
+      backdrop.style.setProperty("--my", y.toFixed(3));
+      frame = Math.abs(targetX - x) + Math.abs(targetY - y) > 0.002 ? requestAnimationFrame(tick) : 0;
+    };
+    const move = (event: PointerEvent) => {
+      targetX = (event.clientX / window.innerWidth) * 2 - 1;
+      targetY = (event.clientY / window.innerHeight) * 2 - 1;
+      backdrop.dataset.pointer = "";
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", move);
+      cancelAnimationFrame(frame);
+      delete backdrop.dataset.pointer;
+    };
+  }, [level]);
 
   useEffect(() => {
     const backdrop = ref.current;
@@ -49,6 +82,7 @@ export function SiteBackdrop() {
       <span className="site-backdrop__glow site-backdrop__glow--cyan" />
       <span className="site-backdrop__glow site-backdrop__glow--pink" />
       <span className="site-backdrop__glow site-backdrop__glow--deep" />
+      <span className="site-backdrop__cursor" />
       <span className="site-backdrop__vignette" />
       {/* Le sol passe au-dessus du vignettage, sinon le bas de l'écran l'éteint. */}
       <div className="site-backdrop__floor">

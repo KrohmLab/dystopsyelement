@@ -28,7 +28,7 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
       <span className="flex items-end justify-between gap-3 p-4">
         <span className="flex flex-col gap-1">
-          <span className="font-display text-h3 font-bold text-ink uppercase transition-colors duration-fast group-hover:text-cyan">{product.name}</span>
+          <span className="font-display text-h3 font-bold text-ink uppercase transition-colors duration-fast group-hover:text-cyan md:max-lg:text-label-lg">{product.name}</span>
           <span className="font-display text-label font-bold text-cyan text-glow-cyan">{product.price}</span>
         </span>
         <ExternalIcon size={20} className="shrink-0 text-pink" />

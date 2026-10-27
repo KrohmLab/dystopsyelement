@@ -1,4 +1,3 @@
-import { useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from "motion/react";
 import { useEffect, useRef, type ReactNode } from "react";
 import { useMotionLevel } from "../../lib/useMotionLevel";
 
@@ -11,51 +10,62 @@ type Props = {
   children: ReactNode;
 };
 
-const SPRING = { stiffness: 60, damping: 20, mass: 0.6 };
-
 /**
  * Calque qui se décale au défilement et suit légèrement la souris (DESIGN_SYSTEM §6.2).
- * Seuls les hooks de `motion` sont utilisés (pas de composant `motion.div`) pour garder le JavaScript léger :
- * la transformation est écrite directement sur l'élément. Mouvement réduit et pré-rendu : immobile.
+ * JavaScript natif (sans `motion`, pour garder l'accueil sous son budget) : la transformation est écrite
+ * directement sur l'élément, une fois par image, la souris étant lissée. Mouvement réduit et pré-rendu : immobile.
  */
 export function Parallax({ speed = 60, mouse = 12, className, children }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const level = useMotionLevel();
-  const amplitude = level === "reduced" ? 0 : level === "full" ? speed : speed / 2;
-
-  // Le niveau passe de « reduced » (pré-rendu) au niveau réel après l'hydratation : amplitude lue via une ref.
-  const amplitudeRef = useRef(amplitude);
-  useEffect(() => {
-    amplitudeRef.current = amplitude;
-  }, [amplitude]);
-
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const scrollY = useTransform(scrollYProgress, (progress) => (progress * 2 - 1) * amplitudeRef.current);
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const x = useSpring(pointerX, SPRING);
-  const y = useSpring(pointerY, SPRING);
-
-  const apply = () => {
-    if (ref.current) ref.current.style.transform = `translate3d(${x.get()}px, ${scrollY.get() + y.get()}px, 0)`;
-  };
-  useMotionValueEvent(scrollY, "change", apply);
-  useMotionValueEvent(x, "change", apply);
-  useMotionValueEvent(y, "change", apply);
 
   useEffect(() => {
-    if (level !== "full" || mouse === 0) {
-      pointerX.set(0);
-      pointerY.set(0);
+    const layer = ref.current;
+    // Le calque se mesure sur son parent, que la transformation ne déplace pas.
+    const frameOf = layer?.parentElement;
+    if (!layer || !frameOf) return;
+    if (level === "reduced") {
+      layer.style.transform = "";
       return;
     }
-    const onMove = (event: PointerEvent) => {
-      pointerX.set((event.clientX / window.innerWidth - 0.5) * 2 * mouse);
-      pointerY.set((event.clientY / window.innerHeight - 0.5) * 2 * mouse);
+    const amplitude = level === "full" ? speed : speed / 2;
+    let targetX = 0;
+    let targetY = 0;
+    let x = 0;
+    let y = 0;
+    let frame = 0;
+
+    const render = () => {
+      frame = 0;
+      x += (targetX - x) * 0.08;
+      y += (targetY - y) * 0.08;
+      const rect = frameOf.getBoundingClientRect();
+      // 0 quand le haut du parent entre par le bas de l'écran, 1 quand son bas sort par le haut.
+      const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+      layer.style.transform = `translate3d(${x}px, ${(progress * 2 - 1) * amplitude + y}px, 0)`;
+      if (Math.abs(targetX - x) + Math.abs(targetY - y) > 0.1) frame = requestAnimationFrame(render);
     };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [level, mouse, pointerX, pointerY]);
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+    const onMove = (event: PointerEvent) => {
+      targetX = (event.clientX / window.innerWidth - 0.5) * 2 * mouse;
+      targetY = (event.clientY / window.innerHeight - 0.5) * 2 * mouse;
+      schedule();
+    };
+
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    const followMouse = level === "full" && mouse !== 0;
+    if (followMouse) window.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("pointermove", onMove);
+    };
+  }, [level, speed, mouse]);
 
   return (
     <div ref={ref} className={className}>

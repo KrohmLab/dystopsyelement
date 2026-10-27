@@ -233,15 +233,15 @@ Rendu `<a>` si `href`, sinon `<button>`.
 
 | Taille | Hauteur | Padding X | Typo |
 |---|---|---|---|
-| `sm` | 40 px | 16 px | `text-label` 12 px |
+| `sm` | 40 px | 16 px | `text-label-sm` 12 px |
 | `md` (défaut) | 48 px | 24 px | `text-label` |
-| `lg` | 56 px | 32 px | `text-label` 14 px |
+| `lg` | 56 px | 32 px | `text-label-lg` 14 px |
 
 Toutes les tailles respectent une cible tactile ≥ 44 px (sauf `sm`, réservé au desktop). Forme : `chamfer-sm` (sm) / `chamfer-md` (md, lg). Libellés : verbe d'action, 1 à 3 mots (« Billetterie », « Voir le line-up », « Demander un devis »).
 
 ### 7.2 `Header` et `Menu` (plein écran, toutes tailles)
 
-Hauteur `spacing-header` (72 px). Logo Dystopsy (SVG, 40 px) à gauche ; à droite `Button primary sm` « Billetterie » (dès `sm`) et le bouton **Menu** (trois traits qui deviennent une croix, libellé « Menu » / « Fermer » dès `md`). **Pas de liens dans l'en-tête, même sur grand écran** (décision du 27/10/2026) : toute la navigation passe par le menu plein écran.
+Hauteur `spacing-header` (72 px). Logo Dystopsy (SVG, 40 px) à gauche ; à droite `Button primary sm` « Billetterie » (dès `sm` ; sur mobile, **bouton icône billet rose 44 px** à gauche du menu) et le bouton **Menu** (trois traits qui deviennent une croix, libellé « Menu » / « Fermer » dès `md`). **Pas de liens dans l'en-tête, même sur grand écran** (décision du 27/10/2026) : toute la navigation passe par le menu plein écran.
 Au repos : transparent. Après 50 px de scroll : fond `abyss/60` + `backdrop-blur` + bordure basse `cyan-line` + `bg-grid` + `shadow-header`. Le logo glitche une fois au premier défilement.
 **Menu plein écran** : fond `void` avec lueurs cyan / rose, sol quadrillé, grand logo en filigrane qui pivote, scanlines. Liens numérotés (`00 Accueil`, `01 Nexen`…) en `text-h1` : entrée en cascade avec glitch RGB. **Un effet de survol par lien**, avec sa couleur : glitch RGB (cyan), néon qui grésille (lilas), lettres qui s'écartent (rose), découpe en deux tranches (pêche), secousse numérique (or), dégradé qui défile dans les lettres ; bande lumineuse qui balaie le lien. Grand logo en filigrane cyan à 14 % avec lueur. Colonne latérale : prochain événement, Billetterie pleine largeur, réseaux, e-mail.
 Ouverture : rideau qui descend (`clip-path`) avec une barre néon cyan → rose au bord ; fermeture : rideau qui remonte, liens qui s'effacent. Focus piégé, Échap, page inerte, focus rendu au bouton (`useModal`). Mouvement réduit : apparition directe.
@@ -258,7 +258,7 @@ Icônes réseaux : carrés `chamfer-sm` 44 px, contour `cyan-line`, survol fond 
 
 ### 7.5 `Hero`
 
-Plein écran (`min-h-[100svh]`), visuel de fond chargé en priorité (`fetchPriority="high"`, LCP), assombri par dégradé `void` (bas) + `void/80` (haut), `mix-blend-luminosity` à 40 % (rendu v1 conservé), `bg-scanlines` par-dessus, `GridFloor` au sol et `NeonFrame` (desktop). Animations d'arrivée et parallaxe : §6.2.
+Plein écran (`min-h-[100svh]`), visuel de fond chargé en priorité (`fetchPriority="high"`, LCP), assombri par dégradé `void` (bas) + `void/80` (haut), `mix-blend-luminosity` à 40 % (rendu v1 conservé), `bg-scanlines` par-dessus, sol quadrillé global au sol. Cadre : `CyberFrame` (grand cadre v1) à partir de `lg` ; en dessous, `NeonFrame` (équerres) **sur toute la hauteur de l'écran, en-tête compris** (logo, billetterie, menu dans le cadre). Animations d'arrivée et parallaxe : §6.2.
 Contenu : badge pulsant rose (`Badge live`) · titre `text-display glitch` · ligne méta (date · lieu) avec icônes cyan · 2 boutons (`primary` + `secondary`).
 **Pas de carrousel** : le hero affiche le **prochain événement** (calculé au build depuis la collection `events`). S'il n'y en a aucun à venir, il affiche le dernier festival Nexen en état « passé » (voir SITE_PLAN §2). Les autres événements sont dans la section Agenda juste en dessous.
 
@@ -334,7 +334,15 @@ Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu
 
 ### 7.18 `Portal` (tuile de navigation)
 
-Grande tuile visuelle vers une page du site ou un lien externe. **Sur grand écran, les tuiles forment une rangée** : la première est étirée par défaut, celle survolée (ou au focus clavier) s'étire à son tour et les autres se replient en bande verticale avec leur libellé à la verticale. Sur mobile et tablette : grille. Visuel en fond (gris → couleur au survol), libellé `text-h3` d'un ou deux mots, sur-titre code optionnel, flèche → ou ↗ (externe). Survol / focus : barre de scan qui descend, liseré néon cyan → rose en bas, glitch RGB sur le libellé, balayage lumineux, visuel qui passe en couleur, `Brackets` qui s'agrandissent. Tuile entière cliquable, `chamfer-lg`. Une tuile dont la destination n'existe pas (URL non fournie, collection vide) n'est pas rendue.
+Grande tuile visuelle vers une page du site ou un lien externe. **Sur grand écran, les tuiles forment une rangée** : la première est étirée par défaut, celle survolée (ou au focus clavier) s'étire à son tour et les autres se replient en bande verticale avec leur libellé à la verticale. Sur tablette : grille 2 colonnes. Sur mobile : carrousel (§7.19). Visuel en fond (gris → couleur au survol), libellé `text-h3` d'un ou deux mots, sur-titre code optionnel, flèche → ou ↗ (externe). Survol / focus : barre de scan qui descend, liseré néon cyan → rose en bas, glitch RGB sur le libellé, balayage lumineux, visuel qui passe en couleur, `Brackets` qui s'agrandissent. Tuile entière cliquable, `chamfer-lg`. Une tuile dont la destination n'existe pas (URL non fournie, collection vide) n'est pas rendue.
+
+### 7.19 Carrousel mobile (`.rail` + `RailDots`)
+
+Sur mobile (< `md`), les listes de cartes de l'accueil (portails, prochaines dates, boutique) deviennent un **défilement horizontal aimanté** (`scroll-snap`, CSS natif, aucune librairie) : bord à bord, l'élément suivant dépasse pour inviter au glissé (84 % de largeur, 62 % pour les produits). Pagination `RailDots` dessous : un trait par élément, l'actif s'allonge en cyan, cliquable. À partir de `md`, la même liste redevient une grille. Les pages catalogue (shop, line-up) restent en grille : on y compare, on ne feuillette pas.
+
+### 7.20 Fond qui suit la souris (PC)
+
+Au niveau de mouvement `full` (≥ 1024 px, souris), les lueurs du `SiteBackdrop` glissent avec le curseur (chacune à sa profondeur) et un halo doux le suit, cyan à gauche de l'écran, rose à droite. Comme les sections sont transparentes ou voilées, leurs fonds bougent avec. Mouvement lissé ; rien sur tactile ni en mouvement réduit.
 
 ## 8. Contenu : la règle « moins de texte »
 

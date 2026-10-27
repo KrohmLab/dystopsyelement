@@ -9,6 +9,7 @@ import { Section } from "../components/layout/Section";
 import { SectionHeader } from "../components/layout/SectionHeader";
 import { Reveal } from "../components/motion/Reveal";
 import { Button } from "../components/ui/Button";
+import { RailDots } from "../components/ui/RailDots";
 import { events, getEvent, products, services, site } from "../content/load.server";
 import { toSummary } from "../content/summaries";
 import { formatDateRange, getFeatured, getUpcoming } from "../lib/events";
@@ -57,13 +58,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         <h2 id="portails-titre" className="sr-only">
           Explorer le site
         </h2>
-        <ul className="portals grid gap-4 sm:grid-cols-2 md:gap-6">
+        <ul id="portails-rail" className="portals rail grid gap-4 sm:grid-cols-2 md:gap-6">
           {portals.map((portal, i) => (
             <Reveal as="li" key={portal.href} delay={i * 90} data-default={i === 0 || undefined} className={wide(i, portals.length) ? "sm:col-span-2" : undefined}>
               <Portal label={portal.label} eyebrow={String(i + 1).padStart(2, "0")} href={portal.href} image={portal.image} className={i === 0 ? "min-h-72" : undefined} />
             </Reveal>
           ))}
         </ul>
+        <RailDots target="portails-rail" count={portals.length} label="Portails" />
       </Section>
 
       {nexen && <NexenFeature dates={nexen.dates} place={nexen.place} ticketUrl={nexen.ticketUrl} />}
@@ -80,13 +82,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
               </Button>
             }
           />
-          <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
+          <ul id="dates-rail" className="rail grid gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
             {upcoming.map((event, i) => (
               <Reveal as="li" key={event.slug} delay={i * 120}>
                 <EventCard event={event} />
               </Reveal>
             ))}
           </ul>
+          <RailDots target="dates-rail" count={upcoming.length} label="Prochaines dates" />
         </Section>
       )}
 
@@ -102,13 +105,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             </Button>
           }
         />
-        <ul className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
+        <ul id="boutique-rail" className="rail rail--narrow grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
           {products.map((product, i) => (
             <Reveal as="li" key={product.slug} delay={i * 80}>
               <ProductCard product={product} />
             </Reveal>
           ))}
         </ul>
+        <RailDots target="boutique-rail" count={products.length} label="Boutique" />
       </Section>
 
       <CtaBanner

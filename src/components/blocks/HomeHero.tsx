@@ -30,11 +30,12 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
       </Parallax>
       <span aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-transparent via-void/30 to-void/85" />
       <span aria-hidden="true" className="absolute inset-0 -z-10 bg-scanlines" />
-      {/* Le grand cadre v1 est dessiné pour un écran paysage : en dessous de lg (mobile, tablette), équerres néon. */}
+      {/* Le grand cadre v1 est dessiné pour un écran paysage : en dessous de lg (mobile, tablette), équerres néon
+          sur tout l'écran, en-tête (logo, billetterie, menu) compris. */}
       <div className="absolute inset-x-8 top-20 bottom-6 -z-10 hidden lg:block">
         <CyberFrame className="size-full" />
       </div>
-      <div className="absolute inset-x-3 top-20 bottom-3 -z-10 md:inset-x-8 md:top-24 md:bottom-8 lg:hidden">
+      <div className="absolute inset-2 -z-10 md:inset-3 lg:hidden">
         <NeonFrame className="size-full" />
       </div>
 

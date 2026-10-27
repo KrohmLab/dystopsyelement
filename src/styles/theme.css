@@ -282,6 +282,42 @@
   opacity: 0.6;
   animation: glow-drift-a 52s ease-in-out infinite alternate-reverse;
 }
+/* Suivi de la souris (PC) : --mx / --my de -1 à 1, écrits par SiteBackdrop. `translate` se cumule avec la dérive. */
+.site-backdrop {
+  --mx: 0;
+  --my: 0;
+}
+.site-backdrop__glow--cyan {
+  translate: calc(var(--mx) * 9vw) calc(var(--my) * 7vh);
+}
+.site-backdrop__glow--pink {
+  translate: calc(var(--mx) * -11vw) calc(var(--my) * -8vh);
+}
+.site-backdrop__glow--deep {
+  translate: calc(var(--mx) * 5vw) calc(var(--my) * -5vh);
+}
+.site-backdrop__cursor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44vmax;
+  height: 44vmax;
+  border-radius: 50%;
+  translate: -50% -50%;
+  transform: translate(calc(var(--mx) * 50vw), calc(var(--my) * 50vh));
+  /* Cyan à gauche de l'écran, rose à droite. */
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, color-mix(in srgb, var(--color-pink) calc((1 + var(--mx)) * 50%), var(--color-cyan)) 12%, transparent),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-in-out);
+  will-change: transform;
+}
+.site-backdrop[data-pointer] .site-backdrop__cursor {
+  opacity: 1;
+}
 @keyframes glow-drift-a {
   to {
     transform: translate(12vw, 10vh) scale(1.15);
@@ -597,6 +633,36 @@ html[data-intro="done"] .site-intro {
 }
 .group:is(:hover, :focus-visible) > .portal__edge {
   transform: scaleX(1);
+}
+
+/* ==========================================================================
+   Carrousel mobile (.rail) : sous md, une liste en grille devient un défilement horizontal aimanté,
+   bord à bord, l'élément suivant dépassant pour inviter au glissé. Pagination : RailDots.
+   ========================================================================== */
+@media (max-width: 47.99rem) {
+  .rail {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--spacing-gutter);
+    margin-inline: calc(-1 * var(--spacing-gutter));
+    padding-inline: var(--spacing-gutter);
+    scrollbar-width: none;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+  .rail > * {
+    flex: 0 0 var(--rail-item, 84%);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+  .rail--narrow {
+    --rail-item: 62%;
+  }
 }
 
 @media (min-width: 64rem) {
