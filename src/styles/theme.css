@@ -580,7 +580,7 @@ html[data-intro="done"] .site-intro {
   .hero-frame-content {
     /* Écarts entre badge, titre, infos et boutons indexés sur la hauteur d'écran : le bloc occupe le cadre. */
     --hero-gap: clamp(1.75rem, 5.5svh, 4.5rem);
-    padding-inline: 13% 10%;
+    padding-inline: 18% 10%;
     padding-block: max(6.5rem, 12svh) max(8rem, 15svh);
   }
   .hero-frame-content > h1 {
