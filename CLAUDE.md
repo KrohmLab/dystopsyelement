@@ -46,13 +46,13 @@ Interdit : MUI, Emotion, Radix, shadcn/ui, react-slick, recharts, react-dnd, tou
 ├─ CLAUDE.md
 ├─ docs/                     DESIGN_SYSTEM.md · SITE_PLAN.md · styleguide.html · TODO_CONTENU.md
 ├─ assets/                   images sources réelles uniquement (brand/, events/, festival/, patterns/)
-├─ content/                  site.json · events/*.md
+├─ content/                  site.json · events/*.md · artists.json · team.json · products.json · services.json · faq.json
 ├─ public/                   favicon.svg · _headers (§7)
 ├─ scripts/                  postbuild.mjs (404.html) · seo-files.mjs (sitemap, robots, _redirects)
 ├─ src/
 │  ├─ root.tsx               document HTML, en-tête, pied de page, lien d'évitement
 │  ├─ routes.ts              table des routes
-│  ├─ routes/                home · nexen · agenda · evenement · prestations · contact · mentions-legales · not-found
+│  ├─ routes/                home · nexen · agenda · evenement · prestations · shop · contact · mentions-legales · not-found · styleguide
 │  ├─ components/            ui/ (Button, Badge, Field…) · layout/ (Header, Footer…) · motion/ (Reveal, DecodeText, Parallax…) · blocks/ (Hero, Portal, EventCard…) · icons.tsx
 │  ├─ content/               schemas.ts · load.server.ts (lecture + validation au build, jamais envoyé au navigateur)
 │  ├─ lib/                   seo.ts · events.ts (prochain événement) · utilitaires
@@ -74,7 +74,7 @@ Interdit : MUI, Emotion, Radix, shadcn/ui, react-slick, recharts, react-dnd, tou
 5. **Rose = conversion, cyan = navigation** (DESIGN_SYSTEM §2.2). Un seul `Button primary` par section (hors bouton Billetterie du header).
 6. **Budgets de texte** (DESIGN_SYSTEM §8) : si un texte fourni les dépasse, raccourcis-le et signale-le.
 7. **Accessibilité** (DESIGN_SYSTEM §10) dès le premier composant, pas en fin de projet.
-8. **N'invente rien** : ni donnée factuelle (date, lieu, prix, URL, nom d'artiste, e-mail), ni texte de présentation, ni produit, ni membre, ni FAQ, ni chiffre clé, ni référence client. Pas de texte de remplacement visible non plus (« Lorem », « Texte à venir »). Ce qui manque reste vide (`null`) dans `content/`, le schéma l'accepte, l'interface masque l'élément, et la liste des manques est mise à jour dans `docs/TODO_CONTENU.md`.
+8. **N'invente rien de réel, construis avec du provisoire.** Aucune donnée présentée comme vraie n'est inventée (date, lieu, prix, URL, nom d'artiste ou de membre, e-mail, texte de présentation). Pour construire pages, sections et interactions avant l'arrivée des contenus, utilise des **contenus provisoires numérotés et visiblement factices** (« Artiste 1 », « Événement 2 », « Produit 3 »…) marqués `placeholder: true` dans `content/` (SITE_PLAN §0). Les liens externes provisoires pointent vers une page du site ou l'accueil du service, jamais vers `#` ni une URL inventée. `docs/TODO_CONTENU.md` liste tout ce qui reste provisoire.
 9. Commits en français, au format `type(portée): message` (`feat(hero): état prochaine édition`).
 
 ## 5. Reprise des contenus et assets de la v1
@@ -86,7 +86,7 @@ La v1 est dans le dépôt `KrohmLab/dystopsyelement` (branche `main`, dernier co
    Les fichiers sources > 2 Mo doivent être redimensionnés à 2400 px max avant commit (script `sharp` ponctuel, non conservé).
 3. `CyberFrame` : convertis les chemins de `src/imports/svg-esp92axs1t.ts` (+ `HeaderHomeMobile.tsx` pour mobile) en fichiers `.svg` dans `src/assets/frames/`, importés en `?raw` ou convertis en composants React, `fill="currentColor"`.
 4. Données : crée **uniquement** les 2 événements réels listés dans SITE_PLAN §9 (Nexen Festival 2026, Nexen's Home), avec leurs seules données factuelles. **Ne reprends pas** les descriptions, les artistes, l'événement « SYSTEM FAILURE [01] », les produits, les membres ni aucun autre contenu de la liste SITE_PLAN §0.
-5. Les URLs Unsplash, les IDs SoundCloud fictifs, les liens `#` et les coordonnées v1 ne sont pas repris. Ne les remplace pas par d'autres placeholders.
+5. Les URLs Unsplash, les IDs SoundCloud fictifs, les liens `#` et les coordonnées v1 ne sont pas repris. Là où il faut quelque chose pour construire, utilise les contenus provisoires numérotés (§4.8).
 
 ## 6. Intégrations
 
@@ -162,7 +162,7 @@ Travaille phase par phase. Une branche par phase (`phase-0-socle`, `phase-1-desi
 - [ ] Lighthouse mobile ≥ 95 (Performance, Accessibilité, Bonnes pratiques, SEO) sur `/nexen`, `/agenda`, `/agenda/[slug]` ; sur `/` : Performance ≥ 90 (animations, DESIGN_SYSTEM §6.2), les 3 autres axes ≥ 95
 - [ ] JS total sur l'accueil < 150 Ko gzip (React + React Router compris) ; aucune requête tierce au chargement
 - [ ] Aucune valeur de couleur ou de taille en dur (`grep -rE "#[0-9a-fA-F]{3,6}|\[[0-9]+px\]" src/components src/routes` ne renvoie rien)
-- [ ] Aucun `href="#"`, aucune image Unsplash, aucun texte lorem, aucun contenu issu de Figma Make listé dans SITE_PLAN §0
+- [ ] Aucun `href="#"`, aucune image Unsplash, aucun texte lorem, aucun contenu issu de Figma Make listé dans SITE_PLAN §0, **aucun contenu `placeholder: true` restant** (le build en affiche le compte)
 - [ ] Le nom affiché partout est « Dystopsy Element »
 - [ ] Navigation complète au clavier, menu mobile compris ; focus toujours visible
 - [ ] Rendu vérifié à 360, 768, 1280 et 1920 px

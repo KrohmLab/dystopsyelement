@@ -265,9 +265,9 @@ Contenu : badge pulsant rose (`Badge live`) · titre `text-display glitch` · li
 Visuel 16:9 `chamfer-lg` (niveaux de gris → couleur au survol, comme la v1) · badge statut (`À venir` cyan / `Dernières places` rose / `Passé` neutre) · date en `text-micro` cyan · titre `text-h3` · lieu `text-small ink-muted` · **pas de description** · CTA : `ghost` « Voir l'événement » + bouton `primary sm` « Billets » si `ticketUrl` et à venir.
 Toute la carte est cliquable (lien étendu via pseudo-élément), le bouton Billets reste un lien distinct au-dessus.
 
-### 7.7 `ShopLink`
+### 7.7 `ProductCard` (boutique vitrine)
 
-La boutique est sur **Vinted** : aucune fiche produit sur le site. Bloc court `surface` + `bg-grid` : sur-titre `// SHOP` (rose), titre `text-h2`, bouton `primary` « Voir la boutique » avec icône ↗ (`external`). Non rendu si `site.shopUrl` est vide.
+Visuel carré `chamfer-md` (niveaux de gris → couleur au survol), badge catégorie, nom `text-h3`, prix en `font-display` cyan avec lueur. Toute la carte est un lien externe vers l'annonce **Vinted** (nouvel onglet, icône ↗) : aucune fiche produit ni panier sur le site.
 
 ### 7.8 `ServiceTile`
 
@@ -307,6 +307,11 @@ SVG inline dans `src/components/icons.tsx` (tracés Lucide), trait 1.5, tailles 
 
 ---
 
+### 7.16 bis Cartes avec modale (`ArtistCard`, `MemberCard`, `Modal`)
+
+Carte portrait `chamfer-md` (photo en niveaux de gris → couleur au survol, `Brackets`), badge (format ou pôle), nom `text-h3`, une ligne en `text-small`. Clic ou Entrée → `Modal` : panneau `surface-raised` biseauté, photo, nom, rôle ou format, courte bio, liens ; focus piégé, Échap, clic sur le fond, retour du focus (`useModal`).
+Filtres et onglets (`Tabs`) : boutons `secondary sm`, l'actif en cyan plein (`aria-pressed` / `aria-selected`), filtrage sans rechargement.
+
 ### 7.17 Briques d'animation (accueil)
 
 Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu statique) et affichent leur contenu sans JavaScript.
@@ -326,7 +331,7 @@ Grande tuile visuelle vers une page du site ou un lien externe. Visuel en fond (
 
 ## 8. Contenu : la règle « moins de texte »
 
-**Rien n'est inventé.** Tous les textes, noms, chiffres et coordonnées viennent de l'asso. Un bloc sans contenu fourni n'est pas affiché. Les contenus générés par IA dans Figma Make (artistes, membres, articles, descriptions, coordonnées) sont supprimés (voir SITE_PLAN §0).
+**Rien de réel n'est inventé.** Tous les textes, noms, chiffres et coordonnées réels viennent de l'asso. En attendant, les sections sont construites avec des **contenus provisoires numérotés** (SITE_PLAN §0), qui respectent les budgets ci-dessous. Les contenus générés par IA dans Figma Make (artistes, membres, articles, descriptions, coordonnées) sont supprimés (voir SITE_PLAN §0).
 
 Demande du président : aller à l'essentiel, chaque section mène quelque part.
 
@@ -375,7 +380,7 @@ Lighthouse mobile ≥ 95 sur les 4 axes (accueil : Performance ≥ 90, compte te
 | `FestivalSection` (scroll à 4 étapes) | Supprimée | Remplacée par le bloc `NexenFeature` (logo + 3 CTA) |
 | `NexenSection` | `NexenFeature` | Liens vers `/nexen#line-up`, `#infos` (les routes v1 `/programmation` etc. n'existaient pas) |
 | `ActivitiesSection` | `ServiceTile` | Textes v1 supprimés, contenu à fournir par l'asso |
-| `MerchSection` (react-slick) + pages Shop | `ShopLink` | Boutique sur Vinted, produits v1 supprimés |
+| `MerchSection` (react-slick) + pages Shop | `ProductCard` (accueil + `/shop`) | Vitrine, chaque produit renvoie vers Vinted ; produits v1 supprimés |
 | `CyberSeparator` (4 variantes) | `Ticker` (1 variante) | Contenu réel |
 | `FloatingPattern` | `Divider` | Un seul motif, statique |
 | `FestivalSection` / `NexenSection` (animations) | `Parallax`, `NeonFlicker`, `Reveal` | Effet « waouh » conservé sur l'accueil, sans scroll-jacking |
