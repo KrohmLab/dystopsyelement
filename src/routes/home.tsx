@@ -25,9 +25,9 @@ export function loader() {
   const portals = [
     { label: "Nexen", href: "/nexen", image: "festival/fond" },
     { label: "Agenda", href: "/agenda", image: "events/nexens-home-2026-banner" },
-    ...(services.length > 0 ? [{ label: "Prestations", href: "/prestations", image: null }] : []),
+    ...(services.length > 0 ? [{ label: "Prestations", href: "/prestations", image: "festival/photo-jour" }] : []),
     { label: "Shop", href: "/shop", image: null },
-    { label: "Contact", href: "/contact", image: null },
+    { label: "Contact", href: "/contact", image: "festival/ecailles" },
     ...(site.socials.instagram ? [{ label: "Instagram", href: site.socials.instagram, image: null }] : []),
   ];
   return {
@@ -54,16 +54,10 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         <h2 id="portails-titre" className="sr-only">
           Explorer le site
         </h2>
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+        <ul className="portals grid gap-4 sm:grid-cols-2 md:gap-6">
           {portals.map((portal, i) => (
-            <Reveal as="li" key={portal.href} delay={(i % 3) * 120} className={i === 0 ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : undefined}>
-              <Portal
-                label={portal.label}
-                eyebrow={String(i + 1).padStart(2, "0")}
-                href={portal.href}
-                image={portal.image}
-                className={i === 0 ? "h-full min-h-72 lg:min-h-full" : undefined}
-              />
+            <Reveal as="li" key={portal.href} delay={i * 90} data-default={i === 0 || undefined} className={i === 0 ? "sm:col-span-2" : undefined}>
+              <Portal label={portal.label} eyebrow={String(i + 1).padStart(2, "0")} href={portal.href} image={portal.image} className={i === 0 ? "min-h-72" : undefined} />
             </Reveal>
           ))}
         </ul>

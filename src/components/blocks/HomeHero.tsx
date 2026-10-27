@@ -38,7 +38,7 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
         <NeonFrame className="size-full" />
       </div>
 
-      <div className="mx-auto w-full max-w-site px-gutter pt-header pb-section md:px-24">
+      <div className="hero-enter mx-auto w-full max-w-site px-gutter pt-header pb-section md:px-24">
         {event.upcoming ? (
           <Badge variant="live">{event.status === "dernieres-places" ? "Dernières places" : "Prochain événement"}</Badge>
         ) : (

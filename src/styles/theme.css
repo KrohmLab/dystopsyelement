@@ -251,3 +251,505 @@
     transform: translateY(16px);
   }
 }
+
+/* ==========================================================================
+   Fond vivant du site (SiteBackdrop)
+   ========================================================================== */
+.site-backdrop__glow {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  opacity: 0.9;
+  will-change: transform;
+}
+.site-backdrop__glow--cyan {
+  top: -30vmax;
+  left: -25vmax;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-cyan) 17%, transparent), transparent);
+  animation: glow-drift-a 38s ease-in-out infinite alternate;
+}
+.site-backdrop__glow--pink {
+  top: 20vh;
+  right: -35vmax;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-pink) 15%, transparent), transparent);
+  animation: glow-drift-b 46s ease-in-out infinite alternate;
+}
+.site-backdrop__glow--deep {
+  bottom: -40vmax;
+  left: 15vw;
+  background: radial-gradient(closest-side, var(--color-cyan-dim), transparent);
+  opacity: 0.6;
+  animation: glow-drift-a 52s ease-in-out infinite alternate-reverse;
+}
+@keyframes glow-drift-a {
+  to {
+    transform: translate(12vw, 10vh) scale(1.15);
+  }
+}
+@keyframes glow-drift-b {
+  to {
+    transform: translate(-14vw, 16vh) scale(0.9);
+  }
+}
+
+/* Sol quadrillé : avance au défilement de la page (scroll-driven), prolonge le sol du hero */
+.site-backdrop__floor {
+  position: absolute;
+  inset: auto 0 0;
+  height: 46vh;
+  perspective: 320px;
+  mask-image: linear-gradient(to top, black 20%, transparent);
+  opacity: 0.7;
+}
+.site-backdrop__plane {
+  position: absolute;
+  inset: 0 -60% -10%;
+  transform: rotateX(70deg);
+  transform-origin: 50% 100%;
+}
+.site-backdrop__lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-cyan) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-cyan) 45%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.site-backdrop__horizon {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-cyan-line), var(--color-pink-line), var(--color-cyan-line), transparent);
+  box-shadow: 0 0 24px 2px var(--color-cyan-dim);
+}
+@supports (animation-timeline: scroll()) {
+  .site-backdrop__lines {
+    animation: floor-scroll linear both;
+    animation-timeline: scroll(root);
+  }
+  .site-backdrop__floor {
+    animation: floor-rise linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+  }
+}
+@keyframes floor-scroll {
+  to {
+    background-position: 0 2400px;
+  }
+}
+/* Discret sous le hero, il s'affirme dès qu'on entre dans le site */
+@keyframes floor-rise {
+  from {
+    opacity: 0.15;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+.site-backdrop__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 45%, var(--color-void) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-backdrop__glow,
+  .site-backdrop__lines,
+  .site-backdrop__floor {
+    animation: none;
+  }
+}
+
+/* Sections voilées (tone="abyss") : filets lumineux haut et bas pour la profondeur */
+.section-veil::before,
+.section-veil::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-cyan-line), transparent);
+  pointer-events: none;
+}
+.section-veil::before {
+  top: 0;
+}
+.section-veil::after {
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, var(--color-pink-line), transparent);
+}
+
+/* ==========================================================================
+   Intro de lancement (SiteIntro) — html[data-intro="on"], une fois par session
+   ========================================================================== */
+:root {
+  --intro-offset: 0s;
+}
+html[data-intro="on"] {
+  --intro-offset: 1.5s;
+}
+.site-intro {
+  display: none;
+}
+html[data-intro="on"] .site-intro,
+html[data-intro="done"] .site-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--color-void);
+  pointer-events: none;
+  animation: intro-curtain 0.7s var(--ease-in-out) 1.3s both;
+}
+html[data-intro="done"] .site-intro {
+  display: none;
+}
+@keyframes intro-curtain {
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+.site-intro__horizon {
+  position: absolute;
+  top: 58%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-cyan), var(--color-pink), var(--color-cyan), transparent);
+  box-shadow: 0 0 30px 4px var(--color-cyan-line);
+  transform: scaleX(0);
+  animation: intro-horizon 0.6s var(--ease-out-expo) 0.1s both;
+}
+@keyframes intro-horizon {
+  to {
+    transform: scaleX(1);
+  }
+}
+.site-intro__floor {
+  position: absolute;
+  inset: 58% 0 0;
+  perspective: 300px;
+  mask-image: linear-gradient(to top, black 30%, transparent);
+}
+.site-intro__lines {
+  position: absolute;
+  inset: -40px -60% -10%;
+  transform-origin: 50% 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-cyan) 60%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-cyan) 60%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: intro-floor 1.2s var(--ease-out-expo) 0.3s both;
+}
+@keyframes intro-floor {
+  from {
+    transform: rotateX(90deg) translateY(0);
+    opacity: 0;
+  }
+  to {
+    transform: rotateX(62deg) translateY(80px);
+    opacity: 1;
+  }
+}
+.site-intro__logo {
+  position: relative;
+  top: -6vh;
+  opacity: 0;
+  filter: drop-shadow(0 0 18px var(--color-cyan));
+  animation: neon-on 0.9s steps(1) 0.5s both;
+}
+
+/* Le hero attend la fin de l'intro pour lancer ses propres animations */
+.hero-enter {
+  animation: fade-up var(--duration-slow) var(--ease-out-expo) var(--intro-offset) both;
+}
+.cyber-frame {
+  animation-delay: calc(0.2s + var(--intro-offset));
+}
+.neon-frame path {
+  animation-delay: calc(var(--delay, 0ms) + var(--intro-offset)), calc(1.4s + var(--intro-offset));
+}
+
+/* ==========================================================================
+   Portails (accueil) : tuile survolée qui s'étire, les autres se replient
+   ========================================================================== */
+.portal__vlabel {
+  display: none;
+}
+.portal__scan {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  background: var(--color-cyan);
+  box-shadow: 0 0 16px 2px var(--color-cyan-line);
+  opacity: 0;
+  pointer-events: none;
+}
+.group:is(:hover, :focus-visible) > .portal__scan {
+  animation: portal-scan 1.8s linear infinite;
+}
+@keyframes portal-scan {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+.portal__edge {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-pink));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+  pointer-events: none;
+}
+.group:is(:hover, :focus-visible) > .portal__edge {
+  transform: scaleX(1);
+}
+
+@media (min-width: 64rem) {
+  .portals {
+    display: flex;
+    gap: 1rem;
+    height: min(34rem, 70vh);
+  }
+  .portals > li {
+    flex: 1 1 0;
+    min-width: 0;
+    transition: flex-grow var(--duration-slow) var(--ease-out-expo);
+  }
+  /* Tuile étirée : la première par défaut, sinon celle survolée ou au focus */
+  .portals > li[data-default],
+  .portals > li:is(:hover, :focus-within) {
+    flex-grow: 3.4;
+  }
+  .portals:has(> li:is(:hover, :focus-within)) > li[data-default]:not(:hover, :focus-within) {
+    flex-grow: 1;
+  }
+
+  /* Repliée : libellé vertical ; étirée : libellé complet */
+  .portals .portal__vlabel {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    transition: opacity var(--duration-base);
+  }
+  .portals .portal__full {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity var(--duration-base),
+      transform var(--duration-slow) var(--ease-out-expo);
+    white-space: nowrap;
+  }
+  .portals > li:is([data-default], :hover, :focus-within) .portal__vlabel {
+    opacity: 0;
+  }
+  .portals > li:is([data-default], :hover, :focus-within) .portal__full {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.15s;
+  }
+  .portals:has(> li:is(:hover, :focus-within)) > li[data-default]:not(:hover, :focus-within) .portal__vlabel {
+    opacity: 1;
+  }
+  .portals:has(> li:is(:hover, :focus-within)) > li[data-default]:not(:hover, :focus-within) .portal__full {
+    opacity: 0;
+    transform: translateY(12px);
+    transition-delay: 0s;
+  }
+}
+
+/* ==========================================================================
+   Menu plein écran : rideau + barre de scan, liens en cascade
+   ========================================================================== */
+.menu {
+  visibility: hidden;
+  clip-path: inset(0 0 100% 0);
+  transition:
+    clip-path 0.55s var(--ease-in-out),
+    visibility 0s linear 0.55s;
+}
+.menu[data-open] {
+  visibility: visible;
+  clip-path: inset(0);
+  transition:
+    clip-path 0.7s var(--ease-out-expo),
+    visibility 0s;
+}
+/* Barre néon au bord du rideau */
+.menu__scanbar {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-cyan), var(--color-pink), var(--color-cyan), transparent);
+  box-shadow: 0 0 24px 3px var(--color-cyan-line);
+  opacity: 0;
+  pointer-events: none;
+}
+.menu[data-open] .menu__scanbar {
+  animation: menu-scan-down 0.7s var(--ease-out-expo) both;
+}
+.menu:not([data-open]) .menu__scanbar {
+  animation: menu-scan-up 0.55s var(--ease-in-out) both;
+}
+@keyframes menu-scan-down {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+@keyframes menu-scan-up {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+/* Liens et colonne latérale : entrée en cascade à l'ouverture, sortie rapide à la fermeture */
+.menu__item,
+.menu__aside {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.menu[data-open] .menu__item {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s var(--ease-out-expo),
+    transform 0.6s var(--ease-out-expo);
+  transition-delay: calc(0.25s + var(--i, 0) * 70ms);
+}
+.menu[data-open] .menu__aside {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.6s var(--ease-out-expo),
+    transform 0.6s var(--ease-out-expo);
+  transition-delay: 0.55s;
+}
+.menu[data-open] .menu__label {
+  animation: menu-glitch-in 0.5s steps(3) both;
+  animation-delay: calc(0.3s + var(--i, 0) * 70ms);
+}
+@keyframes menu-glitch-in {
+  0% {
+    text-shadow: -3px 0 var(--color-pink), 3px 0 var(--color-cyan);
+    clip-path: inset(0 0 60% 0);
+  }
+  50% {
+    text-shadow: 3px 0 var(--color-pink), -3px 0 var(--color-cyan);
+    clip-path: inset(40% 0 0 0);
+  }
+  100% {
+    text-shadow: none;
+    clip-path: inset(0);
+  }
+}
+.menu__mark {
+  transition: transform 1.2s var(--ease-out-expo);
+}
+.menu[data-open] .menu__mark {
+  transform: translateY(-50%) rotate(-12deg);
+}
+
+/* Bouton Menu : trois traits qui deviennent une croix */
+.burger__icon {
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 18px;
+}
+.burger__icon > span {
+  position: absolute;
+  left: 0;
+  height: 2px;
+  background: currentColor;
+  transition:
+    transform var(--duration-base) var(--ease-out-expo),
+    opacity var(--duration-fast),
+    width var(--duration-base) var(--ease-out-expo),
+    top var(--duration-base) var(--ease-out-expo);
+}
+.burger__icon > span:nth-child(1) {
+  top: 0;
+  width: 100%;
+}
+.burger__icon > span:nth-child(2) {
+  top: 8px;
+  width: 70%;
+}
+.burger__icon > span:nth-child(3) {
+  top: 16px;
+  width: 45%;
+}
+.burger:hover .burger__icon > span {
+  width: 100%;
+  background: var(--color-cyan);
+}
+.burger[data-open] .burger__icon > span:nth-child(1) {
+  top: 8px;
+  width: 100%;
+  transform: rotate(45deg);
+}
+.burger[data-open] .burger__icon > span:nth-child(2) {
+  opacity: 0;
+}
+.burger[data-open] .burger__icon > span:nth-child(3) {
+  top: 8px;
+  width: 100%;
+  transform: rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu,
+  .menu[data-open] {
+    transition: visibility 0s;
+  }
+  .menu__scanbar {
+    display: none;
+  }
+  .menu__item,
+  .menu__aside {
+    transform: none;
+  }
+}

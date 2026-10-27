@@ -5,11 +5,13 @@ import type { Route } from "./+types/root";
 import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/Header";
 import { ScrollProgress } from "./components/layout/ScrollProgress";
+import { SiteBackdrop } from "./components/layout/SiteBackdrop";
+import { INTRO_SCRIPT, SiteIntro } from "./components/layout/SiteIntro";
 import { SkipLink } from "./components/layout/SkipLink";
 import { DEPLOY_SKEW_SCRIPT, useDeploySkewGuard } from "./lib/deploySkew";
-import { getFeatured } from "./lib/events";
+import { formatDateRange, getFeatured } from "./lib/events";
 import { getNavigation, type Ticket } from "./lib/navigation";
-import { events, services } from "./content/load.server";
+import { events, services, site } from "./content/load.server";
 import { useScrollTopOnNavigate } from "./lib/useScrollTopOnNavigate";
 import "./styles/theme.css";
 
@@ -29,6 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="theme-color" content="#020202" />
         {/* Avant tout le reste : rejoint le lien cliqué si un ancien onglet a rechargé la page à sa place. */}
         <script dangerouslySetInnerHTML={{ __html: DEPLOY_SKEW_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
         {/* Sans JavaScript, les éléments à apparition et les néons restent visibles. */}
         <noscript>
           <style>{"[data-reveal],[data-flicker]{opacity:1!important;transform:none!important}"}</style>
@@ -50,18 +53,21 @@ export function loader() {
   const featured = getFeatured(events, new Date());
   const ticketUrl = featured?.upcoming ? featured.event.ticketUrl : null;
   const ticket: Ticket = ticketUrl ? { href: ticketUrl, external: true } : { href: "/agenda", external: false };
-  return { nav: getNavigation({ hasServices: services.length > 0 }), ticket };
+  const next = featured?.upcoming ? { title: featured.event.title, slug: featured.event.slug, dates: formatDateRange(featured.event) } : null;
+  return { nav: getNavigation({ hasServices: services.length > 0 }), ticket, next, socials: site.socials, email: site.email };
 }
 
 export default function App() {
-  const { nav, ticket } = useLoaderData<typeof loader>();
+  const { nav, ticket, next, socials, email } = useLoaderData<typeof loader>();
   useDeploySkewGuard();
   useScrollTopOnNavigate();
   return (
     <>
       <SkipLink />
+      <SiteIntro />
+      <SiteBackdrop />
       <ScrollProgress />
-      <Header nav={nav} ticket={ticket} />
+      <Header nav={nav} ticket={ticket} next={next} socials={socials} email={email} />
       <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
         <Outlet />
       </main>

@@ -22,7 +22,7 @@ export function NexenFeature({ dates, place, ticketUrl }: Props) {
       <Parallax speed={80} mouse={0} className="absolute -inset-y-24 inset-x-0 -z-20">
         <ResponsiveImage image="festival/ecailles" alt="" sizes="100vw" className="opacity-35" />
       </Parallax>
-      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-radial from-void/40 to-void to-75%" />
+      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-radial from-void/40 to-void/90 to-75%" />
       <div className="mx-auto flex max-w-site flex-col items-center">
         <Eyebrow tone="pink">Nexen</Eyebrow>
         <h2 id="nexen-titre" className="sr-only">

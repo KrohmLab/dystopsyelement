@@ -53,7 +53,7 @@ export function Footer({ nav, ticket }: { nav: NavItem[]; ticket: Ticket }) {
   ];
 
   return (
-    <footer id="pied-de-page" className="border-t border-cyan-line bg-void px-gutter pt-14 pb-7">
+    <footer id="pied-de-page" className="border-t border-cyan-line bg-void/85 px-gutter pt-14 pb-7">
       <div className="mx-auto max-w-site">
         <div className="grid gap-10 md:grid-cols-[2fr_1fr_1fr]">
           <div>

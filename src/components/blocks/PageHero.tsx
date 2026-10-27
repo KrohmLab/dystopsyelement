@@ -16,11 +16,11 @@ type Props = {
 /** En-tête des pages intérieures : visuel assombri + scanlines, sur-titre, H1 glitch, une ligne, actions. */
 export function PageHero({ eyebrow, title, lead, image, className, children }: Props) {
   return (
-    <section className={cn("relative isolate overflow-hidden border-b border-line bg-void px-gutter pt-header", className)}>
+    <section className={cn("relative isolate overflow-hidden border-b border-line px-gutter pt-header", className)}>
       {image && (
         <div aria-hidden="true" className="absolute inset-0 -z-10">
           <ResponsiveImage image={image} alt="" sizes="100vw" priority className="opacity-40 mix-blend-luminosity" />
-          <span className="absolute inset-0 bg-linear-to-t from-void via-void/60 to-void/80" />
+          <span className="absolute inset-0 bg-linear-to-t from-void/90 via-void/50 to-void/80" />
         </div>
       )}
       <span aria-hidden="true" className="absolute inset-0 -z-10 bg-scanlines" />

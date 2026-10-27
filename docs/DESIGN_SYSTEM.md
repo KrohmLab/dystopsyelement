@@ -159,6 +159,7 @@ Deux équerres de 12 px (bordure 2 px) aux coins haut-gauche et bas-droit, en cy
 
 | Utilitaire | Effet | Où |
 |---|---|---|
+| `SiteBackdrop` | Fond fixe de tout le site : lueurs cyan / rose qui dérivent lentement, sol quadrillé en perspective qui **avance au défilement** (prolonge le sol du hero), scanlines, vignettage | Derrière toutes les pages ; les sections sont transparentes (`void`) ou voilées à 55 % avec filets lumineux (`abyss`) |
 | `bg-grid` | Grille cyan à 5 %, pas de 40 px | Fond de 1 section sur 2, header scrollé |
 | `bg-scanlines` | Lignes horizontales à 3 % | Par-dessus les visuels plein écran |
 | Motifs `Pattern_0X` (PNG v1) | Ornements flottants | Retirés du DOM. Réutiliser **un** motif en SVG comme séparateur décoratif (`<Divider />`) |
@@ -193,6 +194,7 @@ L'accueil doit produire un effet « waouh » dès l'arrivée. Animations prévue
 
 | Où | Effet | Technique |
 |---|---|---|
+| Lancement du site (1re page de la session, ≈ 1,5 s) | `SiteIntro` : écran noir, horizon néon qui se trace, sol quadrillé qui se lève, logo qui s'allume, puis le rideau s'ouvre sur la page ; les animations du hero attendent la fin de l'intro | CSS pur (`html[data-intro]`) |
 | Hero, à l'arrivée (≈ 1 s) | Le cadre néon `NeonFrame` se trace, le titre se décode lettre par lettre (`DecodeText`) puis glitche, la grille en perspective `GridFloor` défile au sol, scanlines par-dessus | CSS + `motion` |
 | Hero, ensuite | Parallaxe légère du visuel à la souris (desktop) et au défilement | `motion` (`useScroll`, ressorts) |
 | Bandeau | Défilement continu `animate-marquee` | CSS |
@@ -237,12 +239,12 @@ Rendu `<a>` si `href`, sinon `<button>`.
 
 Toutes les tailles respectent une cible tactile ≥ 44 px (sauf `sm`, réservé au desktop). Forme : `chamfer-sm` (sm) / `chamfer-md` (md, lg). Libellés : verbe d'action, 1 à 3 mots (« Prendre ma place », « Voir le line-up », « Demander un devis »).
 
-### 7.2 `Header`
+### 7.2 `Header` et `Menu` (plein écran, toutes tailles)
 
-Hauteur `spacing-header` (72 px). Logo Dystopsy (SVG, 40 px) à gauche, liens au centre/droite, `Button primary sm` « Billetterie » à droite.
-Au repos : transparent. Après 50 px de scroll : fond `abyss/60` + `backdrop-blur` + bordure basse `cyan-line` + `bg-grid` + `shadow-header`.
-Liens : `text-label`, `ink-soft` → `ink` au survol avec crochets `[ ]` cyan qui glissent et soulignement cyan 2 px (effet v1 conservé). Lien actif : `cyan` + `aria-current="page"`.
-Mobile : bouton burger (44×44) → panneau plein écran `void`, liens en `text-h3`, bordure gauche cyan au survol, CTA Billetterie pleine largeur en bas. Fermeture : Échap, clic sur un lien, bouton ×. Focus piégé dans le panneau (`<dialog>` modal natif).
+Hauteur `spacing-header` (72 px). Logo Dystopsy (SVG, 40 px) à gauche ; à droite `Button primary sm` « Billetterie » (dès `sm`) et le bouton **Menu** (trois traits qui deviennent une croix, libellé « Menu » / « Fermer » dès `md`). **Pas de liens dans l'en-tête, même sur grand écran** (décision du 27/10/2026) : toute la navigation passe par le menu plein écran.
+Au repos : transparent. Après 50 px de scroll : fond `abyss/60` + `backdrop-blur` + bordure basse `cyan-line` + `bg-grid` + `shadow-header`. Le logo glitche une fois au premier défilement.
+**Menu plein écran** : fond `void` avec lueurs cyan / rose, sol quadrillé, grand logo en filigrane qui pivote, scanlines. Liens numérotés (`00 Accueil`, `01 Nexen`…) en `text-h1` : entrée en cascade avec glitch RGB, au survol décalage + cyan + glitch + flèche. Colonne latérale : prochain événement, Billetterie pleine largeur, réseaux, e-mail.
+Ouverture : rideau qui descend (`clip-path`) avec une barre néon cyan → rose au bord ; fermeture : rideau qui remonte, liens qui s'effacent. Focus piégé, Échap, page inerte, focus rendu au bouton (`useModal`). Mouvement réduit : apparition directe.
 
 ### 7.3 `Footer`
 
@@ -327,7 +329,7 @@ Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu
 
 ### 7.18 `Portal` (tuile de navigation)
 
-Grande tuile visuelle vers une page du site ou un lien externe. Visuel en fond (gris → couleur au survol), libellé `text-h3` d'un ou deux mots, sur-titre code optionnel, flèche → ou ↗ (externe). Survol / focus : glitch RGB sur le libellé, balayage lumineux, `Brackets` qui s'agrandissent. Tuile entière cliquable, `chamfer-lg`. Une tuile dont la destination n'existe pas (URL non fournie, collection vide) n'est pas rendue.
+Grande tuile visuelle vers une page du site ou un lien externe. **Sur grand écran, les tuiles forment une rangée** : la première est étirée par défaut, celle survolée (ou au focus clavier) s'étire à son tour et les autres se replient en bande verticale avec leur libellé à la verticale. Sur mobile et tablette : grille. Visuel en fond (gris → couleur au survol), libellé `text-h3` d'un ou deux mots, sur-titre code optionnel, flèche → ou ↗ (externe). Survol / focus : barre de scan qui descend, liseré néon cyan → rose en bas, glitch RGB sur le libellé, balayage lumineux, visuel qui passe en couleur, `Brackets` qui s'agrandissent. Tuile entière cliquable, `chamfer-lg`. Une tuile dont la destination n'existe pas (URL non fournie, collection vide) n'est pas rendue.
 
 ## 8. Contenu : la règle « moins de texte »
 

@@ -47,7 +47,7 @@ Reprise de la v1 (`dystopsyelements.pages.dev`), avec les pages que la v1 annon�
 | `/mentions-legales` | Mentions légales + confidentialité | n'existait pas (obligatoire) |
 | `/404` | Page introuvable | |
 
-Navigation principale : **Nexen · Agenda · Prestations · Shop · Contact** + bouton rose **Billetterie** (le logo mène à l'accueil).
+Navigation principale, dans le **menu plein écran** (bouton Menu, à toutes les tailles d'écran) : **Accueil · Nexen · Agenda · Prestations · Shop · Contact**. En-tête : logo, bouton rose **Billetterie** et bouton Menu.
 Le bouton Billetterie pointe vers le `ticketUrl` du prochain événement qui en a un ; sinon vers `/agenda`.
 **Billetterie : HelloAsso** et **achats : Vinted**, toujours en liens externes (nouvel onglet, icône ↗). Aucun panier ni paiement sur le site.
 

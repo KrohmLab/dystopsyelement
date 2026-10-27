@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { INTRO_MS } from "../layout/SiteIntro";
 
 const GLYPHS = "!<>-_/\\[]{}=+*^?#01ΛΞΣ";
 
@@ -19,7 +20,9 @@ export function DecodeText({ text, duration = 900, delay = 0 }: Props) {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const start = performance.now() + delay;
+    // Pendant l'intro de lancement, le décodage attend que le rideau s'ouvre.
+    const introDelay = document.documentElement.dataset.intro === "on" ? INTRO_MS : 0;
+    const start = performance.now() + delay + introDelay;
     let frame = requestAnimationFrame(function tick(now) {
       const progress = Math.min(1, Math.max(0, (now - start) / duration));
       const revealed = Math.floor(progress * text.length);

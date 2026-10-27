@@ -16,13 +16,14 @@ type Props = {
 };
 
 /**
- * Tuile de navigation de l'accueil (DESIGN_SYSTEM §7.18) : grand visuel, libellé d'un ou deux mots,
- * glitch RGB, balayage lumineux et équerres au survol ou au focus. Tuile entière cliquable.
+ * Tuile de navigation de l'accueil (DESIGN_SYSTEM §7.18). Dans une rangée `.portals` (grand écran),
+ * la tuile survolée s'étire et les autres se replient en bande verticale (styles dans theme.css).
+ * Au survol ou au focus : barre de scan, liseré néon, glitch RGB, visuel en couleur, équerres.
  */
 export function Portal({ label, href, eyebrow, image, className }: Props) {
   const external = isExternal(href);
   const classes = cn(
-    "group relative flex min-h-56 flex-col justify-end overflow-hidden bg-surface p-6 no-underline chamfer-lg",
+    "portal group relative flex h-full min-h-56 flex-col justify-end overflow-hidden bg-surface p-6 no-underline chamfer-lg",
     // Balayage lumineux au survol.
     "after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:w-1/3 after:bg-linear-to-r after:from-transparent after:via-cyan/20 after:to-transparent after:opacity-0 group-hover:after:animate-shine group-hover:after:opacity-100",
     className,
@@ -35,8 +36,8 @@ export function Portal({ label, href, eyebrow, image, className }: Props) {
           <ResponsiveImage
             image={image}
             alt=""
-            sizes="(min-width: 64rem) 40rem, 100vw"
-            className="opacity-60 grayscale transition duration-slow ease-out-expo group-hover:scale-105 group-hover:opacity-90 group-hover:grayscale-0"
+            sizes="(min-width: 64rem) 50rem, 100vw"
+            className="opacity-55 grayscale transition duration-slow ease-out-expo group-hover:scale-105 group-hover:opacity-90 group-hover:grayscale-0 group-focus-visible:opacity-90 group-focus-visible:grayscale-0"
           />
         </span>
       ) : (
@@ -47,12 +48,19 @@ export function Portal({ label, href, eyebrow, image, className }: Props) {
       )}
       <span aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-void via-void/50 to-transparent" />
       <span aria-hidden="true" className="absolute inset-0 bg-scanlines" />
+      <span aria-hidden="true" className="portal__scan" />
+      <span aria-hidden="true" className="portal__edge" />
       <Brackets />
-      <span className="relative flex items-end justify-between gap-4">
+
+      {/* Libellé vertical : tuile repliée de la rangée (grand écran). */}
+      <span aria-hidden="true" className="portal__vlabel">
+        {eyebrow && <span className="font-display text-eyebrow font-bold text-cyan">// {eyebrow}</span>}
+        <span className="font-display text-h3 font-black whitespace-nowrap text-ink uppercase">{label}</span>
+      </span>
+
+      <span className="portal__full relative flex items-end justify-between gap-4">
         <span>
-          {eyebrow && (
-            <span className="mb-2 block font-display text-eyebrow font-bold text-cyan uppercase">// {eyebrow}</span>
-          )}
+          {eyebrow && <span className="mb-2 block font-display text-eyebrow font-bold text-cyan uppercase">// {eyebrow}</span>}
           <span className="glitch-hover block font-display text-h3 font-black text-ink uppercase" data-text={label}>
             {label}
           </span>

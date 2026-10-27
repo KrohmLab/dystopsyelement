@@ -1,57 +1,27 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router";
+import { Link } from "react-router";
+import type { Site } from "../../content/schemas";
 import { cn } from "../../lib/cn";
 import type { NavItem, Ticket } from "../../lib/navigation";
 import { site } from "../../site";
-import { CloseIcon, ExternalIcon, MenuIcon, TicketIcon } from "../icons";
+import { TicketIcon } from "../icons";
 import { Button } from "../ui/Button";
 import { Logo } from "./Logo";
-import { MobileMenu } from "./MobileMenu";
+import { Menu, type NextEvent } from "./Menu";
 
-const LINK =
-  "group/link relative flex items-center gap-1 px-4 py-2.5 font-display text-label font-bold text-ink-soft uppercase no-underline transition-colors duration-fast hover:text-ink aria-[current=page]:text-cyan";
-const BRACKET =
-  "absolute top-1/2 -translate-y-1/2 text-cyan opacity-0 transition-all duration-base ease-out-expo group-hover/link:opacity-100";
-
-/** Lien de navigation desktop : crochets [ ] cyan qui glissent et soulignement au survol (effet v1). */
-function NavEntry({ item }: { item: NavItem }) {
-  const decor = (
-    <>
-      <span aria-hidden="true" className={`${BRACKET} left-2 group-hover/link:left-0.5`}>
-        [
-      </span>
-      <span aria-hidden="true" className={`${BRACKET} right-2 group-hover/link:right-0.5`}>
-        ]
-      </span>
-      <span
-        aria-hidden="true"
-        className="absolute inset-x-4 bottom-1 h-0.5 origin-left scale-x-0 bg-cyan transition-transform duration-base ease-out-expo group-hover/link:scale-x-100"
-      />
-    </>
-  );
-  if (item.external) {
-    return (
-      <a href={item.href} target="_blank" rel="noopener noreferrer" className={LINK}>
-        {item.label}
-        <ExternalIcon size={16} />
-        <span className="sr-only">(nouvel onglet)</span>
-        {decor}
-      </a>
-    );
-  }
-  return (
-    <NavLink to={item.href} prefetch="intent" className={LINK}>
-      {item.label}
-      {decor}
-    </NavLink>
-  );
-}
+type Props = {
+  nav: NavItem[];
+  ticket: Ticket;
+  next: NextEvent;
+  socials: Site["socials"];
+  email: string | null;
+};
 
 /**
- * En-tête fixe (DESIGN_SYSTEM §7.2) : transparent au repos, fond flouté + grille après 50 px de scroll,
- * logo qui glitche une fois au premier défilement. Le menu plein écran s'ouvre sous l'en-tête.
+ * En-tête fixe (DESIGN_SYSTEM §7.2) : logo, Billetterie et bouton Menu à toutes les tailles d'écran
+ * (menu plein écran). Transparent au repos, fond flouté + grille après 50 px de scroll, logo qui glitche.
  */
-export function Header({ nav, ticket }: { nav: NavItem[]; ticket: Ticket }) {
+export function Header({ nav, ticket, next, socials, email }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -70,32 +40,22 @@ export function Header({ nav, ticket }: { nav: NavItem[]; ticket: Ticket }) {
       <header
         ref={headerRef}
         data-scrolled={scrolled || undefined}
+        data-menu={menuOpen || undefined}
         className={cn(
           "fixed inset-x-0 top-0 z-40 border-b transition duration-base",
           menuOpen
-            ? "border-cyan-line bg-void"
+            ? "border-transparent"
             : "border-transparent data-scrolled:border-cyan-line data-scrolled:bg-abyss/60 data-scrolled:bg-grid data-scrolled:shadow-header data-scrolled:backdrop-blur-lg",
         )}
       >
         <div className="mx-auto flex h-header max-w-site items-center justify-between gap-6 px-gutter">
-          <Link to="/" className="group/brand flex items-center gap-3 text-ink" aria-label={`${site.name}, accueil`}>
+          <Link to="/" className="group/brand flex items-center gap-3 text-ink no-underline" aria-label={`${site.name}, accueil`}>
             <Logo className="logo-mark size-10 transition-[filter] duration-base group-hover/brand:drop-shadow-md group-hover/brand:drop-shadow-cyan" />
-            <span className="hidden font-display text-label font-bold uppercase xl:inline">{site.name}</span>
+            <span className="hidden font-display text-label font-bold uppercase lg:inline">{site.name}</span>
           </Link>
 
-          <nav aria-label="Navigation principale" className="hidden lg:block">
-            <ul className="flex items-center gap-1">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <NavEntry item={item} />
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="flex items-center gap-2">
-            {/* En mobile, la billetterie est dans le menu (bouton pleine largeur). */}
-            <div className="hidden sm:block">
+          <div className="flex items-center gap-3">
+            <div className={cn("hidden transition-opacity duration-base sm:block", menuOpen && "pointer-events-none opacity-0")}>
               <Button size="sm" icon={TicketIcon} href={ticket.href} external={ticket.external}>
                 Billetterie
               </Button>
@@ -103,19 +63,37 @@ export function Header({ nav, ticket }: { nav: NavItem[]; ticket: Ticket }) {
             <button
               ref={burgerRef}
               type="button"
-              aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={menuOpen}
               aria-controls="menu-principal"
               onClick={() => setMenuOpen((open) => !open)}
-              className="grid size-11 cursor-pointer place-items-center text-ink lg:hidden"
+              data-open={menuOpen || undefined}
+              className="burger group/burger flex min-h-11 cursor-pointer items-center gap-3 px-1 text-ink"
             >
-              {menuOpen ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
+              <span className="hidden font-display text-label font-bold uppercase transition-colors duration-fast group-hover/burger:text-cyan md:inline">
+                {menuOpen ? "Fermer" : "Menu"}
+              </span>
+              <span className="sr-only md:hidden">{menuOpen ? "Fermer le menu" : "Ouvrir le menu"}</span>
+              <span aria-hidden="true" className="burger__icon">
+                <span />
+                <span />
+                <span />
+              </span>
             </button>
           </div>
         </div>
       </header>
 
-      <MobileMenu open={menuOpen} onClose={closeMenu} nav={nav} ticket={ticket} headerRef={headerRef} returnFocusRef={burgerRef} />
+      <Menu
+        open={menuOpen}
+        onClose={closeMenu}
+        nav={nav}
+        ticket={ticket}
+        next={next}
+        socials={socials}
+        email={email}
+        headerRef={headerRef}
+        returnFocusRef={burgerRef}
+      />
     </>
   );
 }

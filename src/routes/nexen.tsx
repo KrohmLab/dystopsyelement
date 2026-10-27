@@ -77,7 +77,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
         <Parallax speed={80} mouse={10} className="absolute -inset-24 -z-20">
           <ResponsiveImage image="festival/fond" alt="" sizes="100vw" className="opacity-45" />
         </Parallax>
-        <span aria-hidden="true" className="absolute inset-0 -z-10 bg-radial from-void/30 to-void to-80%" />
+        <span aria-hidden="true" className="absolute inset-0 -z-10 bg-radial from-void/30 to-void/90 to-80%" />
         <div className="mx-auto flex max-w-site flex-col items-center">
           <SectionHeader id="univers-titre" eyebrow="L'univers" tone="pink" title="Open air festival" align="center" />
           <NeonFlicker className="w-[min(26rem,80%)]">
