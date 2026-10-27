@@ -1,4 +1,4 @@
-import logo from "../../assets/brand/logo-dystopsy.svg?raw";
+import logo from "../../../assets/brand/logo-dystopsy.svg?raw";
 
 /** Logo Dystopsy Element en SVG inline : prend la couleur du texte (`currentColor`). */
 export function Logo({ className = "" }: { className?: string }) {

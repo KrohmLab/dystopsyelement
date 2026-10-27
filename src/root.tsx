@@ -2,7 +2,12 @@ import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestora
 import orbitron from "@fontsource-variable/orbitron/files/orbitron-latin-wght-normal.woff2?url";
 import rajdhani from "@fontsource/rajdhani/files/rajdhani-latin-500-normal.woff2?url";
 import type { Route } from "./+types/root";
+import { Footer } from "./components/layout/Footer";
+import { Header } from "./components/layout/Header";
+import { ScrollProgress } from "./components/layout/ScrollProgress";
+import { SkipLink } from "./components/layout/SkipLink";
 import { DEPLOY_SKEW_SCRIPT, useDeploySkewGuard } from "./lib/deploySkew";
+import { getNavigation, type Ticket } from "./lib/navigation";
 import { useScrollTopOnNavigate } from "./lib/useScrollTopOnNavigate";
 import "./styles/theme.css";
 
@@ -22,6 +27,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="theme-color" content="#020202" />
         {/* Avant tout le reste : rejoint le lien cliqué si un ancien onglet a rechargé la page à sa place. */}
         <script dangerouslySetInnerHTML={{ __html: DEPLOY_SKEW_SCRIPT }} />
+        {/* Sans JavaScript, les éléments à apparition et les néons restent visibles. */}
+        <noscript>
+          <style>{"[data-reveal],[data-flicker]{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
         <Meta />
         <Links />
       </head>
@@ -34,20 +43,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+const nav = getNavigation();
+// TODO(phase 2) : ticketUrl du prochain événement qui en a un (lib/events.ts), sinon /agenda.
+const ticket: Ticket = { href: "/agenda", external: false };
+
 export default function App() {
   useDeploySkewGuard();
   useScrollTopOnNavigate();
   return (
     <>
-      <a
-        href="#contenu"
-        className="sr-only-focusable fixed top-4 left-4 z-50 bg-cyan px-4 py-3 font-display text-label font-bold text-on-accent uppercase chamfer-sm"
-      >
-        Aller au contenu
-      </a>
+      <SkipLink />
+      <ScrollProgress />
+      <Header nav={nav} ticket={ticket} />
       <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
         <Outlet />
       </main>
+      <Footer nav={nav} ticket={ticket} />
     </>
   );
 }

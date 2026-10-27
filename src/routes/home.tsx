@@ -1,4 +1,4 @@
-import { Logo } from "../components/Logo";
+import { Logo } from "../components/layout/Logo";
 import { site } from "../content/load.server";
 import { pageMeta } from "../lib/seo";
 import type { Route } from "./+types/home";

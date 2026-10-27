@@ -11,3 +11,203 @@
 
 /* Les docs contiennent des exemples de classes et des valeurs en dur : hors du scan Tailwind. */
 @source not "../../docs";
+
+/* ==========================================================================
+   Animations (DESIGN_SYSTEM §6, §7.17). Uniquement les variables des tokens.
+   Mouvement réduit : la règle de tokens.css ramène toutes les durées à ~0 ;
+   les états initiaux masqués sont neutralisés plus bas.
+   ========================================================================== */
+
+/* Apparition au défilement (Reveal) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Barre de progression de lecture (ScrollProgress) */
+.scroll-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    transform: scaleX(0);
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+@keyframes scroll-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Logo de l'en-tête : glitche une fois au premier défilement */
+[data-scrolled] .logo-mark {
+  animation: logo-glitch var(--duration-slow) steps(4) 1;
+}
+@keyframes logo-glitch {
+  25% {
+    transform: translate(-2px, 1px);
+    filter: drop-shadow(2px 0 var(--color-pink)) drop-shadow(-2px 0 var(--color-cyan));
+  }
+  50% {
+    transform: translate(2px, -1px);
+    filter: drop-shadow(-2px 0 var(--color-pink)) drop-shadow(2px 0 var(--color-cyan));
+  }
+  75% {
+    transform: translate(-1px, 0);
+  }
+}
+
+/* Glitch au survol (tuiles Portal) : couches RGB visibles seulement au survol ou au focus du parent .group */
+.glitch-hover {
+  position: relative;
+}
+.glitch-hover::before,
+.glitch-hover::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.group:is(:hover, :focus-visible) .glitch-hover::before {
+  opacity: 1;
+  left: 2px;
+  text-shadow: -2px 0 var(--color-cyan);
+  clip-path: inset(20% 0 70% 0);
+  animation: var(--animate-glitch-1);
+}
+.group:is(:hover, :focus-visible) .glitch-hover::after {
+  opacity: 1;
+  left: -2px;
+  text-shadow: 2px 0 var(--color-pink);
+  clip-path: inset(60% 0 30% 0);
+  animation: var(--animate-glitch-2);
+}
+
+/* Cadre néon (NeonFrame) : tracé à l'arrivée, puis respiration */
+.neon-frame path {
+  fill: none;
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation:
+    neon-draw 0.9s var(--ease-out-expo) both,
+    neon-breathe 4s ease-in-out 1.4s infinite;
+}
+.neon-frame__corner {
+  stroke: var(--color-cyan);
+}
+.neon-frame__rail {
+  stroke: var(--color-pink);
+}
+@keyframes neon-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes neon-breathe {
+  0%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 0.55;
+  }
+}
+
+/* Grille en perspective au sol (GridFloor) */
+.grid-floor {
+  overflow: hidden;
+  perspective: 320px;
+  mask-image: linear-gradient(to top, black 35%, transparent);
+}
+.grid-floor__plane {
+  position: absolute;
+  inset: 0 -50% -10%;
+  transform: rotateX(68deg);
+  transform-origin: 50% 100%;
+}
+.grid-floor__lines {
+  position: absolute;
+  inset: -40px 0 0;
+  background-image:
+    linear-gradient(var(--color-cyan-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-cyan-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: grid-floor 1.6s linear infinite;
+}
+@keyframes grid-floor {
+  to {
+    transform: translateY(40px);
+  }
+}
+
+/* Néon qui s'allume (NeonFlicker) */
+[data-flicker] {
+  opacity: 0.12;
+}
+[data-flicker="in"] {
+  opacity: 1;
+  filter: drop-shadow(0 0 14px var(--color-cyan-line));
+  animation: neon-on 1.1s steps(1) both;
+}
+@keyframes neon-on {
+  0% {
+    opacity: 0.12;
+  }
+  10% {
+    opacity: 1;
+  }
+  14% {
+    opacity: 0.2;
+  }
+  22% {
+    opacity: 0.9;
+  }
+  30% {
+    opacity: 0.3;
+  }
+  42% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  58%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-flicker] {
+    opacity: 1;
+    transform: none;
+  }
+  .scroll-progress,
+  .grid-floor__lines {
+    animation: none;
+  }
+  .scroll-progress {
+    display: none;
+  }
+  .neon-frame path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
