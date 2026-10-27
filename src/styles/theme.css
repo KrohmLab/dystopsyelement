@@ -293,45 +293,113 @@
   }
 }
 
-/* Sol quadrillé : avance au défilement de la page (scroll-driven), prolonge le sol du hero */
+/* Sol quadrillé global : fixe en bas de l'écran (il suit le visiteur), ses lignes avancent en continu
+   et au rythme du défilement ; chaque section choisit son ambiance via data-floor (voir SiteBackdrop). */
+@property --floor-c {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+@property --floor-o {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+@property --floor-h {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 42vh;
+}
+@property --floor-tilt {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 70deg;
+}
+.site-backdrop {
+  --floor-c: var(--color-cyan);
+  --floor-o: 0.5;
+  --floor-h: 42vh;
+  --floor-tilt: 70deg;
+  transition:
+    --floor-c 1.2s var(--ease-in-out),
+    --floor-o 1s var(--ease-in-out),
+    --floor-h 1.2s var(--ease-out-expo),
+    --floor-tilt 1.4s var(--ease-out-expo);
+}
+.site-backdrop[data-floor="hero"],
+.site-backdrop[data-floor="hero-lilac"] {
+  --floor-o: 1;
+  --floor-h: 50vh;
+  --floor-tilt: 64deg;
+}
+.site-backdrop[data-floor="hero-lilac"],
+.site-backdrop[data-floor="lilac"] {
+  --floor-c: var(--color-nexen-lilac);
+}
+.site-backdrop[data-floor="lilac"],
+.site-backdrop[data-floor="pink"],
+.site-backdrop[data-floor="peach"] {
+  --floor-o: 0.65;
+  --floor-h: 40vh;
+}
+.site-backdrop[data-floor="pink"] {
+  --floor-c: var(--color-pink);
+  --floor-tilt: 74deg;
+}
+.site-backdrop[data-floor="peach"] {
+  --floor-c: var(--color-nexen-peach);
+  --floor-tilt: 72deg;
+}
+.site-backdrop[data-floor="calm"] {
+  --floor-o: 0.22;
+  --floor-h: 28vh;
+  --floor-tilt: 76deg;
+}
+.site-backdrop[data-floor="horizon"] {
+  --floor-c: var(--color-pink);
+  --floor-o: 0.9;
+  --floor-h: 30vh;
+  --floor-tilt: 80deg;
+}
+.site-backdrop[data-floor="off"] {
+  --floor-o: 0;
+}
 .site-backdrop__floor {
   position: absolute;
   inset: auto 0 0;
-  height: 46vh;
+  height: var(--floor-h);
   perspective: 320px;
   mask-image: linear-gradient(to top, black 20%, transparent);
-  opacity: 0.7;
+  opacity: var(--floor-o);
 }
 .site-backdrop__plane {
   position: absolute;
   inset: 0 -60% -10%;
-  transform: rotateX(70deg);
+  transform: rotateX(var(--floor-tilt));
   transform-origin: 50% 100%;
 }
 .site-backdrop__lines {
   position: absolute;
-  inset: 0;
+  inset: -40px 0 0;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--color-cyan) 45%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--color-cyan) 45%, transparent) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--floor-c) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--floor-c) 55%, transparent) 1px, transparent 1px);
   background-size: 40px 40px;
+  animation: grid-floor 1.6s linear infinite;
 }
 .site-backdrop__horizon {
   position: absolute;
   inset: 0 0 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-cyan-line), var(--color-pink-line), var(--color-cyan-line), transparent);
-  box-shadow: 0 0 24px 2px var(--color-cyan-dim);
+  background: linear-gradient(90deg, transparent, var(--floor-c), transparent);
+  box-shadow: 0 0 28px 3px color-mix(in srgb, var(--floor-c) 35%, transparent);
 }
 @supports (animation-timeline: scroll()) {
   .site-backdrop__lines {
-    animation: floor-scroll linear both;
-    animation-timeline: scroll(root);
-  }
-  .site-backdrop__floor {
-    animation: floor-rise linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0 100vh;
+    animation:
+      grid-floor 1.6s linear infinite,
+      floor-scroll linear both;
+    animation-timeline: auto, scroll(root);
   }
 }
 @keyframes floor-scroll {
@@ -339,26 +407,18 @@
     background-position: 0 2400px;
   }
 }
-/* Discret sous le hero, il s'affirme dès qu'on entre dans le site */
-@keyframes floor-rise {
-  from {
-    opacity: 0.15;
-  }
-  to {
-    opacity: 0.7;
-  }
-}
 .site-backdrop__vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 45%, var(--color-void) 100%);
+  background: radial-gradient(ellipse at 50% 40%, transparent 50%, var(--color-void) 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-backdrop,
   .site-backdrop__glow,
-  .site-backdrop__lines,
-  .site-backdrop__floor {
+  .site-backdrop__lines {
     animation: none;
+    transition: none;
   }
 }
 
@@ -1132,4 +1192,9 @@ html[data-intro="done"] .site-intro {
   .map3d__plane {
     translate: -12% 0;
   }
+}
+
+/* Visuel de hero qui s'efface vers le bas pour laisser voir le sol quadrillé global */
+.hero-fade {
+  mask-image: linear-gradient(to bottom, black 50%, transparent 92%);
 }

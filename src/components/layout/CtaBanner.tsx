@@ -15,7 +15,7 @@ type Props = {
 /** Bandeau d'appel à l'action de fin de page (DESIGN_SYSTEM §7.9) : 1 bouton rose + 1 secondaire. */
 export function CtaBanner({ eyebrow, title, lead, primary, secondary }: Props) {
   return (
-    <Section tone="abyss" grid className="border-t border-line text-center">
+    <Section tone="abyss" grid floor="horizon" className="border-t border-line text-center">
       <div className="flex flex-col items-center">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <h2 className="text-h2 font-black">{title}</h2>

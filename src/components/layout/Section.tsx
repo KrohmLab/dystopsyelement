@@ -6,20 +6,23 @@ type Props = {
   grid?: boolean;
   id?: string;
   labelledBy?: string;
+  /** Ambiance du sol quadrillé global quand la section est au centre de l'écran (SiteBackdrop). */
+  floor?: "hero" | "hero-lilac" | "pink" | "lilac" | "peach" | "calm" | "horizon" | "off";
   className?: string;
   children: ReactNode;
 };
 
 /** Conteneur de section : marges, largeur max, fond alterné transparent / voilé (DESIGN_SYSTEM §7.4). */
-export function Section({ tone = "void", grid = false, id, labelledBy, className, children }: Props) {
+export function Section({ tone = "void", grid = false, id, labelledBy, floor, className, children }: Props) {
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
+      data-floor={floor}
       className={cn(
         "relative px-gutter py-section",
         // Le fond vivant du site (SiteBackdrop) transparaît : « void » laisse tout voir, « abyss » voile légèrement.
-        tone === "abyss" && "section-veil bg-abyss/55",
+        tone === "abyss" && "section-veil bg-abyss/40",
         grid && "bg-grid",
         className,
       )}

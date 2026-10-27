@@ -2,16 +2,65 @@ import { useMemo, useState, type CSSProperties } from "react";
 import { useSearchParams } from "react-router";
 import type { Festival, FestivalSet } from "../../content/schemas";
 import { cn } from "../../lib/cn";
-import { ClockIcon, ExternalIcon, SoundCloudIcon } from "../icons";
+import { ClockIcon, ExternalIcon, GridIcon, ResetIcon, SoundCloudIcon, TimetableIcon } from "../icons";
 import { Brackets } from "../ui/Brackets";
-import { FilterBar } from "../ui/FilterBar";
 import { Modal } from "../ui/Modal";
+import { Segmented } from "../ui/Segmented";
+import { SelectField } from "../ui/SelectField";
 
 type Props = Pick<Festival, "sets" | "breaks" | "days" | "families" | "stages">;
 
 const ALL = "Tous";
-const VIEWS = ["Cartes", "Timetable"] as const;
-type View = (typeof VIEWS)[number];
+type View = "cartes" | "timetable";
+
+/** Mode d'affichage du line-up (?affichage=timetable), partagé par la bascule et l'explorateur. */
+function useView(): [View, (view: View) => void] {
+  const [params, setParams] = useSearchParams();
+  const view: View = params.get("affichage") === "timetable" ? "timetable" : "cartes";
+  const setView = (next: View) =>
+    setParams(
+      (prev) => {
+        const p = new URLSearchParams(prev);
+        if (next === "cartes") p.delete("affichage");
+        else p.set("affichage", next);
+        return p;
+      },
+      { replace: true, preventScrollReset: true },
+    );
+  return [view, setView];
+}
+
+const VIEW_OPTIONS = [
+  { value: "cartes" as const, label: "Cartes", Icon: GridIcon },
+  { value: "timetable" as const, label: "Timetable", Icon: TimetableIcon },
+];
+
+/**
+ * Bascule d'affichage du line-up (cartes / timetable) : une option d'affichage, pas un filtre.
+ * Placée à côté du titre de la section (action de SectionHeader).
+ */
+export function ViewToggle() {
+  const [view, setView] = useView();
+  return (
+    <div role="group" aria-label="Affichage du line-up" className="flex bg-void/70 p-1 inset-ring inset-ring-line-strong chamfer-sm">
+      {VIEW_OPTIONS.map(({ value, label, Icon }) => (
+        <button
+          key={value}
+          type="button"
+          aria-pressed={view === value}
+          onClick={() => setView(value)}
+          className={cn(
+            "inline-flex min-h-10 cursor-pointer items-center gap-2 px-4 font-display text-label-sm font-bold uppercase transition-colors duration-base chamfer-sm",
+            view === value ? "bg-ink text-on-accent" : "text-ink-soft hover:text-ink",
+          )}
+        >
+          <Icon size={16} />
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 /** Couleurs de scène (affiches Timetable 2026) : Nexus lilas, Engine pêche. */
 export const STAGE_TONE = {
@@ -40,46 +89,92 @@ const setEnd = (s: FestivalSet) => {
  */
 export function LineupExplorer({ sets, breaks, days, families, stages }: Props) {
   const [params, setParams] = useSearchParams();
+  const [view] = useView();
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
-  const stageNames = stages.map((s) => s.name);
-  const scene = stageNames.includes(params.get("scene") ?? "") ? (params.get("scene") as string) : ALL;
-  const jour = days.some((d) => d.key === params.get("jour")) ? (params.get("jour") as string) : ALL;
+  const stageSlugs = stages.map((s) => s.slug as string);
+  const scene = stageSlugs.includes(params.get("scene") ?? "") ? (params.get("scene") as string) : ALL;
+  const jourParam = days.some((d) => d.key === params.get("jour")) ? (params.get("jour") as string) : ALL;
+  // Le timetable montre toujours un seul jour : « Tous » y vaut le premier jour.
+  const jour = view === "timetable" && jourParam === ALL ? (days[0]?.key ?? ALL) : jourParam;
   const style = families.includes(params.get("style") ?? "") ? (params.get("style") as string) : ALL;
-  const view: View = params.get("affichage") === "timetable" ? "Timetable" : "Cartes";
 
-  const update = (key: string, value: string, empty = ALL) =>
+  const update = (key: string, value: string) =>
     setParams(
       (prev) => {
         const next = new URLSearchParams(prev);
-        if (value === empty) next.delete(key);
+        if (value === ALL) next.delete(key);
         else next.set(key, value);
         return next;
       },
       { replace: true, preventScrollReset: true },
     );
+  const reset = () =>
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams();
+        const display = prev.get("affichage");
+        if (display) next.set("affichage", display);
+        return next;
+      },
+      { replace: true, preventScrollReset: true },
+    );
 
-  const stageSlug = stages.find((s) => s.name === scene)?.slug;
-  const matches = (s: FestivalSet) => (!stageSlug || s.stage === stageSlug) && (jour === ALL || s.day === jour) && (style === ALL || s.family === style);
-  const visible = useMemo(() => sets.filter(matches).sort((a, b) => setStart(a) - setStart(b)), [sets, stageSlug, jour, style]); // eslint-disable-line react-hooks/exhaustive-deps
+  const matchesStage = (s: FestivalSet) => scene === ALL || s.stage === scene;
+  const matchesDay = (s: FestivalSet) => jour === ALL || s.day === jour;
+  const matches = (s: FestivalSet) => matchesStage(s) && matchesDay(s) && (style === ALL || s.family === style);
+  const visible = useMemo(() => sets.filter(matches).sort((a, b) => setStart(a) - setStart(b)), [sets, scene, jour, style]); // eslint-disable-line react-hooks/exhaustive-deps
   const open = sets.find((s) => s.slug === openSlug);
   const openStage = stages.find((s) => s.slug === open?.stage);
+  const filtered = scene !== ALL || jourParam !== ALL || style !== ALL;
+
+  // Nombre de passages par style avec les autres filtres actifs, pour la liste déroulante.
+  const styleCount = (family: string) => sets.filter((s) => matchesStage(s) && matchesDay(s) && s.family === family).length;
+  const styleOptions = [
+    { value: ALL, label: "Tous les styles" },
+    ...families.map((family) => ({ value: family, label: `${family} (${styleCount(family)})` })),
+  ];
 
   return (
     <div>
-      <div className="mb-10 grid gap-4">
-        <FilterBar label="Scène" options={[ALL, ...stageNames]} value={scene} onChange={(v) => update("scene", v)} />
-        <FilterBar label="Jour" options={[ALL, ...days.map((d) => d.key)]} value={jour} onChange={(v) => update("jour", v)} />
-        <FilterBar label="Style" options={[ALL, ...families]} value={style} onChange={(v) => update("style", v)} />
-        <div className="mt-2 flex flex-wrap items-center justify-center gap-4">
-          <FilterBar label="Affichage" options={VIEWS} value={view} onChange={(v) => update("affichage", v === "Timetable" ? "timetable" : "Cartes", "Cartes")} />
-          <p className="text-small text-ink-muted" aria-live="polite">
-            {visible.length} {visible.length > 1 ? "passages" : "passage"}
+      <div className="lineup-toolbar mb-10 grid gap-4 bg-surface/80 p-4 inset-ring inset-ring-nexen-lilac-line chamfer-md sm:p-5 lg:grid-cols-[auto_auto_minmax(14rem,1fr)_auto] lg:items-end lg:gap-5">
+        <Segmented
+          label="Scène"
+          value={scene}
+          onChange={(v) => update("scene", v)}
+          options={[
+            { value: ALL, label: "Toutes" },
+            ...stages.map((stage) => ({
+              value: stage.slug as string,
+              label: stage.slug === "nexus" ? "Nexus" : "Engine",
+              activeClass: stage.slug === "nexus" ? "bg-nexen-lilac text-on-accent" : "bg-nexen-peach text-on-accent",
+            })),
+          ]}
+        />
+        <Segmented
+          label="Jour"
+          value={jour}
+          onChange={(v) => update("jour", v)}
+          options={[
+            ...(view === "timetable" ? [] : [{ value: ALL, label: "Tous" }]),
+            ...days.map((d) => ({ value: d.key as string, label: DAY_SHORT[d.key] ?? d.key })),
+          ]}
+        />
+        <SelectField label="Style" value={style} onChange={(v) => update("style", v)} options={styleOptions} />
+        <div className="flex items-center justify-between gap-4 lg:min-h-12 lg:justify-end">
+          <p className="font-display text-label-sm font-bold text-ink uppercase" aria-live="polite">
+            <span className="text-nexen-lilac">{visible.length}</span> {visible.length > 1 ? "passages" : "passage"}
           </p>
+          {filtered && (
+            <button type="button" onClick={reset} className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 px-2 text-small text-ink-muted hover:text-cyan">
+              <ResetIcon size={16} />
+              Réinitialiser
+            </button>
+          )}
         </div>
       </div>
 
-      {view === "Cartes" ? (
+      {view === "cartes" ? (
         visible.length > 0 ? (
           <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
             {visible.map((set, i) => (
@@ -92,7 +187,7 @@ export function LineupExplorer({ sets, breaks, days, families, stages }: Props) 
           <p className="py-12 text-center font-display text-h3 font-bold text-ink-muted uppercase">Aucun passage pour ces filtres</p>
         )
       ) : (
-        <Timetable sets={sets} breaks={breaks} days={days} stages={stages} jour={jour} matches={matches} onOpen={setOpenSlug} onDay={(d) => update("jour", d)} />
+        <Timetable sets={sets} breaks={breaks} days={days} stages={stages} day={jour} matches={matches} onOpen={setOpenSlug} />
       )}
 
       <Modal open={!!open} onClose={() => setOpenSlug(null)} label={open?.artist ?? ""}>
@@ -188,15 +283,13 @@ function SetCard({ set, onOpen }: { set: FestivalSet; onOpen: () => void }) {
 const REM_PER_MIN = 0.075;
 
 type TimetableProps = Pick<Props, "sets" | "breaks" | "days" | "stages"> & {
-  jour: string;
+  day: string;
   matches: (s: FestivalSet) => boolean;
   onOpen: (slug: string) => void;
-  onDay: (day: string) => void;
 };
 
 /** Timetable d'un jour : les deux scènes en colonnes, blocs à la hauteur de leur durée ; hors filtres = atténués. */
-function Timetable({ sets, breaks, days, stages, jour, matches, onOpen, onDay }: TimetableProps) {
-  const day = jour === ALL ? (days[0]?.key ?? "Vendredi") : jour;
+function Timetable({ sets, breaks, days, stages, day, matches, onOpen }: TimetableProps) {
   const daySets = sets.filter((s) => s.day === day);
   const from = Math.floor(Math.min(...daySets.map(setStart)) / 60) * 60;
   const to = Math.ceil(Math.max(...daySets.map(setEnd)) / 60) * 60;
@@ -205,11 +298,6 @@ function Timetable({ sets, breaks, days, stages, jour, matches, onOpen, onDay }:
 
   return (
     <div>
-      {jour === ALL && (
-        <div className="mb-6">
-          <FilterBar label="Jour du timetable" options={days.map((d) => d.key)} value={day} onChange={onDay} />
-        </div>
-      )}
       <div className="overflow-x-auto pb-2">
         <div className="grid min-w-xl grid-cols-[3.5rem_1fr_1fr] gap-x-3">
           <span />

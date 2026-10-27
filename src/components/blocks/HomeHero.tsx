@@ -1,7 +1,6 @@
 import { formatDateRange } from "../../lib/events";
 import { CalendarIcon, MapPinIcon, TicketIcon } from "../icons";
 import { DecodeText } from "../motion/DecodeText";
-import { GridFloor } from "../motion/GridFloor";
 import { NeonFrame } from "../motion/NeonFrame";
 import { Parallax } from "../motion/Parallax";
 import { Badge } from "../ui/Badge";
@@ -24,12 +23,12 @@ type Props = {
 export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
   const place = [event.venue, event.city].filter(Boolean).join(", ");
   return (
-    <section aria-labelledby="hero-titre" className="relative isolate flex min-h-svh items-center overflow-hidden bg-void">
-      <Parallax speed={50} mouse={14} className="absolute -inset-8 -z-20">
+    <section aria-labelledby="hero-titre" data-floor="hero" className="relative isolate flex min-h-svh items-center overflow-hidden">
+      {/* Le visuel s'efface vers le bas : le sol quadrillé global (fixe, SiteBackdrop) apparaît dessous et suit le défilement. */}
+      <Parallax speed={50} mouse={14} className="hero-fade absolute -inset-8 -z-20">
         <ResponsiveImage image={event.cover ?? fallbackImage} alt="" sizes="100vw" priority className="opacity-40 mix-blend-luminosity" />
       </Parallax>
-      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-void via-void/40 to-void/85" />
-      <GridFloor className="absolute inset-x-0 bottom-0 -z-10 h-2/5" />
+      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-transparent via-void/30 to-void/85" />
       <span aria-hidden="true" className="absolute inset-0 -z-10 bg-scanlines" />
       <div className="absolute inset-x-8 top-20 bottom-6 -z-10 hidden md:block">
         <CyberFrame className="size-full" />

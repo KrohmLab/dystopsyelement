@@ -20,11 +20,10 @@ import {
 import { Section } from "../components/layout/Section";
 import { Eyebrow, SectionHeader } from "../components/layout/SectionHeader";
 import { CountUp } from "../components/motion/CountUp";
-import { GridFloor } from "../components/motion/GridFloor";
 import { NeonFlicker } from "../components/motion/NeonFlicker";
 import { Parallax } from "../components/motion/Parallax";
 import { Reveal } from "../components/motion/Reveal";
-import { LineupExplorer, STAGE_TONE } from "../components/nexen/LineupExplorer";
+import { LineupExplorer, STAGE_TONE, ViewToggle } from "../components/nexen/LineupExplorer";
 import { SiteMap3D } from "../components/nexen/SiteMap3D";
 import { Badge } from "../components/ui/Badge";
 import { Brackets } from "../components/ui/Brackets";
@@ -84,13 +83,12 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
   return (
     <div className="nexen-page">
       {/* Hero */}
-      <section aria-labelledby="nexen-titre" className="relative isolate flex min-h-svh items-center overflow-hidden">
-        <Parallax speed={70} mouse={18} className="absolute -inset-10 -z-20">
+      <section aria-labelledby="nexen-titre" data-floor="hero-lilac" className="relative isolate flex min-h-svh items-center overflow-hidden">
+        <Parallax speed={70} mouse={18} className="hero-fade absolute -inset-10 -z-20">
           <ResponsiveImage image={cover} alt="" sizes="100vw" priority className="opacity-60" />
         </Parallax>
-        <span aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-void via-nexen-violet-dim to-void/70" />
-        <span aria-hidden="true" className="absolute inset-0 -z-10 bg-radial from-transparent to-void to-80%" />
-        <GridFloor className="absolute inset-x-0 bottom-0 -z-10 h-2/5" />
+        <span aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-transparent via-nexen-violet-dim to-void/70" />
+        <span aria-hidden="true" className="absolute inset-0 -z-10 bg-radial from-transparent to-void/70 to-80%" />
         <span aria-hidden="true" className="absolute inset-0 -z-10 bg-scanlines" />
 
         <div className="hero-enter mx-auto flex w-full max-w-site flex-col items-center px-gutter pt-header pb-section text-center">
@@ -130,7 +128,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </section>
 
       {/* Chiffres clés */}
-      <section aria-label="Le festival en chiffres" className="relative border-y border-nexen-lilac-line bg-nexen-violet-dim px-gutter py-12">
+      <section aria-label="Le festival en chiffres" data-floor="lilac" className="relative border-y border-nexen-lilac-line bg-nexen-violet-dim px-gutter py-12">
         <ul className="mx-auto grid max-w-site grid-cols-2 gap-8 text-center sm:grid-cols-3 lg:grid-cols-5">
           {festival.facts.map((fact, i) => (
             <Reveal as="li" key={fact.label} delay={i * 90} className="flex flex-col items-center gap-1">
@@ -144,7 +142,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </section>
 
       {/* L'expérience */}
-      <Section labelledBy="experience-titre">
+      <Section labelledBy="experience-titre" floor="lilac">
         <SectionHeader id="experience-titre" eyebrow="L'expérience" tone="lilac" title="Trois jours hors du temps" />
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
           {festival.experience.map((item, i) => {
@@ -166,7 +164,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </Section>
 
       {/* Les scènes */}
-      <Section tone="abyss" labelledBy="scenes-titre">
+      <Section tone="abyss" labelledBy="scenes-titre" floor="peach">
         <SectionHeader id="scenes-titre" eyebrow="Les scènes" tone="lilac" title="Nexus & Engine" />
         <ul className="grid gap-5 lg:grid-cols-2">
           {festival.stages.map((stage, i) => {
@@ -174,7 +172,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
             return (
               <Reveal as="li" key={stage.slug} delay={i * 150}>
                 <Link
-                  to={`/nexen?scene=${encodeURIComponent(stage.name)}#line-up`}
+                  to={`/nexen?scene=${stage.slug}#line-up`}
                   preventScrollReset
                   className={cn("stage-panel group relative flex min-h-96 flex-col justify-end overflow-hidden p-8 no-underline inset-ring chamfer-lg sm:p-10", tone.ring)}
                 >
@@ -214,24 +212,25 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </Section>
 
       {/* Line-up */}
-      <Section id="line-up" labelledBy="lineup-titre">
+      <Section id="line-up" labelledBy="lineup-titre" floor="calm">
         <SectionHeader
           id="lineup-titre"
           eyebrow="Programmation"
           tone="lilac"
           title="Line-up & timetable"
           lead="Filtrez par scène, par jour ou par style ; touchez un artiste pour ouvrir sa fiche."
+          action={<ViewToggle />}
         />
         <LineupExplorer sets={festival.sets} breaks={festival.breaks} days={festival.days} families={festival.families} stages={festival.stages} />
       </Section>
 
       {/* Carte 3D */}
-      <div id="carte">
+      <div id="carte" data-floor="off">
         <SiteMap3D map={festival.map} />
       </div>
 
       {/* Infos pratiques */}
-      <Section id="infos" tone="abyss" labelledBy="infos-titre">
+      <Section id="infos" tone="abyss" labelledBy="infos-titre" floor="peach">
         <SectionHeader id="infos-titre" eyebrow="Infos pratiques" tone="lilac" title="Avant de venir" />
         <ol className="timeline mb-14 grid gap-4 md:grid-cols-3 lg:grid-cols-6">
           {festival.schedule.map((step, i) => (
@@ -250,7 +249,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </Section>
 
       {/* Village, restauration, galerie d'art */}
-      <Section id="village" labelledBy="village-titre">
+      <Section id="village" labelledBy="village-titre" floor="lilac">
         <SectionHeader id="village-titre" eyebrow="Le village" tone="lilac" title="Market, food & art" />
         <div className="grid gap-12 lg:grid-cols-[3fr_2fr]">
           <div>
@@ -296,7 +295,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </Section>
 
       {/* Crew */}
-      <section aria-labelledby="crew-titre" className="relative overflow-hidden border-y border-nexen-lilac-line bg-nexen-violet-dim px-gutter py-14">
+      <section aria-labelledby="crew-titre" data-floor="pink" className="relative overflow-hidden border-y border-nexen-lilac-line bg-nexen-violet-dim px-gutter py-14">
         <div className="mx-auto max-w-site">
           <Eyebrow tone="lilac">Crédits</Eyebrow>
           <h2 id="crew-titre" className="mb-8 text-h2 font-black">
@@ -314,7 +313,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </section>
 
       {/* Galerie */}
-      <Section id="galerie" labelledBy="galerie-titre">
+      <Section id="galerie" labelledBy="galerie-titre" floor="lilac">
         <SectionHeader id="galerie-titre" eyebrow="Galerie" tone="lilac" title="En images" />
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
           {GALLERY.map(({ image, alt }, i) => (
@@ -337,7 +336,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </Section>
 
       {/* Liens */}
-      <section aria-labelledby="liens-titre" className="relative isolate overflow-hidden px-gutter py-section text-center">
+      <section aria-labelledby="liens-titre" data-floor="horizon" className="relative isolate overflow-hidden px-gutter py-section text-center">
         <span aria-hidden="true" className="absolute inset-0 -z-10 bg-radial from-nexen-violet-dim to-transparent to-70%" />
         <Eyebrow tone="lilac">Nexen</Eyebrow>
         <h2 id="liens-titre" className="text-h2 font-black">

@@ -50,7 +50,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       {featured && <HomeHero event={featured} fallbackImage="festival/fond" instagramUrl={instagramUrl} />}
       <Ticker items={TICKER} />
 
-      <Section tone="abyss" labelledBy="portails-titre">
+      <Section tone="abyss" labelledBy="portails-titre" floor="pink">
         <h2 id="portails-titre" className="sr-only">
           Explorer le site
         </h2>
@@ -66,7 +66,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       {nexen && <NexenFeature dates={nexen.dates} place={nexen.place} ticketUrl={nexen.ticketUrl} />}
 
       {upcoming.length > 0 && (
-        <Section grid labelledBy="dates-titre">
+        <Section grid labelledBy="dates-titre" floor="calm">
           <SectionHeader
             id="dates-titre"
             eyebrow="Agenda"
@@ -87,7 +87,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </Section>
       )}
 
-      <Section tone="abyss" labelledBy="boutique-titre">
+      <Section tone="abyss" labelledBy="boutique-titre" floor="pink">
         <SectionHeader
           id="boutique-titre"
           eyebrow="Supportez l'asso"

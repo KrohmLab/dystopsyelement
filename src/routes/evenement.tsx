@@ -51,7 +51,7 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <section aria-labelledby="evenement-titre" className="relative isolate flex min-h-[80svh] items-end overflow-hidden border-b border-line px-gutter pt-header">
+      <section aria-labelledby="evenement-titre" data-floor="hero" className="relative isolate flex min-h-[80svh] items-end overflow-hidden border-b border-line px-gutter pt-header">
         <div aria-hidden="true" className="absolute inset-0 -z-10">
           <ResponsiveImage image={event.cover} alt="" sizes="100vw" priority fallbackLabel={event.title} className="opacity-50 mix-blend-luminosity" />
           <span className="absolute inset-0 bg-linear-to-t from-void via-void/50 to-void/70" />

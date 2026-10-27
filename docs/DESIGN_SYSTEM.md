@@ -159,7 +159,7 @@ Deux équerres de 12 px (bordure 2 px) aux coins haut-gauche et bas-droit, en cy
 
 | Utilitaire | Effet | Où |
 |---|---|---|
-| `SiteBackdrop` | Fond fixe de tout le site : lueurs cyan / rose qui dérivent lentement, sol quadrillé en perspective qui **avance au défilement** (prolonge le sol du hero), scanlines, vignettage | Derrière toutes les pages ; les sections sont transparentes (`void`) ou voilées à 55 % avec filets lumineux (`abyss`) |
+| `SiteBackdrop` | Fond fixe de tout le site : lueurs cyan / rose qui dérivent lentement, **sol quadrillé unique, fixe en bas de l'écran** (il naît sous le hero et suit le visiteur), dont les lignes avancent en continu et au défilement ; scanlines, vignettage. Chaque section choisit l'ambiance du sol avec `data-floor` (`hero`, `hero-lilac`, `pink`, `lilac`, `peach`, `calm` pour les sections denses, `horizon` en fin de page, `off`) : couleur, intensité, hauteur et inclinaison basculent en douceur | Derrière toutes les pages ; les sections sont transparentes (`void`) ou voilées à 40 % avec filets lumineux (`abyss`), les visuels de hero s'effacent vers le bas pour laisser voir le sol |
 | `bg-grid` | Grille cyan à 5 %, pas de 40 px | Fond de 1 section sur 2, header scrollé |
 | `bg-scanlines` | Lignes horizontales à 3 % | Par-dessus les visuels plein écran |
 | Motifs `Pattern_0X` (PNG v1) | Ornements flottants | Retirés du DOM. Réutiliser **un** motif en SVG comme séparateur décoratif (`<Divider />`) |
@@ -195,7 +195,7 @@ L'accueil doit produire un effet « waouh » dès l'arrivée. Animations prévue
 | Où | Effet | Technique |
 |---|---|---|
 | Lancement du site (1re page de la session, ≈ 1,5 s) | `SiteIntro` : écran noir, horizon néon qui se trace, sol quadrillé qui se lève, logo qui s'allume, puis le rideau s'ouvre sur la page ; les animations du hero attendent la fin de l'intro | CSS pur (`html[data-intro]`) |
-| Hero, à l'arrivée (≈ 1 s) | Le cadre néon `NeonFrame` se trace, le titre se décode lettre par lettre (`DecodeText`) puis glitche, la grille en perspective `GridFloor` défile au sol, scanlines par-dessus | CSS + `motion` |
+| Hero, à l'arrivée (≈ 1 s) | Le cadre néon se trace, le titre se décode lettre par lettre (`DecodeText`) puis glitche, le sol quadrillé global brille sous le hero, scanlines par-dessus | CSS + `motion` |
 | Hero, ensuite | Parallaxe légère du visuel à la souris (desktop) et au défilement | `motion` (`useScroll`, ressorts) |
 | Bandeau | Défilement continu `animate-marquee` | CSS |
 | Portails | Apparition en cascade au défilement ; au survol : glitch RGB, balayage lumineux, équerres qui s'agrandissent, visuel qui passe du gris à la couleur | CSS + `Reveal` |
@@ -312,7 +312,7 @@ SVG inline dans `src/components/icons.tsx` (tracés Lucide), trait 1.5, tailles 
 ### 7.16 bis Cartes avec modale (`ArtistCard`, `MemberCard`, `Modal`)
 
 Carte portrait `chamfer-md` (photo en niveaux de gris → couleur au survol, `Brackets`), badge (format ou pôle), nom `text-h3`, une ligne en `text-small`. Clic ou Entrée → `Modal` : panneau `surface-raised` biseauté, photo, nom, rôle ou format, courte bio, liens ; focus piégé, Échap, clic sur le fond, retour du focus (`useModal`).
-Filtres et onglets (`Tabs`) : boutons `secondary sm`, l'actif en cyan plein (`aria-pressed` / `aria-selected`), filtrage sans rechargement.
+Filtres : **une seule barre** par liste. Choix exclusifs courts (scène, jour) en **sélecteur segmenté** (`Segmented` : un bloc biseauté, l'option active pleine, couleur de scène si besoin) ; listes longues (styles) en **liste déroulante** (`SelectField`) avec le nombre de résultats par option ; compteur et « Réinitialiser » dans la barre. Les **options d'affichage** (cartes / timetable) ne sont pas des filtres : bascule séparée à côté du titre de la section (`ViewToggle`). Filtrage sans rechargement, état dans l'URL.
 
 ### 7.16 ter Couleurs Nexen
 

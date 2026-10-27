@@ -16,7 +16,7 @@ type Props = {
 /** En-tête des pages intérieures : visuel assombri + scanlines, sur-titre, H1 glitch, une ligne, actions. */
 export function PageHero({ eyebrow, title, lead, image, className, children }: Props) {
   return (
-    <section className={cn("relative isolate overflow-hidden border-b border-line px-gutter pt-header", className)}>
+    <section data-floor="hero" className={cn("relative isolate overflow-hidden border-b border-line px-gutter pt-header", className)}>
       {image && (
         <div aria-hidden="true" className="absolute inset-0 -z-10">
           <ResponsiveImage image={image} alt="" sizes="100vw" priority className="opacity-40 mix-blend-luminosity" />
