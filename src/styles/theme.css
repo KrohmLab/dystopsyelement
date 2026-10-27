@@ -293,8 +293,11 @@
   }
 }
 
-/* Sol quadrillé global : fixe en bas de l'écran (il suit le visiteur), ses lignes avancent en continu
-   et au rythme du défilement ; chaque section choisit son ambiance via data-floor (voir SiteBackdrop). */
+/* Sol quadrillé global : fixe en bas de l'écran (il suit le visiteur) ; chaque section choisit son ambiance
+   via data-floor (voir SiteBackdrop). Deux régimes :
+   - hero : sol haut, lumineux, lignes qui avancent en continu (effet spectacle) ;
+   - contenu (toutes les autres ambiances) : sol bas et pâle, immobile sauf au défilement, pour ne jamais
+     concurrencer le texte ni les boutons. Seule la teinte change d'une section à l'autre. */
 @property --floor-c {
   syntax: "<color>";
   inherits: true;
@@ -303,32 +306,40 @@
 @property --floor-o {
   syntax: "<number>";
   inherits: true;
-  initial-value: 0.5;
+  initial-value: 0.16;
+}
+@property --floor-run {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
 }
 @property --floor-h {
   syntax: "<length-percentage>";
   inherits: true;
-  initial-value: 42vh;
+  initial-value: 26vh;
 }
 @property --floor-tilt {
   syntax: "<angle>";
   inherits: true;
-  initial-value: 70deg;
+  initial-value: 76deg;
 }
 .site-backdrop {
   --floor-c: var(--color-cyan);
-  --floor-o: 0.5;
-  --floor-h: 42vh;
-  --floor-tilt: 70deg;
+  --floor-o: 0.16;
+  --floor-run: 0;
+  --floor-h: 26vh;
+  --floor-tilt: 76deg;
   transition:
-    --floor-c 1.2s var(--ease-in-out),
-    --floor-o 1s var(--ease-in-out),
-    --floor-h 1.2s var(--ease-out-expo),
-    --floor-tilt 1.4s var(--ease-out-expo);
+    --floor-c 1.6s var(--ease-in-out),
+    --floor-o 1.4s var(--ease-in-out),
+    --floor-run 1.2s var(--ease-in-out),
+    --floor-h 1.6s var(--ease-out-expo),
+    --floor-tilt 1.8s var(--ease-out-expo);
 }
 .site-backdrop[data-floor="hero"],
 .site-backdrop[data-floor="hero-lilac"] {
   --floor-o: 1;
+  --floor-run: 1;
   --floor-h: 50vh;
   --floor-tilt: 64deg;
 }
@@ -339,26 +350,25 @@
 .site-backdrop[data-floor="lilac"],
 .site-backdrop[data-floor="pink"],
 .site-backdrop[data-floor="peach"] {
-  --floor-o: 0.65;
-  --floor-h: 40vh;
+  --floor-o: 0.22;
+  --floor-h: 28vh;
+  --floor-tilt: 75deg;
 }
 .site-backdrop[data-floor="pink"] {
   --floor-c: var(--color-pink);
-  --floor-tilt: 74deg;
 }
 .site-backdrop[data-floor="peach"] {
   --floor-c: var(--color-nexen-peach);
-  --floor-tilt: 72deg;
 }
 .site-backdrop[data-floor="calm"] {
-  --floor-o: 0.22;
-  --floor-h: 28vh;
-  --floor-tilt: 76deg;
+  --floor-o: 0.1;
+  --floor-h: 22vh;
+  --floor-tilt: 78deg;
 }
 .site-backdrop[data-floor="horizon"] {
   --floor-c: var(--color-pink);
-  --floor-o: 0.9;
-  --floor-h: 30vh;
+  --floor-o: 0.3;
+  --floor-h: 24vh;
   --floor-tilt: 80deg;
 }
 .site-backdrop[data-floor="off"] {
@@ -378,6 +388,7 @@
   transform: rotateX(var(--floor-tilt));
   transform-origin: 50% 100%;
 }
+/* Couche « contenu » : ne bouge qu'avec le défilement. Couche « hero » : avance en continu, fondue par --floor-run. */
 .site-backdrop__lines {
   position: absolute;
   inset: -40px 0 0;
@@ -385,7 +396,13 @@
     linear-gradient(color-mix(in srgb, var(--floor-c) 55%, transparent) 1px, transparent 1px),
     linear-gradient(90deg, color-mix(in srgb, var(--floor-c) 55%, transparent) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+.site-backdrop__lines--run {
+  opacity: var(--floor-run);
   animation: grid-floor 1.6s linear infinite;
+}
+.site-backdrop__lines:not(.site-backdrop__lines--run) {
+  opacity: calc(1 - var(--floor-run));
 }
 .site-backdrop__horizon {
   position: absolute;
@@ -393,13 +410,12 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--floor-c), transparent);
   box-shadow: 0 0 28px 3px color-mix(in srgb, var(--floor-c) 35%, transparent);
+  opacity: calc(0.35 + var(--floor-run) * 0.65);
 }
 @supports (animation-timeline: scroll()) {
-  .site-backdrop__lines {
-    animation:
-      grid-floor 1.6s linear infinite,
-      floor-scroll linear both;
-    animation-timeline: auto, scroll(root);
+  .site-backdrop__lines:not(.site-backdrop__lines--run) {
+    animation: floor-scroll linear both;
+    animation-timeline: scroll(root);
   }
 }
 @keyframes floor-scroll {
