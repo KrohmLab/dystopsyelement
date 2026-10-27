@@ -753,3 +753,383 @@ html[data-intro="done"] .site-intro {
     transform: none;
   }
 }
+
+/* Timetable Nexen : créneaux « Break » / « Fin » hachurés aux couleurs de l'affiche */
+.tt-break {
+  background: repeating-linear-gradient(-45deg, var(--color-nexen-peach-line) 0 6px, transparent 6px 12px);
+  outline: 1px solid var(--color-nexen-peach-line);
+}
+
+/* ==========================================================================
+   Carte du site en 3D (SiteMap3D) — tout est piloté par --p (0 = vue de dessus, 1 = isométrique éclatée)
+   ========================================================================== */
+.map3d__plane {
+  --p: 1;
+}
+.map3d__viewport {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.map3d[data-animate] {
+  height: 260vh;
+}
+.map3d[data-animate] .map3d__viewport {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+.map3d__stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  perspective: 1600px;
+  pointer-events: none;
+}
+.map3d__plane {
+  position: relative;
+  width: min(94vw, 66rem);
+  aspect-ratio: 1000 / 620;
+  transform-style: preserve-3d;
+  transform: translateY(calc(var(--p) * 4vh)) rotateX(calc(var(--p) * 56deg)) rotateZ(calc(var(--p) * -34deg)) scale(calc(1 - var(--p) * 0.12));
+  will-change: transform;
+}
+.map3d__plane > * {
+  transform-style: preserve-3d;
+}
+.map3d__floor {
+  position: absolute;
+  inset: -12%;
+  background-image:
+    linear-gradient(var(--color-nexen-lilac-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-nexen-lilac-line) 1px, transparent 1px);
+  background-size: 4% 6.45%;
+  mask-image: radial-gradient(closest-side, black 40%, transparent);
+  opacity: calc(0.3 + var(--p) * 0.5);
+}
+.map3d__road {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.map3d__road path {
+  fill: none;
+  stroke: var(--color-ink-soft);
+  stroke-width: 0.6;
+  stroke-dasharray: 2 1.6;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+}
+.map3d__slab {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(calc(var(--p) * var(--z, 0px)));
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+.map3d__top {
+  box-shadow: inset 0 0 0 2px var(--color-ink);
+  filter: brightness(1.1);
+}
+.map3d__top--active {
+  filter: brightness(1.35) drop-shadow(0 0 12px var(--color-ink));
+}
+/* Scènes : tours néon de tranches empilées */
+.map3d__tower {
+  position: absolute;
+  width: 5%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+}
+.map3d__tower > span {
+  position: absolute;
+  inset: 0;
+  border: 2px solid currentColor;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  box-shadow: 0 0 14px currentColor;
+  transform: translateZ(calc(var(--p) * var(--z)));
+}
+.map3d__tower--nexus {
+  color: var(--color-nexen-lilac);
+}
+.map3d__tower--engine {
+  color: var(--color-nexen-peach);
+}
+.map3d__tent,
+.map3d__car {
+  position: absolute;
+  translate: -50% -50%;
+  transform: translateZ(calc(var(--p) * var(--z)));
+}
+.map3d__tent {
+  width: 3.4%;
+  aspect-ratio: 1;
+  background: var(--color-cyan);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  opacity: 0.85;
+}
+.map3d__car {
+  width: 3.6%;
+  aspect-ratio: 2 / 1;
+  background: var(--color-nexen-gold);
+}
+/* Étiquettes : contre-rotation pour toujours faire face au visiteur */
+.map3d__label {
+  position: absolute;
+  translate: -50% -100%;
+  padding: 0.25rem 0.6rem;
+  white-space: nowrap;
+  background: var(--color-void);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-eyebrow);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px var(--color-nexen-lilac-line);
+  transform: translateZ(calc(var(--p) * var(--z))) rotateZ(calc(var(--p) * 34deg)) rotateX(calc(var(--p) * -56deg));
+  opacity: calc(var(--p) * 1.6 - 0.4);
+}
+.map3d__label--spot {
+  font-size: var(--text-label);
+  color: var(--color-void);
+  background: var(--color-ink);
+  box-shadow: 0 0 18px var(--color-cyan-line);
+}
+.map3d__label--small {
+  color: var(--color-ink-muted);
+}
+@media (max-width: 47.99rem) {
+  .map3d[data-animate] {
+    height: 200vh;
+  }
+  .map3d__label {
+    font-size: 0.5rem;
+  }
+  .map3d__label--spot {
+    font-size: var(--text-micro);
+  }
+}
+
+/* ==========================================================================
+   Page Nexen : panneaux de scène, frise des horaires
+   ========================================================================== */
+.stage-panel {
+  background: var(--color-surface);
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+.stage-panel:hover {
+  transform: translateY(-4px);
+}
+.stage-panel__glow {
+  opacity: 0.55;
+  transition:
+    opacity var(--duration-slow),
+    transform 1.2s var(--ease-out-expo);
+}
+.stage-panel:hover .stage-panel__glow {
+  opacity: 1;
+  transform: scale(1.08);
+}
+.stage-panel__glow--nexus {
+  background:
+    radial-gradient(ellipse at 80% 0%, var(--color-nexen-lilac-line), transparent 60%),
+    radial-gradient(ellipse at 10% 100%, var(--color-nexen-violet-dim), transparent 70%);
+}
+.stage-panel__glow--engine {
+  background:
+    radial-gradient(ellipse at 80% 0%, var(--color-nexen-peach-line), transparent 60%),
+    radial-gradient(ellipse at 10% 100%, var(--color-pink-dim), transparent 70%);
+}
+.stage-panel__index {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-line-strong);
+  transition: -webkit-text-stroke-color var(--duration-base);
+}
+.stage-panel:hover .stage-panel__index {
+  -webkit-text-stroke-color: var(--color-ink-muted);
+}
+
+/* Frise des horaires */
+.timeline__step::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  left: 0;
+  right: -1rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-nexen-peach-line), var(--color-nexen-lilac-line));
+}
+.timeline__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 9999px;
+  background: var(--color-void);
+  box-shadow:
+    inset 0 0 0 2px var(--color-nexen-peach),
+    0 0 12px var(--color-nexen-peach-line);
+}
+
+/* ==========================================================================
+   Menu : logo en filigrane plus présent, un effet de survol par lien
+   ========================================================================== */
+.menu__mark {
+  opacity: 0.14;
+  filter: drop-shadow(0 0 24px var(--color-cyan-line));
+}
+.menu__link {
+  --fx: var(--color-cyan);
+  isolation: isolate;
+}
+.menu__link[data-fx="neon"] {
+  --fx: var(--color-nexen-lilac);
+}
+.menu__link[data-fx="spread"] {
+  --fx: var(--color-pink);
+}
+.menu__link[data-fx="slice"] {
+  --fx: var(--color-nexen-peach);
+}
+.menu__link[data-fx="shake"] {
+  --fx: var(--color-nexen-gold);
+}
+.menu__label {
+  display: inline-block;
+  transition:
+    color var(--duration-base),
+    transform var(--duration-base) var(--ease-out-expo),
+    letter-spacing var(--duration-slow) var(--ease-out-expo),
+    text-shadow var(--duration-base);
+}
+.menu__link:is(:hover, :focus-visible) .menu__label,
+.menu__link[aria-current="page"] .menu__label {
+  color: var(--fx);
+}
+/* Bande lumineuse qui balaie le lien au survol */
+.menu__sweep {
+  position: absolute;
+  inset: 0 -1rem;
+  z-index: -1;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--fx) 16%, transparent), transparent 70%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+.menu__link:is(:hover, :focus-visible) .menu__sweep {
+  transform: scaleX(1);
+}
+/* 00 · glitch RGB + décalage */
+.menu__link[data-fx="glitch"]:is(:hover, :focus-visible) .menu__label {
+  transform: translateX(0.75rem);
+}
+/* 01 · néon qui grésille */
+.menu__link[data-fx="neon"]:is(:hover, :focus-visible) .menu__label {
+  text-shadow:
+    0 0 8px var(--fx),
+    0 0 28px var(--color-nexen-lilac-line);
+  animation: menu-neon 0.9s steps(1) both;
+}
+.menu__link[data-fx="neon"] .menu__label::before,
+.menu__link[data-fx="neon"] .menu__label::after,
+.menu__link[data-fx="spread"] .menu__label::before,
+.menu__link[data-fx="spread"] .menu__label::after,
+.menu__link[data-fx="shake"] .menu__label::before,
+.menu__link[data-fx="shake"] .menu__label::after,
+.menu__link[data-fx="wave"] .menu__label::before,
+.menu__link[data-fx="wave"] .menu__label::after {
+  display: none;
+}
+@keyframes menu-neon {
+  0%,
+  30%,
+  60% {
+    opacity: 1;
+  }
+  15%,
+  45% {
+    opacity: 0.35;
+  }
+}
+/* 02 · lettres qui s'écartent + inclinaison */
+.menu__link[data-fx="spread"]:is(:hover, :focus-visible) .menu__label {
+  letter-spacing: 0.08em;
+  transform: skewX(-8deg) translateX(0.5rem);
+}
+/* 03 · découpe : deux tranches qui glissent en sens inverse */
+.menu__link[data-fx="slice"] .menu__label::before,
+.menu__link[data-fx="slice"] .menu__label::after {
+  color: var(--fx);
+  text-shadow: none;
+  animation: none;
+}
+.menu__link[data-fx="slice"]:is(:hover, :focus-visible) .menu__label {
+  color: transparent;
+}
+.menu__link[data-fx="slice"]:is(:hover, :focus-visible) .menu__label::before {
+  opacity: 1;
+  left: 0;
+  clip-path: inset(0 0 50% 0);
+  transform: translateX(-0.6rem);
+  animation: none;
+}
+.menu__link[data-fx="slice"]:is(:hover, :focus-visible) .menu__label::after {
+  opacity: 1;
+  left: 0;
+  clip-path: inset(50% 0 0 0);
+  transform: translateX(0.6rem);
+  animation: none;
+}
+/* 04 · secousse numérique */
+.menu__link[data-fx="shake"]:is(:hover, :focus-visible) .menu__label {
+  animation: menu-shake 0.4s steps(2) 2;
+}
+@keyframes menu-shake {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(-3px, 2px);
+  }
+  50% {
+    transform: translate(3px, -2px);
+  }
+  75% {
+    transform: translate(-2px, -1px);
+  }
+  100% {
+    transform: translate(0.5rem, 0);
+  }
+}
+/* 05 · dégradé cyan → rose qui défile dans les lettres */
+.menu__link[data-fx="wave"]:is(:hover, :focus-visible) .menu__label {
+  color: transparent;
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-pink), var(--color-nexen-lilac), var(--color-cyan));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: menu-wave 1.6s linear infinite;
+  transform: translateX(0.5rem);
+}
+@keyframes menu-wave {
+  to {
+    background-position: 300% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu__link .menu__label {
+    animation: none !important;
+  }
+}
+@media (min-width: 64rem) {
+  .map3d__plane {
+    translate: -12% 0;
+  }
+}

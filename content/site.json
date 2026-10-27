@@ -2,8 +2,8 @@
   "name": "Dystopsy Element",
   "url": "https://dystopsyelement.krohmlab.workers.dev",
   "description": "Texte provisoire : description du site pour les moteurs de recherche.",
-  "email": "provisoire@example.com",
-  "shopUrl": "https://www.vinted.fr",
+  "email": "dystopsyelements@gmail.com",
+  "shopUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
   "socials": {
     "instagram": "https://www.instagram.com",
     "facebook": "https://www.facebook.com",
@@ -25,8 +25,6 @@
   },
   "placeholders": [
     "description",
-    "email",
-    "shopUrl",
     "socials.instagram",
     "socials.facebook",
     "socials.soundcloud",

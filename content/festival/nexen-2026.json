@@ -1,0 +1,1234 @@
+{
+  "slug": "nexen-festival-2026",
+  "title": "Nexen Festival 2026",
+  "event": "nexen-festival-2026",
+  "tagline": "Open air festival · Psytrance · Techno · Bass · Chill",
+  "facts": [
+    {
+      "value": "2",
+      "label": "scènes"
+    },
+    {
+      "value": "48 h",
+      "label": "de son non-stop"
+    },
+    {
+      "value": "61",
+      "label": "sets au timetable"
+    },
+    {
+      "value": "500",
+      "label": "festivaliers maximum"
+    },
+    {
+      "value": "3",
+      "label": "jours en pleine nature"
+    }
+  ],
+  "experience": [
+    {
+      "title": "Open air",
+      "text": "En pleine nature, au nord d'Angers.",
+      "icon": "tree"
+    },
+    {
+      "title": "Camping tentes",
+      "text": "Camping séparé du parking : aucun véhicule au camping.",
+      "icon": "tent"
+    },
+    {
+      "title": "Market artisanal",
+      "text": "Le village des artisans-créateurs.",
+      "icon": "store"
+    },
+    {
+      "title": "Food & bar",
+      "text": "Foodtrucks et bar à prix doux.",
+      "icon": "food"
+    },
+    {
+      "title": "Perfos & fireshow",
+      "text": "Performances et cracheurs de feu.",
+      "icon": "fire"
+    },
+    {
+      "title": "Yoga",
+      "text": "Un atelier pour reprendre son souffle.",
+      "icon": "yoga"
+    },
+    {
+      "title": "Galerie d'art",
+      "text": "Un espace visuel et immersif.",
+      "icon": "art"
+    },
+    {
+      "title": "Toilettes sèches",
+      "text": "En autogestion, pas de douches.",
+      "icon": "drop"
+    }
+  ],
+  "stages": [
+    {
+      "slug": "nexus",
+      "name": "Nexus Stage",
+      "role": "Scène principale",
+      "families": [
+        "Darkpsy",
+        "Forest",
+        "Hi-tech",
+        "Full-on",
+        "Prog",
+        "Twilight"
+      ],
+      "mapping": [
+        "Tahu'a",
+        "Zywolf"
+      ]
+    },
+    {
+      "slug": "engine",
+      "name": "Engine Stage",
+      "role": "Scène alternative",
+      "families": [
+        "Techno",
+        "Drum & Bass",
+        "Bass",
+        "Tribe",
+        "Tekno"
+      ],
+      "mapping": [
+        "Crystal Bros"
+      ]
+    }
+  ],
+  "days": [
+    {
+      "key": "Vendredi",
+      "date": "2026-06-05",
+      "label": "Ven. 5 juin"
+    },
+    {
+      "key": "Samedi",
+      "date": "2026-06-06",
+      "label": "Sam. 6 juin"
+    },
+    {
+      "key": "Dimanche",
+      "date": "2026-06-07",
+      "label": "Dim. 7 juin"
+    }
+  ],
+  "families": [
+    "Darkpsy",
+    "Forest",
+    "Hi-tech",
+    "Full-on & Groovy",
+    "Prog & Twilight",
+    "Techno",
+    "Tribe & Primal",
+    "Drum & Bass",
+    "Bass & Dubstep",
+    "Tekno",
+    "Ambient"
+  ],
+  "sets": [
+    {
+      "slug": "soopium-nexus-vendredi-19-00",
+      "artist": "Soopium",
+      "stage": "nexus",
+      "day": "Vendredi",
+      "date": "2026-06-05",
+      "start": "19:00",
+      "end": "20:30",
+      "style": "Dark Prog",
+      "family": "Prog & Twilight",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/rayane-soop"
+    },
+    {
+      "slug": "fractal-mist-nexus-vendredi-20-30",
+      "artist": "Fractal Mist",
+      "stage": "nexus",
+      "day": "Vendredi",
+      "date": "2026-06-05",
+      "start": "20:30",
+      "end": "22:00",
+      "style": "Dark Prog",
+      "family": "Prog & Twilight",
+      "label": "Dystopsy Elements",
+      "soundcloud": "https://soundcloud.com/fractalmist"
+    },
+    {
+      "slug": "arketypal-nexus-vendredi-22-00",
+      "artist": "Arketypal",
+      "stage": "nexus",
+      "day": "Vendredi",
+      "date": "2026-06-05",
+      "start": "22:00",
+      "end": "23:30",
+      "style": "Forest Dark",
+      "family": "Forest",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/arketypal"
+    },
+    {
+      "slug": "hivemind-nexus-vendredi-23-30",
+      "artist": "Hivemind",
+      "stage": "nexus",
+      "day": "Vendredi",
+      "date": "2026-06-05",
+      "start": "23:30",
+      "end": "01:00",
+      "style": "Forest",
+      "family": "Forest",
+      "label": "Dripping Tales Records",
+      "soundcloud": "https://soundcloud.com/hivemindpsy"
+    },
+    {
+      "slug": "psynomis-nexus-samedi-01-00",
+      "artist": "Psynomis",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "01:00",
+      "end": "02:30",
+      "style": "Twilight / Darkpsy",
+      "family": "Darkpsy",
+      "label": "Level Up / Dystopsy Elements",
+      "soundcloud": "https://soundcloud.com/psynomis"
+    },
+    {
+      "slug": "opsuruus-nexus-samedi-02-30",
+      "artist": "Opsuruus",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "02:30",
+      "end": "04:00",
+      "style": "Darkpsy",
+      "family": "Darkpsy",
+      "label": "Transubtil Records",
+      "soundcloud": "https://soundcloud.com/opsuruus"
+    },
+    {
+      "slug": "balku-nexus-samedi-04-00",
+      "artist": "Balku",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "04:00",
+      "end": "05:30",
+      "style": "Darkpsy",
+      "family": "Darkpsy",
+      "label": "Transubtil Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "dreysoth-nexus-samedi-05-30",
+      "artist": "Dreysoth",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "05:30",
+      "end": "07:00",
+      "style": "Darkpsy",
+      "family": "Darkpsy",
+      "label": "Nataraja",
+      "soundcloud": null
+    },
+    {
+      "slug": "stellarvore-nexus-samedi-07-00",
+      "artist": "Stellarvore",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "07:00",
+      "end": "08:30",
+      "style": "Darkpsy",
+      "family": "Darkpsy",
+      "label": "Dripping Tales Records",
+      "soundcloud": "https://soundcloud.com/stellar-vore"
+    },
+    {
+      "slug": "alixer-nexus-samedi-08-30",
+      "artist": "Alixer",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "08:30",
+      "end": "10:00",
+      "style": "Psycore",
+      "family": "Hi-tech",
+      "label": "Indépendant",
+      "soundcloud": null
+    },
+    {
+      "slug": "d-rec-nexus-samedi-12-00",
+      "artist": "D.Rec",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "12:00",
+      "end": "14:00",
+      "style": "Psybreaks",
+      "family": "Bass & Dubstep",
+      "label": "Etheral Decibel Company",
+      "soundcloud": "https://soundcloud.com/d-rec"
+    },
+    {
+      "slug": "haida-nexus-samedi-14-00",
+      "artist": "Haida",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "14:00",
+      "end": "15:30",
+      "style": "Dark Prog",
+      "family": "Prog & Twilight",
+      "label": "Multiversal Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "doki-doc-nexus-samedi-15-30",
+      "artist": "Doki Doc",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "15:30",
+      "end": "17:00",
+      "style": "Full-on",
+      "family": "Full-on & Groovy",
+      "label": "Nataraja",
+      "soundcloud": "https://soundcloud.com/dokidoc"
+    },
+    {
+      "slug": "solitary-shell-nexus-samedi-17-00",
+      "artist": "Solitary Shell",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "17:00",
+      "end": "18:30",
+      "style": "Full-on",
+      "family": "Full-on & Groovy",
+      "label": "Dacru Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "brain-in-space-nexus-samedi-18-30",
+      "artist": "Brain in Space",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "18:30",
+      "end": "19:30",
+      "style": "Twilight",
+      "family": "Prog & Twilight",
+      "label": "Reversible Records",
+      "soundcloud": "https://on.soundcloud.com/iugvnebhJfNbREQrbt"
+    },
+    {
+      "slug": "kafei-nexus-samedi-19-30",
+      "artist": "Kafei",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "19:30",
+      "end": "20:30",
+      "style": "Forest",
+      "family": "Forest",
+      "label": "Dystopsy Elements",
+      "soundcloud": "https://on.soundcloud.com/pj4a95zFFnimAqCx4q"
+    },
+    {
+      "slug": "fafazz-nexus-samedi-20-30",
+      "artist": "Fafazz",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "20:30",
+      "end": "22:00",
+      "style": "Forest",
+      "family": "Forest",
+      "label": "Funky Freaks Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "faeyan-nexus-samedi-22-00",
+      "artist": "Faeyan",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "22:00",
+      "end": "23:30",
+      "style": "Forest",
+      "family": "Forest",
+      "label": "Quadrivium Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "pakkun-b2b-rayzorks-nexus-samedi-23-30",
+      "artist": "Pakkun B2B Rayzorks",
+      "stage": "nexus",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "23:30",
+      "end": "01:00",
+      "style": "Darkpsy",
+      "family": "Darkpsy",
+      "label": "Transubtil Records & Level Up",
+      "soundcloud": null
+    },
+    {
+      "slug": "d-rec-nexus-dimanche-01-00",
+      "artist": "D.Rec",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "01:00",
+      "end": "02:00",
+      "style": "Psybreaks",
+      "family": "Bass & Dubstep",
+      "label": "Etheral Decibel Company",
+      "soundcloud": "https://soundcloud.com/d-rec"
+    },
+    {
+      "slug": "insane-creatures-nexus-dimanche-02-00",
+      "artist": "Insane Creatures",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "02:00",
+      "end": "03:30",
+      "style": "Darkpsy",
+      "family": "Darkpsy",
+      "label": "Catar Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "lesky-nexus-dimanche-03-30",
+      "artist": "Lesky",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "03:30",
+      "end": "05:00",
+      "style": "Darkpsy",
+      "family": "Darkpsy",
+      "label": "ADN Music & Dripping Tales Records",
+      "soundcloud": "https://soundcloud.com/cl-ment-lescail"
+    },
+    {
+      "slug": "default-mode-nexus-dimanche-05-00",
+      "artist": "Default Mode",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "05:00",
+      "end": "06:30",
+      "style": "Darkpsy",
+      "family": "Darkpsy",
+      "label": null,
+      "soundcloud": "https://soundcloud.com/default-mode-92081371"
+    },
+    {
+      "slug": "neon-vapor-nexus-dimanche-06-30",
+      "artist": "Neon Vapor",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "06:30",
+      "end": "08:00",
+      "style": "Hi-tech",
+      "family": "Hi-tech",
+      "label": "ADN Music",
+      "soundcloud": "https://soundcloud.com/neonvapor"
+    },
+    {
+      "slug": "klaak-nexus-dimanche-08-00",
+      "artist": "Klaak",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "08:00",
+      "end": "09:30",
+      "style": "Hi-tech",
+      "family": "Hi-tech",
+      "label": "Outrance",
+      "soundcloud": "https://soundcloud.com/klaak"
+    },
+    {
+      "slug": "tartalatrance-nexus-dimanche-09-30",
+      "artist": "Tartalatrance",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "09:30",
+      "end": "11:00",
+      "style": "Hi-tech",
+      "family": "Hi-tech",
+      "label": "Chronozone Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "isomorphik-nexus-dimanche-11-00",
+      "artist": "Isomorphik",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "11:00",
+      "end": "12:30",
+      "style": "Dark Hi-tech",
+      "family": "Hi-tech",
+      "label": "Nataraja",
+      "soundcloud": null
+    },
+    {
+      "slug": "excaeterage-nexus-dimanche-12-30",
+      "artist": "Excaeterage",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "12:30",
+      "end": "14:00",
+      "style": "Hi-tech",
+      "family": "Hi-tech",
+      "label": "Multiversal Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "hellesday-nexus-dimanche-14-00",
+      "artist": "Hellesday",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "14:00",
+      "end": "15:30",
+      "style": "Full-on",
+      "family": "Full-on & Groovy",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/hellesday"
+    },
+    {
+      "slug": "zywolf-nexus-dimanche-15-30",
+      "artist": "Zywolf",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "15:30",
+      "end": "17:00",
+      "style": "Psygroovy",
+      "family": "Full-on & Groovy",
+      "label": "Indépendant / Dystopsy Elements",
+      "soundcloud": "https://soundcloud.com/zywolf-music"
+    },
+    {
+      "slug": "hyphae-nexus-dimanche-17-00",
+      "artist": "Hyphae",
+      "stage": "nexus",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "17:00",
+      "end": "18:30",
+      "style": "Groovy",
+      "family": "Full-on & Groovy",
+      "label": "Soundblasting Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "step-oko-engine-vendredi-18-00",
+      "artist": "Step'Oko",
+      "stage": "engine",
+      "day": "Vendredi",
+      "date": "2026-06-05",
+      "start": "18:00",
+      "end": "20:00",
+      "style": "Dubstep / DnB",
+      "family": "Bass & Dubstep",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/step-oko"
+    },
+    {
+      "slug": "psycid-engine-vendredi-20-00",
+      "artist": "PsyciD",
+      "stage": "engine",
+      "day": "Vendredi",
+      "date": "2026-06-05",
+      "start": "20:00",
+      "end": "21:30",
+      "style": "Hybrid Bass Music",
+      "family": "Bass & Dubstep",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/quentin-touchais"
+    },
+    {
+      "slug": "saram-engine-vendredi-21-30",
+      "artist": "Saram",
+      "stage": "engine",
+      "day": "Vendredi",
+      "date": "2026-06-05",
+      "start": "21:30",
+      "end": "23:00",
+      "style": "Drum and Bass",
+      "family": "Drum & Bass",
+      "label": "Indépendante",
+      "soundcloud": "https://soundcloud.com/saramdnb"
+    },
+    {
+      "slug": "acidchaser-engine-vendredi-23-00",
+      "artist": "AcidChaser",
+      "stage": "engine",
+      "day": "Vendredi",
+      "date": "2026-06-05",
+      "start": "23:00",
+      "end": "00:30",
+      "style": "Liquid DnB",
+      "family": "Drum & Bass",
+      "label": "Dystopsy Elements",
+      "soundcloud": "https://soundcloud.com/acidchaser"
+    },
+    {
+      "slug": "elyotrope-engine-samedi-00-30",
+      "artist": "Elyotrope",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "00:30",
+      "end": "02:00",
+      "style": "Bass Music",
+      "family": "Bass & Dubstep",
+      "label": "Abys Production",
+      "soundcloud": "https://soundcloud.com/elyotrope"
+    },
+    {
+      "slug": "naztek-engine-samedi-02-00",
+      "artist": "Naztek",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "02:00",
+      "end": "03:30",
+      "style": "Drum and Bass",
+      "family": "Drum & Bass",
+      "label": "Lookout Music",
+      "soundcloud": "https://soundcloud.com/naztekfr"
+    },
+    {
+      "slug": "grid-zone-engine-samedi-03-30",
+      "artist": "Grid Zone",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "03:30",
+      "end": "05:30",
+      "style": "Drum and Bass",
+      "family": "Drum & Bass",
+      "label": "WOBO",
+      "soundcloud": "https://soundcloud.com/grid-zone"
+    },
+    {
+      "slug": "wobble-priests-engine-samedi-05-30",
+      "artist": "Wobble Priests",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "05:30",
+      "end": "07:00",
+      "style": "Dubstep",
+      "family": "Bass & Dubstep",
+      "label": "Stickzy Crew",
+      "soundcloud": null
+    },
+    {
+      "slug": "neo-quantic-bass-engine-samedi-07-00",
+      "artist": "Neo Quantic Bass",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "07:00",
+      "end": "08:30",
+      "style": "Drum and Bass",
+      "family": "Drum & Bass",
+      "label": "Bloom Records",
+      "soundcloud": "https://soundcloud.com/nqb"
+    },
+    {
+      "slug": "kontakt-engine-samedi-08-30",
+      "artist": "Kontakt",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "08:30",
+      "end": "10:00",
+      "style": "Drum and Bass",
+      "family": "Drum & Bass",
+      "label": "Indépendant",
+      "soundcloud": null
+    },
+    {
+      "slug": "pakkun-engine-samedi-10-00",
+      "artist": "Pakkun",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "10:00",
+      "end": "12:00",
+      "style": "Bass Music",
+      "family": "Bass & Dubstep",
+      "label": "Transubtil Records",
+      "soundcloud": "https://soundcloud.com/pakkun-psy"
+    },
+    {
+      "slug": "seephar-engine-samedi-14-00",
+      "artist": "Seephar",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "14:00",
+      "end": "15:00",
+      "style": "Melodic Techno (live)",
+      "family": "Techno",
+      "label": "Confluence",
+      "soundcloud": "https://soundcloud.com/seephar"
+    },
+    {
+      "slug": "lowin-engine-samedi-15-00",
+      "artist": "Löwin",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "15:00",
+      "end": "16:30",
+      "style": "Techno / Trance",
+      "family": "Techno",
+      "label": "Confluence",
+      "soundcloud": "https://soundcloud.com/lowin_nantes"
+    },
+    {
+      "slug": "yomonara-engine-samedi-16-30",
+      "artist": "Yomonara",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "16:30",
+      "end": "18:00",
+      "style": "Progressive / Deep / Hypnotique Techno",
+      "family": "Techno",
+      "label": "Confluence",
+      "soundcloud": "https://soundcloud.com/yomonara"
+    },
+    {
+      "slug": "guego-engine-samedi-18-00",
+      "artist": "Guego",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "18:00",
+      "end": "19:30",
+      "style": "Progressive Trance",
+      "family": "Prog & Twilight",
+      "label": "Confluence",
+      "soundcloud": "https://soundcloud.com/guego-wav"
+    },
+    {
+      "slug": "mysmatic-engine-samedi-19-30",
+      "artist": "Mysmatic",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "19:30",
+      "end": "21:00",
+      "style": "Psy Techno",
+      "family": "Techno",
+      "label": "Dripping Tales Records",
+      "soundcloud": "https://soundcloud.com/mysmatic"
+    },
+    {
+      "slug": "bad-jarvis-engine-samedi-21-00",
+      "artist": "Bad Jarvis",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "21:00",
+      "end": "22:30",
+      "style": "Techno",
+      "family": "Techno",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/originalmen"
+    },
+    {
+      "slug": "two-pm-engine-samedi-22-30",
+      "artist": "Two PM",
+      "stage": "engine",
+      "day": "Samedi",
+      "date": "2026-06-06",
+      "start": "22:30",
+      "end": "00:30",
+      "style": "Techno",
+      "family": "Techno",
+      "label": "Indépendant",
+      "soundcloud": null
+    },
+    {
+      "slug": "anonhymne-engine-dimanche-00-30",
+      "artist": "Anonhymne",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "00:30",
+      "end": "02:00",
+      "style": "Techno",
+      "family": "Techno",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/anonhymne"
+    },
+    {
+      "slug": "o-d-m-engine-dimanche-02-00",
+      "artist": "O.D.M",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "02:00",
+      "end": "03:00",
+      "style": "Primal",
+      "family": "Tribe & Primal",
+      "label": "Martyrs Records",
+      "soundcloud": "https://soundcloud.com/odm-primal-music"
+    },
+    {
+      "slug": "choko-vs-o-d-m-engine-dimanche-03-00",
+      "artist": "Chôkô vs O.D.M",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "03:00",
+      "end": "04:00",
+      "style": "Mental Tribe / Primal",
+      "family": "Tribe & Primal",
+      "label": "SHZ Records & Martyrs Records",
+      "soundcloud": null
+    },
+    {
+      "slug": "choko-engine-dimanche-04-00",
+      "artist": "Chôkô",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "04:00",
+      "end": "05:00",
+      "style": "Mental Tribe (live)",
+      "family": "Tribe & Primal",
+      "label": "SHZ Records",
+      "soundcloud": "https://soundcloud.com/9choko"
+    },
+    {
+      "slug": "tixpo-engine-dimanche-05-00",
+      "artist": "Tixpo",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "05:00",
+      "end": "06:30",
+      "style": "Tixpocore",
+      "family": "Tekno",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/tixpo"
+    },
+    {
+      "slug": "nohlib-engine-dimanche-06-30",
+      "artist": "Nohlib",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "06:30",
+      "end": "08:00",
+      "style": "Tekno",
+      "family": "Tekno",
+      "label": "Mesures Obscures (ex 4 Mesures)",
+      "soundcloud": "https://soundcloud.com/billon-clement"
+    },
+    {
+      "slug": "5f-u-engine-dimanche-08-00",
+      "artist": "5F.U",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "08:00",
+      "end": "09:30",
+      "style": "Mental Psy Techno",
+      "family": "Techno",
+      "label": "Indépendante",
+      "soundcloud": "https://soundcloud.com/5fu"
+    },
+    {
+      "slug": "zywolf-engine-dimanche-09-30",
+      "artist": "Zywolf",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "09:30",
+      "end": "11:30",
+      "style": "Ambient",
+      "family": "Ambient",
+      "label": "Indépendant / Dystopsy Elements",
+      "soundcloud": "https://soundcloud.com/zywolf-music"
+    },
+    {
+      "slug": "dwellearth-engine-dimanche-11-30",
+      "artist": "Dwellearth",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "11:30",
+      "end": "13:00",
+      "style": "Dark Prog",
+      "family": "Prog & Twilight",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/dwellearth"
+    },
+    {
+      "slug": "metamorphic-engine-dimanche-13-00",
+      "artist": "Metamorphic",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "13:00",
+      "end": "14:30",
+      "style": "PsyTech / Tribe",
+      "family": "Tribe & Primal",
+      "label": "Multiversal Records",
+      "soundcloud": "https://soundcloud.com/trip-shift"
+    },
+    {
+      "slug": "dwe-engine-dimanche-14-30",
+      "artist": "DWØE",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "14:30",
+      "end": "16:00",
+      "style": "Techno",
+      "family": "Techno",
+      "label": "Indépendant",
+      "soundcloud": "https://soundcloud.com/dwoemusic"
+    },
+    {
+      "slug": "toomax-engine-dimanche-16-00",
+      "artist": "Toomax",
+      "stage": "engine",
+      "day": "Dimanche",
+      "date": "2026-06-07",
+      "start": "16:00",
+      "end": "17:30",
+      "style": "Groovy Techno",
+      "family": "Techno",
+      "label": "Indépendante",
+      "soundcloud": "https://soundcloud.com/user-741311420"
+    }
+  ],
+  "breaks": [
+    {
+      "stage": "nexus",
+      "day": "Samedi",
+      "start": "10:00",
+      "end": "12:00"
+    },
+    {
+      "stage": "nexus",
+      "day": "Dimanche",
+      "start": "18:30",
+      "end": null,
+      "kind": "fin"
+    },
+    {
+      "stage": "engine",
+      "day": "Samedi",
+      "start": "12:00",
+      "end": "14:00"
+    },
+    {
+      "stage": "engine",
+      "day": "Dimanche",
+      "start": "17:30",
+      "end": null,
+      "kind": "fin"
+    }
+  ],
+  "schedule": [
+    {
+      "when": "Ven. 5 juin · 15 h",
+      "what": "Ouverture du camping"
+    },
+    {
+      "when": "Ven. 5 juin · 18 h",
+      "what": "Ouverture du site et début des concerts"
+    },
+    {
+      "when": "Sam. 6 juin · 12 h",
+      "what": "Accès des billets 1 jour"
+    },
+    {
+      "when": "Dim. 7 juin · 18 h",
+      "what": "Fin des concerts"
+    },
+    {
+      "when": "Dim. 7 juin · 19 h 30",
+      "what": "Fermeture du site"
+    },
+    {
+      "when": "Mar. 9 juin · matin",
+      "what": "Fermeture du camping et du parking (pas de son dès dimanche soir)"
+    }
+  ],
+  "practical": {
+    "knowTitle": "À savoir",
+    "know": [
+      "Capacité : 500 personnes",
+      "Pas de remboursement",
+      "Revente : envoyer le nom et le prénom de l'acheteur à l'asso par e-mail",
+      "Lieu : Maine-et-Loire, 30 min au nord d'Angers",
+      "Localisation exacte envoyée aux détenteurs de billets",
+      "Sanitaires en autogestion : ne rien jeter sauf le papier toilette"
+    ],
+    "bring": [
+      "Eau perso (eau gratuite sur place, prévoyez des réserves)",
+      "Éthylotest perso",
+      "Sacs poubelle (points de collecte sur le site)",
+      "Lampe frontale ou lampe de poche",
+      "Affaires de camping et de toilette",
+      "Imperméable et vêtements chauds pour la nuit",
+      "Espèces et carte bancaire (selon les stands)",
+      "Nourriture et boissons perso autorisées (pas de verre sur le site)"
+    ],
+    "forbidden": [
+      "Feux, partout",
+      "Réchauds : tolérés, avec une vigilance maximale",
+      "Mineurs : 18 ans et plus, contrôle d'identité",
+      "Animaux, même en laisse (acceptés au parking uniquement)",
+      "Verre sur le site du festival (autorisé au camping et au parking)",
+      "Comportements violents, sexistes, racistes, LGBTQIA+phobes : exclusion directe",
+      "Baignade dans les bassins autour du site"
+    ]
+  },
+  "map": {
+    "zones": [
+      {
+        "id": "nexus",
+        "name": "Nexus",
+        "kind": "festival",
+        "text": "La scène principale, sous le mapping de Tahu'a et Zywolf."
+      },
+      {
+        "id": "engine",
+        "name": "Engine",
+        "kind": "festival",
+        "text": "La scène alternative, sous le mapping des Crystal Bros."
+      },
+      {
+        "id": "bar",
+        "name": "Bar",
+        "kind": "festival",
+        "text": "Pour se rafraîchir entre deux sets."
+      },
+      {
+        "id": "galerie",
+        "name": "Galerie",
+        "kind": "festival",
+        "text": "Espace visuel et immersif."
+      },
+      {
+        "id": "village",
+        "name": "Village Nexen",
+        "kind": "village",
+        "text": "Artisans-créateurs, foodtrucks, stands shop et espace RDR."
+      },
+      {
+        "id": "benevoles",
+        "name": "Accueil bénévoles · Catering",
+        "kind": "benevoles",
+        "text": "Le camp de base de l'équipe."
+      },
+      {
+        "id": "chill",
+        "name": "Chill · Yoga",
+        "kind": "chill",
+        "text": "Pour souffler, s'étirer, se poser."
+      },
+      {
+        "id": "camping",
+        "name": "Camping",
+        "kind": "camping",
+        "text": "Tentes uniquement, aucun véhicule au camping."
+      },
+      {
+        "id": "parking",
+        "name": "Parking camions / voitures",
+        "kind": "parking",
+        "text": "Séparé du camping. Les animaux y sont acceptés."
+      }
+    ],
+    "legend": [
+      {
+        "kind": "village",
+        "label": "Village Nexen"
+      },
+      {
+        "kind": "benevoles",
+        "label": "Zone bénévoles"
+      },
+      {
+        "kind": "festival",
+        "label": "Zone festival"
+      },
+      {
+        "kind": "chill",
+        "label": "Zone chill"
+      },
+      {
+        "kind": "parking",
+        "label": "Parking / camping"
+      }
+    ],
+    "services": [
+      "Points d'eau",
+      "Stand RDR (réduction des risques)",
+      "Stands food",
+      "Stands shop",
+      "Toilettes"
+    ]
+  },
+  "village": {
+    "stands": [
+      {
+        "name": "Artizinnia",
+        "what": "Bijoux et vêtements en crochet"
+      },
+      {
+        "name": "Delpeixo",
+        "what": "Bijoux et vêtements"
+      },
+      {
+        "name": "Eden Mako",
+        "what": "Tatouages, bijoux, illustrations"
+      },
+      {
+        "name": "Le petit forestier",
+        "what": "Coiffeur"
+      },
+      {
+        "name": "Tattoo travel",
+        "what": "Tatouages"
+      },
+      {
+        "name": "Cowboy Beshop",
+        "what": "Vêtements"
+      },
+      {
+        "name": "Marty's Âneries",
+        "what": "Artisanat bois"
+      },
+      {
+        "name": "Théïa Bijoux",
+        "what": "Créations bijoux"
+      },
+      {
+        "name": "Napaykuy",
+        "what": "Vêtements"
+      },
+      {
+        "name": "Le PotaGéant",
+        "what": "CBD"
+      },
+      {
+        "name": "Bohemian Baz'art",
+        "what": "Bijoux et vêtements"
+      },
+      {
+        "name": "Julie & Julia",
+        "what": "Yoga · atelier de Julie le vendredi à 17 h 30"
+      },
+      {
+        "name": "Vivi Filo",
+        "what": "Vêtements en crochet"
+      },
+      {
+        "name": "Shahinese",
+        "what": "Maquillage UV"
+      }
+    ],
+    "food": [
+      {
+        "name": "La Fouée",
+        "what": "Salé, sucré, carné, végé, végan, halal"
+      },
+      {
+        "name": "Spice Travel",
+        "what": "Indien, traditionnel et végan"
+      },
+      {
+        "name": "BBQ Nexen",
+        "what": "Frites, burgers carnés et végé"
+      }
+    ],
+    "gallery": [
+      "Shroomzuals",
+      "Nymeria",
+      "Fabien Dessoly – Symbolic Art BZH",
+      "EucaLyptus",
+      "Ajaks",
+      "Razel",
+      "Nigoull",
+      "Chloé Liberge",
+      "Louis Rigaut",
+      "Eden Mako"
+    ]
+  },
+  "crew": [
+    {
+      "role": "Mapping Nexus",
+      "names": [
+        "Tahu'a",
+        "Zywolf"
+      ]
+    },
+    {
+      "role": "Mapping Engine",
+      "names": [
+        "Crystal Bros"
+      ]
+    },
+    {
+      "role": "Visual artist & stage builder",
+      "names": [
+        "Shas'ombre"
+      ]
+    },
+    {
+      "role": "Scénographie",
+      "names": [
+        "The Ark Project"
+      ]
+    },
+    {
+      "role": "Fireshow",
+      "names": [
+        "Somon",
+        "Ganey",
+        "Cobé"
+      ]
+    },
+    {
+      "role": "Photo",
+      "names": [
+        "Pamp'"
+      ]
+    }
+  ],
+  "links": {
+    "ticket": "https://www.helloasso.com/associations/dystopsy-elements/evenements/nexen-festival-2026",
+    "merch": "https://www.vinted.fr/member/3161686337-dystopsyelements",
+    "carpool": "https://www.facebook.com/groups/962779532220719/",
+    "facebook": "https://www.facebook.com/events/1363260745173238"
+  },
+  "source": "Événement Facebook officiel, description et publications « Timetable » et « Map festival » (relevé du 27/10/2026)"
+}

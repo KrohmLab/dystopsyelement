@@ -5,6 +5,7 @@ import { parse as parseYaml } from "yaml";
 import type { z } from "zod";
 import artistsJson from "../../content/artists.json";
 import faqJson from "../../content/faq.json";
+import nexen2026Json from "../../content/festival/nexen-2026.json";
 import productsJson from "../../content/products.json";
 import servicesJson from "../../content/services.json";
 import siteJson from "../../content/site.json";
@@ -14,6 +15,7 @@ import {
   artistSchema,
   eventFrontmatterSchema,
   faqSchema,
+  festivalSchema,
   memberSchema,
   productSchema,
   serviceSchema,
@@ -36,6 +38,7 @@ export const team = validate(memberSchema.array(), teamJson, "content/team.json"
 export const products = validate(productSchema.array(), productsJson, "content/products.json");
 export const services = validate(serviceSchema.array(), servicesJson, "content/services.json");
 export const faq = validate(faqSchema.array(), faqJson, "content/faq.json");
+export const nexen2026 = validate(festivalSchema, nexen2026Json, "content/festival/nexen-2026.json");
 
 const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)([\s\S]*)$/;
 const eventFiles = import.meta.glob<string>("../../content/events/*.md", { query: "?raw", import: "default", eager: true });
@@ -61,6 +64,7 @@ function loadEvents(): DystopsyEvent[] {
 export const events = loadEvents();
 
 // Contrôles croisés : chaque référence pointe vers un contenu existant.
+if (!events.some((e) => e.slug === nexen2026.event)) throw new Error(`content/festival/nexen-2026.json : événement inconnu (${nexen2026.event})`);
 const images = imagesJson as Record<string, unknown>;
 const artistSlugs = new Set(artists.map((a) => a.slug));
 for (const event of events) {

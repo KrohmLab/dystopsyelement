@@ -115,3 +115,69 @@ export const YouTubeIcon = (p: IconProps) => (
     <path d="m10 15 5-3-5-3z" />
   </Icon>
 );
+
+// Icônes de l'expérience festival (page Nexen).
+export const TreeIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 22v-6M8 16h8l-4-6 3 0-3-5-3 5h3l-4 6Z" />
+  </Icon>
+);
+
+export const TentIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3.5 21 12 4l8.5 17M12 4v17M8 21l4-6 4 6M2 21h20" />
+  </Icon>
+);
+
+export const StoreIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3 9 5 4h14l2 5M3 9h18M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0M5 12v8h14v-8M10 20v-5h4v5" />
+  </Icon>
+);
+
+export const FoodIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M7 2v8a2 2 0 0 0 4 0V2M9 10v12M17 2c-2 2-3 5-3 8h3v12" />
+  </Icon>
+);
+
+export const FireIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-10-1 2-2 3-3 3-1-2-1-4 0-6-4 2-7 7-7 13 0 4 3 7 7 7Z" />
+    <path d="M12 22a3 3 0 0 0 3-3c0-2-2-3-3-5-1 2-3 3-3 5a3 3 0 0 0 3 3Z" />
+  </Icon>
+);
+
+export const YogaIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="12" cy="4.5" r="2" />
+    <path d="M12 7v6M5 10l7 3 7-3M8 21l4-8 4 8M5 21h14" />
+  </Icon>
+);
+
+export const ArtIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="3" width="18" height="18" />
+    <path d="m3 16 5-5 4 4 3-3 6 6" />
+    <circle cx="15.5" cy="8.5" r="1.5" />
+  </Icon>
+);
+
+export const DropIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 2s6 7 6 12a6 6 0 0 1-12 0c0-5 6-12 6-12Z" />
+  </Icon>
+);
+
+export const CheckIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m5 12 5 5 9-10" />
+  </Icon>
+);
+
+export const ClockIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 2" />
+  </Icon>
+);

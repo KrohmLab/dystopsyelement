@@ -82,7 +82,7 @@ Le site est reconstruit chaque nuit (CLAUDE.md §7) pour que la bascule soit aut
 Sections dans l'ordre, fonds alternés `void` / `abyss`. Aucun paragraphe de présentation.
 
 **3.1 Hero** (plein écran, animé) — **un seul événement** (le prochain, sinon le dernier Nexen : §2), dans le grand cadre cyber de la v1 · badge statut · titre (décodage + glitch) · date · lieu
-CTA principal **Prendre ma place** → `ticketUrl` · CTA secondaire **Voir l'événement** → `/agenda/[slug]`
+CTA principal **Billetterie** → `ticketUrl` · CTA secondaire **Voir l'événement** → `/agenda/[slug]`
 
 **3.2 Ticker** — termes des affiches réelles : `OPEN AIR FESTIVAL ✦ PSYTRANCE · TECHNO · BASS · CHILL ✦`
 
@@ -102,12 +102,21 @@ CTA `festival` **Billetterie** → `ticketUrl` si à venir, sinon **Voir le fest
 
 ## 4. Nexen `/nexen`
 
-**Hero** : bannière de l'édition, H1 « NEXEN FESTIVAL » (glitch), dates et lieu, CTA `festival` **Billetterie** (si à venir), **Événement Facebook** ↗.
-**`#line-up`** : grille d'`ArtistCard` (photo, format Live / DJ Set, genre) ; clic → **modale artiste** (photo, format, genre, courte bio, liens SoundCloud / Instagram). Affiche officielle du line-up en complément (image réelle).
-**`#univers`** : bloc visuel (fond, écailles, logo néon) + une phrase courte.
-**`#infos`** : `Accordion` de questions-réponses.
-**`#galerie`** : grille de photos (photo de jour du festival + emplacements).
-**CtaBanner** : **Prendre ma place** (si à venir) ou **Voir l'agenda**.
+> Décision du 27/10/2026 : page de présentation **complète et interactive** de l'édition 2026 (cas concret pour l'équipe et vitrine en attendant la prochaine édition), aux couleurs de l'événement (lilas Nexus, pêche Engine, violet et or de la carte). Données réelles relevées sur l'événement Facebook officiel : `content/festival/nexen-2026.json`.
+
+1. **Hero** : bannière en parallaxe, logo Nexen néon, dates, lieu, styles ; CTA `festival` **Billetterie** (si à venir) ou **Explorer le line-up**, **Revivre l'événement** (Facebook).
+2. **Chiffres clés** qui défilent : 2 scènes, 48 h non-stop, 61 sets, 500 festivaliers, 3 jours.
+3. **L'expérience** : open air, camping, market, food & bar, perfos & fireshow, yoga, galerie d'art, toilettes sèches.
+4. **Les scènes** : Nexus Stage (scène principale) et Engine Stage (scène alternative) ; styles, mapping, nombre de passages, lien vers le line-up filtré.
+5. **`#line-up` Line-up & timetable** : filtres **scène / jour / style** (dans l'URL), vue **cartes** (clic → fiche : passage, style, label, SoundCloud) ou **timetable** (les deux scènes côte à côte, créneaux à l'échelle, Break / Fin).
+6. **`#carte` Carte du site en 3D** : recréée d'après la publication « Map festival 2026 ». Au défilement, le plan bascule en vue isométrique et s'éclate (zones, scènes en tours néon, tentes, parking, étiquettes) ; zones cliquables avec leur descriptif.
+7. **`#infos` Infos pratiques** : frise des horaires (camping, site, concerts, fermetures), À savoir / À amener / Interdit.
+8. **`#village`** : artisans-créateurs, restauration, galerie d'art.
+9. **Crédits** : mapping, visual artist, scénographie, fireshow, photo.
+10. **`#galerie`** + affiche officielle du line-up.
+11. **Liens** : Billetterie (si à venir), merch Vinted, covoiturage, événement Facebook.
+
+La localisation exacte n'est jamais publiée (envoyée aux détenteurs de billets).
 
 ---
 
@@ -117,7 +126,7 @@ CTA `festival` **Billetterie** → `ticketUrl` si à venir, sinon **Voir le fest
 
 **Fiche** :
 Hero : visuel plein écran, **Retour**, badge statut, H1, date, horaires, lieu, **Événement Facebook** ↗.
-Barre d'actions collante sur mobile : **Prendre ma place** (si à venir et `ticketUrl`) + **Partager**.
+Barre d'actions collante sur mobile : **Billetterie** (si à venir et `ticketUrl`) + **Partager**.
 **Le résumé** (v1 « Transmission ») : texte court, bouton **Lire la suite** qui déplie le reste.
 **Line-up** : `ArtistCard` → modale artiste (comme `/nexen`).
 Pied : 2 autres événements + CtaBanner.

@@ -62,7 +62,7 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
         <div className="flex flex-wrap items-center gap-4">
           {event.upcoming && event.ticketUrl ? (
             <Button size="lg" icon={TicketIcon} href={event.ticketUrl}>
-              Prendre ma place
+              Billetterie
             </Button>
           ) : (
             <Button size="lg" href="/agenda">

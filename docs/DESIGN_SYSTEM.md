@@ -211,7 +211,7 @@ Garde-fous (bloquants) :
 
 ### 6.3 Interdit partout
 
-Curseur personnalisé · scroll-jacking · rotation 3D · animations qui retardent l'affichage du texte. Librairie autorisée : **`motion`** (comme le site Outrance), pour les animations liées au défilement ou à la souris ; le reste en CSS.
+Curseur personnalisé · scroll-jacking · animations qui retardent l'affichage du texte. **Exception validée le 27/10/2026** : la carte 3D de la page Nexen (`SiteMap3D`) utilise une section collante qui pivote en 3D au défilement, à la demande du client ; le défilement reste libre (pas de blocage), et en mouvement réduit la carte s'affiche directement dans son état final, sans section collante. Librairie autorisée : **`motion`** (comme le site Outrance), pour les animations liées au défilement ou à la souris ; le reste en CSS.
 
 ---
 
@@ -237,13 +237,13 @@ Rendu `<a>` si `href`, sinon `<button>`.
 | `md` (défaut) | 48 px | 24 px | `text-label` |
 | `lg` | 56 px | 32 px | `text-label` 14 px |
 
-Toutes les tailles respectent une cible tactile ≥ 44 px (sauf `sm`, réservé au desktop). Forme : `chamfer-sm` (sm) / `chamfer-md` (md, lg). Libellés : verbe d'action, 1 à 3 mots (« Prendre ma place », « Voir le line-up », « Demander un devis »).
+Toutes les tailles respectent une cible tactile ≥ 44 px (sauf `sm`, réservé au desktop). Forme : `chamfer-sm` (sm) / `chamfer-md` (md, lg). Libellés : verbe d'action, 1 à 3 mots (« Billetterie », « Voir le line-up », « Demander un devis »).
 
 ### 7.2 `Header` et `Menu` (plein écran, toutes tailles)
 
 Hauteur `spacing-header` (72 px). Logo Dystopsy (SVG, 40 px) à gauche ; à droite `Button primary sm` « Billetterie » (dès `sm`) et le bouton **Menu** (trois traits qui deviennent une croix, libellé « Menu » / « Fermer » dès `md`). **Pas de liens dans l'en-tête, même sur grand écran** (décision du 27/10/2026) : toute la navigation passe par le menu plein écran.
 Au repos : transparent. Après 50 px de scroll : fond `abyss/60` + `backdrop-blur` + bordure basse `cyan-line` + `bg-grid` + `shadow-header`. Le logo glitche une fois au premier défilement.
-**Menu plein écran** : fond `void` avec lueurs cyan / rose, sol quadrillé, grand logo en filigrane qui pivote, scanlines. Liens numérotés (`00 Accueil`, `01 Nexen`…) en `text-h1` : entrée en cascade avec glitch RGB, au survol décalage + cyan + glitch + flèche. Colonne latérale : prochain événement, Billetterie pleine largeur, réseaux, e-mail.
+**Menu plein écran** : fond `void` avec lueurs cyan / rose, sol quadrillé, grand logo en filigrane qui pivote, scanlines. Liens numérotés (`00 Accueil`, `01 Nexen`…) en `text-h1` : entrée en cascade avec glitch RGB. **Un effet de survol par lien**, avec sa couleur : glitch RGB (cyan), néon qui grésille (lilas), lettres qui s'écartent (rose), découpe en deux tranches (pêche), secousse numérique (or), dégradé qui défile dans les lettres ; bande lumineuse qui balaie le lien. Grand logo en filigrane cyan à 14 % avec lueur. Colonne latérale : prochain événement, Billetterie pleine largeur, réseaux, e-mail.
 Ouverture : rideau qui descend (`clip-path`) avec une barre néon cyan → rose au bord ; fermeture : rideau qui remonte, liens qui s'effacent. Focus piégé, Échap, page inerte, focus rendu au bouton (`useModal`). Mouvement réduit : apparition directe.
 
 ### 7.3 `Footer`
@@ -314,6 +314,10 @@ SVG inline dans `src/components/icons.tsx` (tracés Lucide), trait 1.5, tailles 
 Carte portrait `chamfer-md` (photo en niveaux de gris → couleur au survol, `Brackets`), badge (format ou pôle), nom `text-h3`, une ligne en `text-small`. Clic ou Entrée → `Modal` : panneau `surface-raised` biseauté, photo, nom, rôle ou format, courte bio, liens ; focus piégé, Échap, clic sur le fond, retour du focus (`useModal`).
 Filtres et onglets (`Tabs`) : boutons `secondary sm`, l'actif en cyan plein (`aria-pressed` / `aria-selected`), filtrage sans rechargement.
 
+### 7.16 ter Couleurs Nexen
+
+Tokens `nexen-violet`, `nexen-lilac` (Nexus Stage), `nexen-peach` (Engine Stage, Break / Fin), `nexen-gold` (village), `nexen-ember` (bénévoles), relevés sur l'affiche, le timetable et la carte 2026. Réservés à la page `/nexen` et aux éléments du festival ; le reste du site garde cyan / rose.
+
 ### 7.17 Briques d'animation (accueil)
 
 Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu statique) et affichent leur contenu sans JavaScript.
@@ -326,6 +330,7 @@ Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu
 | `NeonFrame` | Cadre néon SVG (équerres + lignes) qui se trace à l'arrivée, puis respire légèrement |
 | `GridFloor` | Grille cyan en perspective qui défile au sol (fond du hero) |
 | `NeonFlicker` | Allumage d'un néon qui grésille (logo Nexen) |
+| `CountUp` | Chiffre qui défile jusqu'à sa valeur au premier passage dans le viewport |
 
 ### 7.18 `Portal` (tuile de navigation)
 
@@ -349,7 +354,7 @@ Demande du président : aller à l'essentiel, chaque section mène quelque part.
 
 Chaque section respecte le schéma **Titre → (1 ligne) → Visuel/Cartes → CTA**. Pas de section sans CTA, sauf le hero du footer.
 
-Ton : direct, vouvoiement ou tournure impersonnelle. Les libellés de boutons (« Prendre ma place », « Voir le line-up », « Voir la boutique ») sont des éléments d'interface, pas du contenu. L'univers se dit avec les sur-titres `// CODE` et les visuels, pas avec du jargon. À bannir : « protocole », « matrice », « secteur 7 », « système hacké », faux codes hexadécimaux dans le contenu lisible.
+Ton : direct, vouvoiement ou tournure impersonnelle. Les libellés de boutons (« Billetterie », « Voir le line-up », « Voir la boutique ») sont des éléments d'interface, pas du contenu. L'univers se dit avec les sur-titres `// CODE` et les visuels, pas avec du jargon. À bannir : « protocole », « matrice », « secteur 7 », « système hacké », faux codes hexadécimaux dans le contenu lisible.
 
 ---
 

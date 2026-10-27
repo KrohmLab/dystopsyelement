@@ -36,6 +36,16 @@
   /* Texte posé SUR un accent : toujours noir (blanc sur rose = 3.7:1, refusé) */
   --color-on-accent: #020202;
 
+  /* ---------- Nexen Festival (couleurs de l'affiche, du timetable et de la carte 2026) ---------- */
+  --color-nexen-violet: #7a3ce0;    /* fond de la carte du site, néons de l'affiche */
+  --color-nexen-lilac: #c9a8ff;     /* Nexus Stage (scène principale) */
+  --color-nexen-peach: #f6ad8f;     /* Engine Stage (scène alternative), « Break » / « Fin » */
+  --color-nexen-gold: #f2c94c;      /* Village Nexen sur la carte */
+  --color-nexen-ember: #e2574c;     /* Zone bénévoles sur la carte */
+  --color-nexen-violet-dim: rgb(122 60 224 / 0.18);
+  --color-nexen-lilac-line: rgb(201 168 255 / 0.40);
+  --color-nexen-peach-line: rgb(246 173 143 / 0.40);
+
   /* ---------- États ---------- */
   --color-success: #75feed;
   --color-danger: #ff4d6d;

@@ -1,13 +1,16 @@
 import type { ReactNode } from "react";
 import { cn } from "../../lib/cn";
 
+type Tone = "cyan" | "pink" | "lilac";
+const TONE: Record<Tone, string> = { cyan: "text-cyan", pink: "text-pink", lilac: "text-nexen-lilac" };
+
 type Props = {
   eyebrow: string;
   title: string;
   lead?: string;
   align?: "left" | "center";
-  /** Sur-titre rose si la section est orientée vente. */
-  tone?: "cyan" | "pink";
+  /** Sur-titre rose si la section est orientée vente ; lilas sur la page Nexen. */
+  tone?: Tone;
   /** Identifiant du H2, pour `aria-labelledby` de la section. */
   id?: string;
   /** Action (un Button ghost) à droite en desktop, dessous en mobile. */
@@ -31,8 +34,6 @@ export function SectionHeader({ eyebrow, title, lead, align = "left", tone = "cy
 }
 
 /** Sur-titre « // CODE » (DESIGN_SYSTEM §3.2). */
-export function Eyebrow({ tone = "cyan", children }: { tone?: "cyan" | "pink"; children: ReactNode }) {
-  return (
-    <p className={cn("mb-3 font-display text-eyebrow font-bold uppercase", tone === "pink" ? "text-pink" : "text-cyan")}>// {children}</p>
-  );
+export function Eyebrow({ tone = "cyan", children }: { tone?: Tone; children: ReactNode }) {
+  return <p className={cn("mb-3 font-display text-eyebrow font-bold uppercase", TONE[tone])}>// {children}</p>;
 }

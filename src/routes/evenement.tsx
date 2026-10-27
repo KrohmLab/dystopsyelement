@@ -12,7 +12,7 @@ import { Reveal } from "../components/motion/Reveal";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
 import { ResponsiveImage } from "../components/ui/ResponsiveImage";
-import { artists, events, getEvent } from "../content/load.server";
+import { artists, events, getEvent, nexen2026 } from "../content/load.server";
 import { toSummary } from "../content/summaries";
 import { formatDateRange, getUpcoming } from "../lib/events";
 import { pageMeta } from "../lib/seo";
@@ -33,6 +33,8 @@ export function loader({ params }: Route.LoaderArgs) {
     summaryHtml: event.summaryHtml,
     lineup: event.lineup.flatMap((slug) => artists.filter((a) => a.slug === slug)),
     others: others.map((e) => toSummary(e, now)),
+    /** Festival détaillé (line-up, timetable, carte) sur sa propre page. */
+    festivalPage: event.slug === nexen2026.event ? "/nexen" : null,
   };
 }
 
@@ -43,7 +45,7 @@ export const meta: Route.MetaFunction = ({ data }) =>
 
 /** Fiche événement (SITE_PLAN §5) : hero, résumé dépliable, line-up + modales, autres événements. */
 export default function Evenement({ loaderData }: Route.ComponentProps) {
-  const { event, dates, timeRange, facebookUrl, summaryHtml, lineup, others } = loaderData;
+  const { event, dates, timeRange, facebookUrl, summaryHtml, lineup, others, festivalPage } = loaderData;
   const canBuy = event.upcoming && event.ticketUrl && event.status !== "complet" && event.status !== "annule";
   const place = [event.venue, event.city].filter(Boolean).join(", ");
 
@@ -84,7 +86,7 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
           <div className="mt-8 hidden flex-wrap gap-4 md:flex">
             {canBuy && (
               <Button size="lg" icon={TicketIcon} href={event.ticketUrl ?? undefined}>
-                Prendre ma place
+                Billetterie
               </Button>
             )}
             {facebookUrl && (
@@ -118,6 +120,22 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
         </Section>
       )}
 
+      {festivalPage && (
+        <Section tone="abyss" labelledBy="festival-titre">
+          <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="mb-3 font-display text-eyebrow font-bold text-nexen-lilac uppercase">// Programmation</p>
+              <h2 id="festival-titre" className="text-h2 font-black">
+                Line-up, timetable & carte
+              </h2>
+            </div>
+            <Button variant="festival" href={`${festivalPage}#line-up`}>
+              Explorer le festival
+            </Button>
+          </div>
+        </Section>
+      )}
+
       {others.length > 0 && (
         <Section grid labelledBy="autres-titre">
           <SectionHeader
@@ -143,7 +161,7 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
       <CtaBanner
         eyebrow="Contact"
         title="Une question ?"
-        primary={canBuy ? { label: "Prendre ma place", href: event.ticketUrl ?? "/agenda" } : { label: "Nous écrire", href: "/contact" }}
+        primary={canBuy ? { label: "Billetterie", href: event.ticketUrl ?? "/agenda" } : { label: "Nous écrire", href: "/contact" }}
         secondary={canBuy ? { label: "Nous écrire", href: "/contact" } : undefined}
       />
       {/* Espace sous la barre collante mobile. */}

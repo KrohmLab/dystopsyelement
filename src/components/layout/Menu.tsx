@@ -30,8 +30,10 @@ const NETWORKS = [
   { key: "youtube", label: "YouTube", Icon: YouTubeIcon },
 ] as const;
 
-const LINK =
-  "menu__link group relative flex items-baseline gap-4 py-2 no-underline sm:gap-6 aria-[current=page]:text-cyan";
+const LINK = "menu__link group relative flex items-baseline gap-4 py-2 no-underline sm:gap-6";
+
+/** Un effet de survol par lien (couleur, mouvement, glitch) : styles .menu__link[data-fx] dans theme.css. */
+const FX = ["glitch", "neon", "spread", "slice", "shake", "wave"] as const;
 
 /**
  * Menu plein écran, à toutes les tailles (DESIGN_SYSTEM §7.2) : rideau qui descend avec une barre de scan,
@@ -65,7 +67,7 @@ export function Menu({ open, onClose, nav, ticket, next, socials, email, headerR
         <span className="absolute inset-0 bg-radial-[at_15%_20%] from-cyan-dim to-transparent to-60%" />
         <span className="absolute inset-0 bg-radial-[at_90%_80%] from-pink-dim to-transparent to-60%" />
         <GridFloor className="absolute inset-x-0 bottom-0 h-2/5 opacity-70" />
-        <Logo className="menu__mark absolute top-1/2 -right-1/4 size-[min(90vh,52rem)] -translate-y-1/2 text-ink opacity-5" />
+        <Logo className="menu__mark absolute top-1/2 -right-[18%] size-[min(92vh,54rem)] -translate-y-1/2 text-cyan" />
         <span className="absolute inset-0 bg-scanlines" />
       </div>
       <span aria-hidden="true" className="menu__scanbar" />
@@ -77,10 +79,8 @@ export function Menu({ open, onClose, nav, ticket, next, socials, email, headerR
               const content = (
                 <>
                   <span className="font-display text-eyebrow font-bold text-cyan">{String(i).padStart(2, "0")}</span>
-                  <span
-                    className="menu__label glitch-hover font-display text-h1 font-black text-ink uppercase transition-[color,transform] duration-base ease-out-expo group-hover:translate-x-3 group-hover:text-cyan group-focus-visible:translate-x-3 group-focus-visible:text-cyan group-aria-[current=page]:text-cyan"
-                    data-text={item.label}
-                  >
+                  <span aria-hidden="true" className="menu__sweep" />
+                  <span className="menu__label glitch-hover font-display text-h1 font-black text-ink uppercase" data-text={item.label}>
                     {item.label}
                   </span>
                   {item.external ? (
@@ -93,12 +93,12 @@ export function Menu({ open, onClose, nav, ticket, next, socials, email, headerR
               return (
                 <li key={item.href} className="menu__item border-b border-line/60" style={{ "--i": i } as CSSProperties}>
                   {item.external ? (
-                    <a href={item.href} target="_blank" rel="noopener noreferrer" className={LINK}>
+                    <a href={item.href} target="_blank" rel="noopener noreferrer" className={LINK} data-fx={FX[i % FX.length]}>
                       {content}
                       <span className="sr-only">(nouvel onglet)</span>
                     </a>
                   ) : (
-                    <NavLink to={item.href} end={item.href === "/"} className={LINK}>
+                    <NavLink to={item.href} end={item.href === "/"} className={LINK} data-fx={FX[i % FX.length]}>
                       {content}
                     </NavLink>
                   )}

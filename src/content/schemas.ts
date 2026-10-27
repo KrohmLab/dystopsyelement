@@ -110,7 +110,74 @@ export const faqSchema = z.strictObject({
   placeholder,
 });
 
+const time = z.string().regex(/^\d{2}:\d{2}$/, "heure attendue au format HH:MM");
+const stageSlug = z.enum(["nexus", "engine"]);
+const day = z.enum(["Vendredi", "Samedi", "Dimanche"]);
+
+/** Festival détaillé (content/festival/*.json) : scènes, timetable, infos pratiques, carte, village, crew. */
+export const festivalSchema = z.strictObject({
+  slug,
+  title: z.string(),
+  /** Slug de l'événement correspondant dans content/events/. */
+  event: slug,
+  tagline: z.string(),
+  facts: z.array(z.strictObject({ value: z.string(), label: z.string() })),
+  experience: z.array(z.strictObject({ title: z.string(), text: z.string(), icon: z.string() })),
+  stages: z.array(
+    z.strictObject({ slug: stageSlug, name: z.string(), role: z.string(), families: z.array(z.string()), mapping: z.array(z.string()) }),
+  ),
+  days: z.array(z.strictObject({ key: day, date: isoDate, label: z.string() })),
+  families: z.array(z.string()),
+  sets: z.array(
+    z.strictObject({
+      slug,
+      artist: z.string(),
+      stage: stageSlug,
+      day,
+      date: isoDate,
+      start: time,
+      end: time,
+      style: z.string(),
+      family: z.string(),
+      label: nullable(z.string()),
+      soundcloud: nullable(url),
+    }),
+  ),
+  breaks: z.array(
+    z.strictObject({ stage: stageSlug, day, start: time, end: nullable(time), kind: z.literal("fin").optional() }),
+  ),
+  schedule: z.array(z.strictObject({ when: z.string(), what: z.string() })),
+  practical: z.strictObject({
+    knowTitle: z.string(),
+    know: z.array(z.string()),
+    bring: z.array(z.string()),
+    forbidden: z.array(z.string()),
+  }),
+  map: z.strictObject({
+    zones: z.array(
+      z.strictObject({
+        id: z.string(),
+        name: z.string(),
+        kind: z.enum(["festival", "village", "benevoles", "chill", "camping", "parking"]),
+        text: z.string(),
+      }),
+    ),
+    legend: z.array(z.strictObject({ kind: z.string(), label: z.string() })),
+    services: z.array(z.string()),
+  }),
+  village: z.strictObject({
+    stands: z.array(z.strictObject({ name: z.string(), what: z.string() })),
+    food: z.array(z.strictObject({ name: z.string(), what: z.string() })),
+    gallery: z.array(z.string()),
+  }),
+  crew: z.array(z.strictObject({ role: z.string(), names: z.array(z.string()) })),
+  links: z.strictObject({ ticket: url, merch: url, carpool: url, facebook: url }),
+  source: z.string(),
+});
+
 export type Site = z.infer<typeof siteSchema>;
+export type Festival = z.infer<typeof festivalSchema>;
+export type FestivalSet = Festival["sets"][number];
 export type Artist = z.infer<typeof artistSchema>;
 export type Member = z.infer<typeof memberSchema>;
 export type Product = z.infer<typeof productSchema>;

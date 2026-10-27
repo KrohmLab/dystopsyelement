@@ -8,7 +8,7 @@ export function StickyTicketBar({ ticketUrl, title }: { ticketUrl: string | null
     <div className="fixed inset-x-0 bottom-0 z-30 flex gap-3 border-t border-cyan-line bg-abyss/90 px-gutter py-3 backdrop-blur-lg md:hidden">
       {ticketUrl && (
         <Button icon={TicketIcon} href={ticketUrl} fullWidth>
-          Prendre ma place
+          Billetterie
         </Button>
       )}
       <ShareButton title={title} />

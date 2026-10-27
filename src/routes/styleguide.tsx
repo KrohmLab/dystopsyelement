@@ -181,7 +181,7 @@ export default function Styleguide() {
                 Billets
               </Button>
               <Button icon={TicketIcon} href="#sg-boutons">
-                Prendre ma place
+                Billetterie
               </Button>
               <Button size="lg" href="#sg-boutons">
                 Demander un devis
