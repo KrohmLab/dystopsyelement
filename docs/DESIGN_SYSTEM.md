@@ -1,6 +1,6 @@
 # Dystopsy Element — Design System v2
 
-> Version 2.0 · 26 octobre 2026 · Remplace le prototype Figma Make (dépôt `KrohmLab/dystopsyelement`).
+> Version 2.1 · 27 octobre 2026 (accueil « mode spectacle ») · 2.0 · 26 octobre 2026 · Remplace le prototype Figma Make (dépôt `KrohmLab/dystopsyelement`).
 > Les valeurs exactes vivent dans `src/styles/tokens.css`. Ce document explique **quoi utiliser, où, et pourquoi**.
 
 ---
@@ -17,7 +17,7 @@ La v2 garde **l'ADN** (noir profond, cyan `#75feed`, rose `#fc029b`, Orbitron + 
 | Formes | `rounded-*` + biseaux + cercles | **Biseau partout**, aucun arrondi (sauf pastilles d'état) |
 | Boutons | 4 styles ad hoc | 1 composant `Button`, 4 variantes, 3 tailles |
 | Gris | 9 nuances Tailwind | 4 tokens texte + 2 tokens ligne |
-| Effets | Glitch, scan, parallax, curseur partout | 1 glitch par page, effets au survol seulement |
+| Effets | Glitch, scan, parallax, curseur partout | Accueil spectaculaire (§6.2), autres pages sobres (§6.1) ; pas de curseur personnalisé |
 | Texte | Paragraphes de 30–50 mots | Budget strict (voir §8), chaque section finit par un CTA |
 | Polices | Google Fonts (requête externe) | Auto-hébergées (`@fontsource`), perf + RGPD |
 
@@ -33,7 +33,7 @@ La v2 garde **l'ADN** (noir profond, cyan `#75feed`, rose `#fc029b`, Orbitron + 
 
 **4. Rapide d'abord.** Le site doit s'afficher en moins de 2 s sur un mobile en 4G, sur un parking de festival.
 
-**5. Sobre au repos, vivant au survol.** Les effets (glitch, balayage lumineux, lueur) se déclenchent à l'interaction, jamais en boucle permanente sur toute la page.
+**5. L'accueil impressionne, les autres pages informent.** La page d'accueil est la vitrine : effet « waouh », animations à l'arrivée et au défilement, univers cyberpunk assumé (§6.2), avec un contenu réduit à des visuels et des liens. Les autres pages (agenda, fiches, contact, mentions) restent sobres : effets à l'interaction uniquement (§6.1).
 
 ---
 
@@ -165,11 +165,11 @@ Deux équerres de 12 px (bordure 2 px) aux coins haut-gauche et bas-droit, en cy
 
 ### 5.4 Lueurs
 
-`text-glow-cyan` / `text-glow-pink` et `shadow-glow-cyan` / `shadow-glow-pink` : **uniquement en état `:hover` / `:focus-visible`**, jamais au repos (sauf le prix d'un produit et le mot clé du titre hero).
+`text-glow-cyan` / `text-glow-pink` et `shadow-glow-cyan` / `shadow-glow-pink` : **uniquement en état `:hover` / `:focus-visible`**, jamais au repos, sauf sur l'accueil (titre du hero, logo Nexen, néons décoratifs : §6.2).
 
 ### 5.5 Glitch
 
-Utilitaire `glitch` + attribut `data-text`. **Un seul élément par page** : le titre du hero (accueil) ou le H1 (autres pages). Le logo du header glitche une fois quand on commence à scroller (comportement v1 conservé, en CSS pur). Désactivé automatiquement par `prefers-reduced-motion`.
+Utilitaire `glitch` + attribut `data-text`. Pages intérieures : **un seul élément par page**, le H1. Accueil : glitch permanent sur le titre du hero, glitch ponctuel (au survol ou à l'apparition) sur les tuiles Portail et le logo Nexen. Le logo du header glitche une fois quand on commence à scroller (comportement v1 conservé). Désactivé automatiquement par `prefers-reduced-motion`.
 
 ---
 
@@ -183,15 +183,39 @@ Utilitaire `glitch` + attribut `data-text`. **Un seul élément par page** : le 
 | `ease-out-expo` | — | Entrées |
 | `ease-in-out` | — | Balayages |
 
+### 6.1 Pages intérieures : sobre
+
 Autorisé : apparition en fondu + translation 16 px au premier passage dans le viewport (une fois) · balayage lumineux `animate-shine` sur le CTA principal au survol · défilement `animate-marquee` du bandeau séparateur · flèche qui avance de 4 px au survol.
-**Supprimé** : curseur personnalisé, scroll-jacking / sections « sticky » à étapes, parallax souris, carrousel automatique, rotation 3D, animations au chargement qui retardent l'affichage du texte.
-Tout passe par CSS (ou l'API Intersection Observer native). **Pas de librairie d'animation** sauf besoin prouvé.
+
+### 6.2 Accueil : mode spectacle
+
+L'accueil doit produire un effet « waouh » dès l'arrivée. Animations prévues (composants §7.17) :
+
+| Où | Effet | Technique |
+|---|---|---|
+| Hero, à l'arrivée (≈ 1 s) | Le cadre néon `NeonFrame` se trace, le titre se décode lettre par lettre (`DecodeText`) puis glitche, la grille en perspective `GridFloor` défile au sol, scanlines par-dessus | CSS + `motion` |
+| Hero, ensuite | Parallaxe légère du visuel à la souris (desktop) et au défilement | `motion` (`useScroll`, ressorts) |
+| Bandeau | Défilement continu `animate-marquee` | CSS |
+| Portails | Apparition en cascade au défilement ; au survol : glitch RGB, balayage lumineux, équerres qui s'agrandissent, visuel qui passe du gris à la couleur | CSS + `Reveal` |
+| Nexen | Le logo s'allume comme un néon qui grésille, le fond d'écailles se décale au défilement | CSS + `Parallax` |
+| Sections | Apparition en fondu + glitch de ligne au premier passage | `Reveal` |
+
+Garde-fous (bloquants) :
+- **Le contenu est dans le HTML dès le départ** : titre, dates, liens sont rendus au pré-rendu ; l'animation les décore, elle ne retarde ni leur affichage, ni le LCP, ni le référencement. Sans JavaScript, tout est visible.
+- **Le visiteur garde la main** : pas de scroll-jacking, pas de section « sticky » à étapes, pas de carrousel automatique.
+- **`prefers-reduced-motion`** : toutes les animations sont coupées (décodage, parallaxe, néons, défilements), le contenu s'affiche directement.
+- **Mobile allégé** : pas d'effet à la souris, parallaxe réduite, moins de couches animées.
+- **Uniquement `transform` et `opacity`** pour les animations continues (pas de `filter` ni de `box-shadow` animés en boucle).
+
+### 6.3 Interdit partout
+
+Curseur personnalisé · scroll-jacking · rotation 3D · animations qui retardent l'affichage du texte. Librairie autorisée : **`motion`** (comme le site Outrance), pour les animations liées au défilement ou à la souris ; le reste en CSS.
 
 ---
 
 ## 7. Composants
 
-Tous dans `src/components/`, en `.astro` (zéro JavaScript envoyé) sauf mention **[île]**.
+Tous dans `src/components/`, en composants React (`.tsx`).
 
 ### 7.1 `Button`
 
@@ -213,13 +237,12 @@ Rendu `<a>` si `href`, sinon `<button>`.
 
 Toutes les tailles respectent une cible tactile ≥ 44 px (sauf `sm`, réservé au desktop). Forme : `chamfer-sm` (sm) / `chamfer-md` (md, lg). Libellés : verbe d'action, 1 à 3 mots (« Prendre ma place », « Voir le line-up », « Demander un devis »).
 
-### 7.2 `Header` [île légère pour le menu mobile]
+### 7.2 `Header`
 
 Hauteur `spacing-header` (72 px). Logo Dystopsy (SVG, 40 px) à gauche, liens au centre/droite, `Button primary sm` « Billetterie » à droite.
 Au repos : transparent. Après 50 px de scroll : fond `abyss/60` + `backdrop-blur` + bordure basse `cyan-line` + `bg-grid` + `shadow-header`.
 Liens : `text-label`, `ink-soft` → `ink` au survol avec crochets `[ ]` cyan qui glissent et soulignement cyan 2 px (effet v1 conservé). Lien actif : `cyan` + `aria-current="page"`.
-Mobile : bouton burger (44×44) → panneau plein écran `void`, liens en `text-h3`, bordure gauche cyan au survol, CTA Billetterie pleine largeur en bas. Fermeture : Échap, clic sur un lien, bouton ×. Focus piégé dans le panneau.
-Script : moins de 1 Ko, vanilla JS dans le composant (pas de React).
+Mobile : bouton burger (44×44) → panneau plein écran `void`, liens en `text-h3`, bordure gauche cyan au survol, CTA Billetterie pleine largeur en bas. Fermeture : Échap, clic sur un lien, bouton ×. Focus piégé dans le panneau (`<dialog>` modal natif).
 
 ### 7.3 `Footer`
 
@@ -228,12 +251,12 @@ Icônes réseaux : carrés `chamfer-sm` 44 px, contour `cyan-line`, survol fond 
 
 ### 7.4 `Section` & `SectionHeader`
 
-`<Section tone="void|abyss" grid={bool} id>` : applique `py-section`, `px-gutter`, `max-w-site`, fond, et `bg-grid` si demandé. Alterner `void` / `abyss` d'une section à l'autre.
+`<Section tone="void|abyss" grid id>` : applique `py-section`, `px-gutter`, `max-w-site`, fond, et `bg-grid` si demandé. Alterner `void` / `abyss` d'une section à l'autre.
 `<SectionHeader eyebrow title lead align="left|center" action>` : sur-titre code, titre H2, accroche optionnelle (≤ 20 mots), et un `action` (Button ghost) aligné à droite en desktop, sous le titre en mobile.
 
 ### 7.5 `Hero`
 
-Plein écran (`min-h-[100svh]`), visuel de fond `astro:assets` en `priority` (LCP), assombri par dégradé `void` (bas) + `void/80` (haut), `mix-blend-luminosity` à 40 % (rendu v1 conservé), `bg-scanlines` par-dessus, cadre décoratif SVG `CyberFrame` en desktop.
+Plein écran (`min-h-[100svh]`), visuel de fond chargé en priorité (`fetchPriority="high"`, LCP), assombri par dégradé `void` (bas) + `void/80` (haut), `mix-blend-luminosity` à 40 % (rendu v1 conservé), `bg-scanlines` par-dessus, `GridFloor` au sol et `NeonFrame` (desktop). Animations d'arrivée et parallaxe : §6.2.
 Contenu : badge pulsant rose (`Badge live`) · titre `text-display glitch` · ligne méta (date · lieu) avec icônes cyan · 2 boutons (`primary` + `secondary`).
 **Pas de carrousel** : le hero affiche le **prochain événement** (calculé au build depuis la collection `events`). S'il n'y en a aucun à venir, il affiche le dernier festival Nexen en état « passé » (voir SITE_PLAN §2). Les autres événements sont dans la section Agenda juste en dessous.
 
@@ -280,9 +303,26 @@ Barre 2 px en haut de page, dégradé cyan → rose, via `animation-timeline: sc
 
 ### 7.16 Icônes
 
-Lucide (`@lucide/astro` ou SVG inline), trait 1.5, tailles 16 / 20 / 24 / 32. Les icônes décoratives ont `aria-hidden="true"`. Icônes réseaux : Instagram, Facebook, SoundCloud, YouTube (si URL fournie).
+SVG inline dans `src/components/icons.tsx` (tracés Lucide), trait 1.5, tailles 16 / 20 / 24 / 32. Les icônes décoratives ont `aria-hidden="true"`. Icônes réseaux : Instagram, Facebook, SoundCloud, YouTube (si URL fournie).
 
 ---
+
+### 7.17 Briques d'animation (accueil)
+
+Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu statique) et affichent leur contenu sans JavaScript.
+
+| Composant | Rôle |
+|---|---|
+| `Reveal` | Apparition au premier passage dans le viewport (fondu + translation 16 px), option `delay` pour les cascades |
+| `DecodeText` | Texte qui se décode lettre par lettre à l'arrivée ; le vrai texte est dans le HTML, lu tel quel par les lecteurs d'écran |
+| `Parallax` | Décalage d'un calque au défilement (et à la souris en desktop), amplitude réduite sur mobile |
+| `NeonFrame` | Cadre néon SVG (équerres + lignes) qui se trace à l'arrivée, puis respire légèrement |
+| `GridFloor` | Grille cyan en perspective qui défile au sol (fond du hero) |
+| `NeonFlicker` | Allumage d'un néon qui grésille (logo Nexen) |
+
+### 7.18 `Portal` (tuile de navigation)
+
+Grande tuile visuelle vers une page du site ou un lien externe. Visuel en fond (gris → couleur au survol), libellé `text-h3` d'un ou deux mots, sur-titre code optionnel, flèche → ou ↗ (externe). Survol / focus : glitch RGB sur le libellé, balayage lumineux, `Brackets` qui s'agrandissent. Tuile entière cliquable, `chamfer-lg`. Une tuile dont la destination n'existe pas (URL non fournie, collection vide) n'est pas rendue.
 
 ## 8. Contenu : la règle « moins de texte »
 
@@ -308,7 +348,7 @@ Ton : direct, vouvoiement ou tournure impersonnelle. Les libellés de boutons (�
 
 ## 9. Images
 
-Format source déposé dans `src/assets/` ; Astro génère AVIF + WebP, tailles responsives (`widths` 480 / 960 / 1440 / 1920) et `width`/`height` (zéro décalage de mise en page).
+Format source déposé dans `assets/`, décliné en amont en AVIF + WebP aux largeurs 480 / 960 / 1440 / 1920 (script `sharp` ponctuel), servi via `<picture>` avec `width`/`height` (zéro décalage de mise en page) et `loading="lazy"` hors écran.
 Budgets : hero ≤ 200 Ko (AVIF 1920 px) · carte ≤ 60 Ko · page d'accueil totale ≤ 900 Ko.
 Traitement graphique uniforme : visuels d'événements en niveaux de gris + 70 % d'opacité au repos, couleur au survol (signature v1). `alt` descriptif obligatoire, `alt=""` pour les décoratifs.
 Les photos Unsplash de la v1 (artistes, membres, produits) sont **supprimées**, sans remplacement par d'autres photos de banque d'images. Seuls les visuels réels de l'asso sont utilisés.
@@ -323,7 +363,7 @@ Les photos Unsplash de la v1 (artistes, membres, produits) sont **supprimées**,
 
 ## 11. Performance (budgets bloquants)
 
-Lighthouse mobile ≥ 95 sur les 4 axes · LCP < 2 s (4G) · CLS < 0.05 · INP < 200 ms · JavaScript total sur l'accueil < 30 Ko gzip · polices : 2 fichiers préchargés max · aucune requête vers un domaine tiers au chargement (sauf HelloAsso au clic, analytics Cloudflare).
+Lighthouse mobile ≥ 95 sur les 4 axes (accueil : Performance ≥ 90, compte tenu des animations) · LCP < 2 s (4G) · CLS < 0.05 · INP < 200 ms · JavaScript total sur l'accueil < 150 Ko gzip (React, React Router et `motion` compris) · polices : 2 fichiers préchargés max · aucune requête vers un domaine tiers au chargement (sauf HelloAsso au clic, analytics Cloudflare).
 
 ---
 
@@ -338,6 +378,7 @@ Lighthouse mobile ≥ 95 sur les 4 axes · LCP < 2 s (4G) · CLS < 0.05 · INP <
 | `MerchSection` (react-slick) + pages Shop | `ShopLink` | Boutique sur Vinted, produits v1 supprimés |
 | `CyberSeparator` (4 variantes) | `Ticker` (1 variante) | Contenu réel |
 | `FloatingPattern` | `Divider` | Un seul motif, statique |
-| `CustomCursor` | Supprimé | |
+| `FestivalSection` / `NexenSection` (animations) | `Parallax`, `NeonFlicker`, `Reveal` | Effet « waouh » conservé sur l'accueil, sans scroll-jacking |
+| `CustomCursor` | Supprimé | Décision confirmée le 27/10/2026 |
 | `CyberFrame` | `CyberFrame` (SVG fichier) | 18 Ko de chemins inline → fichier mis en cache |
 | `components/ui/*` (60 fichiers shadcn), MUI, Emotion, Radix, recharts, react-dnd… | Supprimés | Inutilisés |

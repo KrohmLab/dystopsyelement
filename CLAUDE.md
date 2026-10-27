@@ -53,7 +53,7 @@ Interdit : MUI, Emotion, Radix, shadcn/ui, react-slick, recharts, react-dnd, tou
 │  ├─ root.tsx               document HTML, en-tête, pied de page, lien d'évitement
 │  ├─ routes.ts              table des routes
 │  ├─ routes/                home · nexen · agenda · evenement · prestations · contact · mentions-legales · not-found
-│  ├─ components/            ui/ (Button, Badge, Field…) · layout/ (Header, Footer…) · blocks/ (Hero, EventCard…)
+│  ├─ components/            ui/ (Button, Badge, Field…) · layout/ (Header, Footer…) · motion/ (Reveal, DecodeText, Parallax…) · blocks/ (Hero, Portal, EventCard…) · icons.tsx
 │  ├─ content/               schemas.ts · load.server.ts (lecture + validation au build, jamais envoyé au navigateur)
 │  ├─ lib/                   seo.ts · events.ts (prochain événement) · utilitaires
 │  ├─ site.ts                réglages du site côté client (depuis content/site.json)
@@ -151,7 +151,7 @@ Travaille phase par phase. Une branche par phase (`phase-0-socle`, `phase-1-desi
 | Phase | Contenu | Critère de fin |
 |---|---|---|
 | **0. Socle** | Tag `v1-figma-make`, nettoyage du dépôt, init React Router + Tailwind + TS strict (comme Outrance), `tokens.css`, polices, `root.tsx`, SEO de base, `_headers`, `_redirects`, CI | `npm run build`, `typecheck` et `lint` OK, page aux bonnes couleurs/polices |
-| **1. Design system** | Tous les composants `ui/` et `layout/`, page cachée `/styleguide` (non indexée, exclue du sitemap) qui les affiche tous dans tous leurs états | La page `/styleguide` correspond visuellement à `docs/styleguide.html` |
+| **1. Design system** | Tous les composants `ui/`, `layout/` et `motion/` + `Portal`, page cachée `/styleguide` (non indexée, exclue du sitemap) qui les affiche tous dans tous leurs états | La page `/styleguide` correspond visuellement à `docs/styleguide.html` |
 | **2. Contenus** | `content/` + schémas zod, migration des données et assets v1, `lib/events.ts` avec tests de la logique « prochain événement » | `typecheck` OK, images < budgets |
 | **3. Pages** | Accueil, Nexen, Agenda (+ fiche), Prestations, Contact, Mentions légales, 404 — dans cet ordre | Chaque section a son CTA vers la bonne destination (SITE_PLAN) |
 | **4. Finitions** | Formulaire branché, façade SoundCloud, JSON-LD, OG images, sitemap, accessibilité clavier, `prefers-reduced-motion` | Checklist §9 entièrement cochée |
@@ -159,14 +159,14 @@ Travaille phase par phase. Une branche par phase (`phase-0-socle`, `phase-1-desi
 
 ## 9. Définition de « terminé »
 
-- [ ] Lighthouse mobile ≥ 95 (Performance, Accessibilité, Bonnes pratiques, SEO) sur `/`, `/nexen`, `/agenda`, `/agenda/[slug]`
+- [ ] Lighthouse mobile ≥ 95 (Performance, Accessibilité, Bonnes pratiques, SEO) sur `/nexen`, `/agenda`, `/agenda/[slug]` ; sur `/` : Performance ≥ 90 (animations, DESIGN_SYSTEM §6.2), les 3 autres axes ≥ 95
 - [ ] JS total sur l'accueil < 150 Ko gzip (React + React Router compris) ; aucune requête tierce au chargement
 - [ ] Aucune valeur de couleur ou de taille en dur (`grep -rE "#[0-9a-fA-F]{3,6}|\[[0-9]+px\]" src/components src/routes` ne renvoie rien)
 - [ ] Aucun `href="#"`, aucune image Unsplash, aucun texte lorem, aucun contenu issu de Figma Make listé dans SITE_PLAN §0
 - [ ] Le nom affiché partout est « Dystopsy Element »
 - [ ] Navigation complète au clavier, menu mobile compris ; focus toujours visible
 - [ ] Rendu vérifié à 360, 768, 1280 et 1920 px
-- [ ] `prefers-reduced-motion` : plus aucune animation
+- [ ] `prefers-reduced-motion` : plus aucune animation (accueil compris)
 - [ ] Recharger n'importe quelle URL renvoie la page (pas de 404) ; anciennes URLs v1 redirigées
 - [ ] Formulaire testé de bout en bout (réception de l'e-mail)
 - [ ] `docs/TODO_CONTENU.md` liste tout ce que l'asso doit encore fournir

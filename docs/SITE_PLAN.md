@@ -73,27 +73,38 @@ Le site est reconstruit chaque nuit (CLAUDE.md §7) pour que la bascule soit aut
 
 ## 3. Accueil `/`
 
-Sections dans l'ordre, fonds alternés `void` / `abyss`. Une section dont les données sont vides n'est pas rendue.
+> Mise à jour du 27/10/2026, demande du client : un accueil **toujours aussi graphique et fort dans sa DA**, avec un effet « waouh » et des animations, mais **moins de texte**, **aucune section de présentation** et **plus d'appels à l'action** vers les pages du site et les liens externes. Animations : DESIGN_SYSTEM §6.2.
 
-**3.1 Hero** — badge statut · titre (glitch) · date · lieu
+Sections dans l'ordre, fonds alternés `void` / `abyss`. Une section dont les données sont vides n'est pas rendue. Aucun paragraphe de présentation sur l'accueil.
+
+**3.1 Hero** (plein écran, animé) — badge statut · titre (décodage + glitch) · date · lieu
 CTA principal **Prendre ma place** → `ticketUrl` (HelloAsso) · CTA secondaire **Voir l'événement** → `/agenda/[slug]`
 (État de repli : §2.)
 
 **3.2 Ticker** — termes issus des affiches réelles : `OPEN AIR FESTIVAL ✦ PSYTRANCE · TECHNO · BASS · CHILL ✦`
 
-**3.3 Nexen Festival** — logo Nexen sur visuel de fond (comme la v1), dates et lieu de l'édition affichée
+**3.3 Portails** — bloc central de l'accueil : grille de grandes tuiles `Portal` (DESIGN_SYSTEM §7.18), une par destination, sans texte d'accompagnement :
+
+| Tuile | Destination | Affichée si |
+|---|---|---|
+| **Nexen** | `/nexen` | toujours |
+| **Agenda** | `/agenda` | toujours |
+| **Prestations** | `/prestations` | la collection `services` n'est pas vide |
+| **Boutique** ↗ | `site.shopUrl` (Vinted) | `shopUrl` fourni |
+| **Contact** | `/contact` | toujours |
+| **Instagram** ↗ | `site.socials.instagram` | URL fournie |
+
+Visuels des tuiles : uniquement des visuels réels de l'asso (affiches, bannières, fond Nexen, écailles, photo de jour) ou un traitement graphique (grille, motif) quand aucun visuel ne convient. Apparition en cascade au défilement.
+
+**3.4 Nexen Festival** — logo Nexen qui s'allume (néon) sur fond d'écailles en parallaxe, dates et lieu de l'édition affichée
 Tuiles-liens : **Line-up** → `/nexen#line-up` · **Infos pratiques** → `/nexen#infos` (si contenu fourni)
 CTA principal (variante `festival`) **Billetterie** → `ticketUrl` si à venir, sinon **Voir le festival** → `/nexen`
 
-**3.4 Agenda** — `// AGENDA` · « Prochaines dates » · action **Tout l'agenda** → `/agenda` · 3 `EventCard` max
+**3.5 Prochaines dates** — `// AGENDA` · « Prochaines dates » · action **Tout l'agenda** → `/agenda` · 3 `EventCard` max. Non rendue si aucun événement à venir.
 
-**3.5 Prestations** — `// PRESTATIONS` · titre et accroche **à fournir** · 1 à 3 `ServiceTile` → `/prestations#<id>` · CTA **Demander un devis** → `/contact?sujet=prestation`
-Non rendue tant que la collection `services` est vide.
+**3.6 CtaBanner** — titre et accroche **à fournir** · CTA **Nous écrire** → `/contact` · **Suivre sur Instagram** ↗ (si URL) · icônes des réseaux fournis
 
-**3.6 Shop** — bloc court (pas de grille de produits) : `// SHOP` · « La boutique est sur Vinted » · CTA **Voir la boutique** ↗ → `site.shopUrl`
-Non rendu tant que `shopUrl` est vide.
-
-**3.7 CtaBanner** — titre et accroche **à fournir** · CTA **Nous écrire** → `/contact` · **Suivre sur Instagram** ↗ (si URL)
+Remplacés par les Portails (décision du 27/10/2026) : les anciens blocs « Prestations » (tuiles + texte) et « Shop » (bloc Vinted) de l'accueil.
 
 ---
 
