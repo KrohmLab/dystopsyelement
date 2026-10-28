@@ -2483,8 +2483,6 @@ body {
 .nexen-feature {
   --tx: 0;
   --ty: 0;
-  view-timeline: --nexen block;
-  view-timeline-inset: 0;
 }
 .nexen-feature__aura {
   position: absolute;
@@ -2587,20 +2585,19 @@ body {
   color: var(--color-nexen-peach);
 }
 
-/* Au défilement : le sceau s'ouvre (échelle + rotation), le logo arrive en glitch */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .nexen-feature__core {
-      animation: nexen-open linear both;
-      animation-timeline: --nexen;
-      animation-range: entry 10% cover 45%;
-    }
-    .nexen-feature__logo picture {
-      display: block;
-      animation: holo-glitch-out linear reverse both;
-      animation-timeline: --nexen;
-      animation-range: entry 30% cover 42%;
-    }
+/* À l'arrivée du logo à l'écran (NeonFlicker, une seule fois) : le sceau s'ouvre, le logo arrive en glitch.
+   Animation au temps et non liée au défilement : sur mobile la section est très haute, le logo restait à moitié
+   éteint tant qu'on n'avait pas parcouru toute la section. */
+@media (prefers-reduced-motion: no-preference) {
+  .nexen-feature__core:has([data-flicker=""]) .nexen-feature__sigil {
+    opacity: 0;
+  }
+  .nexen-feature__core:has([data-flicker="in"]) .nexen-feature__sigil {
+    animation: nexen-open 1.4s var(--ease-out-expo) backwards;
+  }
+  .nexen-feature__logo[data-flicker="in"] picture {
+    display: block;
+    animation: holo-glitch-out 0.9s linear reverse backwards;
   }
 }
 @keyframes nexen-open {

@@ -35,7 +35,7 @@ const STAGE_TONE = {
 
 /**
  * Bloc Nexen de l'accueil (SITE_PLAN §3.4) : un « portail » vers le festival. À gauche, le logo néon dans un
- * sceau qui tourne (anneaux de l'affiche) et s'ouvre au défilement, incliné vers le curseur ; à droite, les chiffres
+ * sceau qui tourne (anneaux de l'affiche) et s'ouvre à son arrivée à l'écran, incliné vers le curseur ; à droite, les chiffres
  * de l'édition, puis les deux scènes avec le défilé de leurs artistes. Survoler une scène teinte tout le bloc à sa
  * couleur. Styles et animations dans theme.css (.nexen-feature) ; mouvement réduit : tout est immobile.
  */
@@ -90,7 +90,10 @@ export function NexenFeature({ title, dates, place, tagline, facts, stages, tick
             </div>
           )}
           <p className="relative mt-4 font-display text-label-lg font-bold text-ink uppercase">
-            <DecodeText text={`${dates} · ${place}`} duration={1200} />
+            <DecodeText text={dates} duration={1200} />
+            <span className="hidden sm:inline"> · </span>
+            <br className="sm:hidden" />
+            <DecodeText text={place} duration={1200} />
           </p>
           <p className="relative mt-2 text-small text-ink-muted">{tagline}</p>
         </div>
@@ -106,8 +109,8 @@ export function NexenFeature({ title, dates, place, tagline, facts, stages, tick
           {facts.length > 0 && (
             <dl className="grid grid-cols-2 gap-px overflow-hidden bg-line chamfer-md sm:grid-cols-4">
               {facts.map((fact) => (
-                <div key={fact.label} className="flex flex-col-reverse gap-1 bg-abyss/90 p-4">
-                  <dt className="text-micro font-semibold text-ink-muted uppercase">{fact.label}</dt>
+                <div key={fact.label} className="flex flex-col-reverse justify-end gap-1 bg-abyss/90 p-4">
+                  <dt className="text-micro font-semibold whitespace-nowrap text-ink-muted uppercase">{fact.label}</dt>
                   <dd className="font-display text-h3 font-black text-ink text-glow-cyan">
                     <CountUp value={fact.value} />
                   </dd>

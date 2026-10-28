@@ -46,7 +46,12 @@ export function loader() {
       place: nexen.venue,
       ticketUrl: toSummary(nexen, now).upcoming ? nexen.ticketUrl : null,
       tagline: nexen2026.tagline,
-      facts: nexen2026.facts.slice(0, 4),
+      // Chiffres courts (une ligne chacun) : scènes, heures de son, nombre d'artistes, jauge.
+      facts: [
+        ...nexen2026.facts.filter((fact) => fact.label === "scènes" || fact.value.endsWith(" h")),
+        { value: String(new Set(nexen2026.sets.map((set) => set.artist)).size), label: "artistes" },
+        ...nexen2026.facts.filter((fact) => fact.label.startsWith("festivaliers")).map((fact) => ({ ...fact, label: "festivaliers" })),
+      ],
       stages: nexen2026.stages.map(({ slug, name, role, families }) => ({
         slug,
         name,
