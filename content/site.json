@@ -16,6 +16,10 @@
     "youtube": null
   },
   "tagline": "Texte provisoire du pied de page.",
+  "madeBy": {
+    "name": "Krohm Lab (Kévin)",
+    "url": "https://www.facebook.com/kevoutrance/"
+  },
   "city": "Ville 1",
   "contactSubjects": [
     "Sujet 1",

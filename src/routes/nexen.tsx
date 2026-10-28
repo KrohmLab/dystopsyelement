@@ -69,7 +69,6 @@ const EXPERIENCE_ICONS: Record<string, ComponentType<{ size?: 32; className?: st
   drop: DropIcon,
 };
 
-// Galerie : photo de jour réelle + emplacements provisoires numérotés.
 /**
  * Page du festival (SITE_PLAN §4) : présentation interactive complète de l'édition 2026, aux couleurs de
  * l'événement (lilas Nexus, pêche Engine, violet de la carte). Données : content/festival/nexen-2026.json.

@@ -31,6 +31,8 @@ export const siteSchema = z.strictObject({
   }),
   /** Phrase de présentation du footer. */
   tagline: nullable(z.string().max(160)),
+  /** Crédit de réalisation du site, barre légale du footer (« Fait avec ♡ par … »). */
+  madeBy: nullable(z.strictObject({ name: z.string().min(1), url })),
   /** Ville affichée dans le bloc coordonnées de /contact. */
   city: nullable(z.string()),
   contactSubjects: z.array(z.string()).min(1),

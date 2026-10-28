@@ -100,6 +100,16 @@ export function Footer({ nav, ticket }: { nav: NavItem[]; ticket: Ticket }) {
         <div className="mt-12 flex flex-wrap justify-between gap-x-6 gap-y-3 border-t border-line pt-5 text-small text-ink-muted">
           <span>
             © {new Date().getFullYear()} {site.name}
+            {site.madeBy && (
+              <>
+                {" · "}Fait avec <span aria-hidden="true" className="text-pink">♡</span>
+                <span className="sr-only">amour</span> par{" "}
+                <a href={site.madeBy.url} target="_blank" rel="noopener noreferrer" className={LINK}>
+                  {site.madeBy.name}
+                  <span className="sr-only"> (nouvel onglet)</span>
+                </a>
+              </>
+            )}
           </span>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             <li>
