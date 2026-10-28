@@ -8,12 +8,14 @@ type Props = {
   labelledBy?: string;
   /** Ambiance du sol quadrillé global quand la section est au centre de l'écran (SiteBackdrop). */
   floor?: "hero" | "hero-lilac" | "pink" | "lilac" | "peach" | "calm" | "horizon" | "off";
+  /** Décor discret derrière le contenu (motifs flottants), coupé aux bords de la section. */
+  decor?: ReactNode;
   className?: string;
   children: ReactNode;
 };
 
 /** Conteneur de section : marges, largeur max, fond alterné transparent / voilé (DESIGN_SYSTEM §7.4). */
-export function Section({ tone = "void", grid = false, id, labelledBy, floor, className, children }: Props) {
+export function Section({ tone = "void", grid = false, id, labelledBy, floor, decor, className, children }: Props) {
   return (
     <section
       id={id}
@@ -27,7 +29,12 @@ export function Section({ tone = "void", grid = false, id, labelledBy, floor, cl
         className,
       )}
     >
-      <div className="relative mx-auto max-w-site">{children}</div>
+      {decor && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          {decor}
+        </div>
+      )}
+      <div className="relative z-10 mx-auto max-w-site">{children}</div>
     </section>
   );
 }

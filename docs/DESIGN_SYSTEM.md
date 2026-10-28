@@ -265,7 +265,7 @@ Brief complet et maquettes validées : `docs/hero-hologramme/`. Section de **260
 - **soirée** : visuel de l'événement dans un médaillon circulaire (recadré par le champ `heroFocus`, valeur `object-position`), visuel flouté en fond, grille plate estompée, pas de sol ; titre en deux lignes (suite en contour néon). Sans visuel : logo Dystopsy en néon.
 
 Contenu : badge pulsant rose · titre · ligne méta (date · lieu) · 2 boutons (`primary` + `secondary`), logique inchangée (prochain événement, sinon dernier festival « passé », SITE_PLAN §2).
-Géométrie partagée par le hero et le sol (`--holo-r`, `--holo-top`, `--holo-cx`, `--holo-horizon`) : mobile et tablette, radar en haut et texte centré dessous ; grand écran, texte à gauche et radar à droite. **Garde-fous** : la taille du radar dépend de la hauteur disponible une fois le texte placé ; sur grand écran, la colonne de texte s'arrête avant le radar et le titre est dimensionné sur la largeur de sa colonne (`cqi`) : jamais de chevauchement.
+Géométrie partagée par le hero et le sol (`--holo-r`, `--holo-top`, `--holo-cx`, `--holo-horizon`) : mobile et tablette, radar en haut et texte centré dessous ; grand écran, texte à gauche et radar à droite, **calés sur les bords de la colonne du site** (comme le logo et le bouton Menu). Entrée après l'intro : la sortie jouée à l'envers (point lumineux, ligne, radar ; glitch du texte). Sortie resserrée (section de 100lvh + 110svh) et chevauchée par la section suivante, voile plafonné à 80 % : pas d'écran noir entre le hero et la suite. **Garde-fous** : la taille du radar dépend de la hauteur disponible une fois le texte placé ; sur grand écran, la colonne de texte s'arrête avant le radar et le titre est dimensionné sur la largeur de sa colonne (`cqi`) : jamais de chevauchement.
 Accessibilité : un seul `h1` ; calque RGB du glitch `aria-hidden` + `inert` ; le texte disparu passe en `visibility: hidden` (boutons ni cliquables ni atteignables au clavier, ils reviennent en remontant). Mouvement réduit ou navigateur sans `animation-timeline` : hero statique de 100svh, sans intro ni sortie.
 
 ### 7.6 `EventCard`
@@ -337,6 +337,7 @@ Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu
 | `GridFloor` | Grille cyan en perspective qui défile au sol (fond du hero) |
 | `NeonFlicker` | Allumage d'un néon qui grésille (logo Nexen) |
 | `CountUp` | Chiffre qui défile jusqu'à sa valeur au premier passage dans le viewport |
+| `FloatingPattern` | Motif technique de la v1 (cible, hexagone, circuit, code-barres) posé en coin de section via `Section decor` : 14 % d'opacité, halo néon, dérive lente (10 s) et bref glitch toutes les ≈ 4,6 s. Deux par section au plus, sur quelques sections seulement (accueil : portails, dates, boutique ; Nexen : expérience, village ; agenda ; shop) |
 
 ### 7.18 `Portal` (tuile de navigation)
 

@@ -498,7 +498,7 @@ html[data-intro="on"] .site-backdrop[data-floor="holo"] .site-backdrop__horizon 
   }
   .site-backdrop[data-floor="holo"] .site-backdrop__floor {
     animation-name: holo-floor-tilt;
-    animation-range: contain 0% contain 70%;
+    animation-range: contain 0% contain 60%;
   }
   .site-backdrop[data-floor="holo"] .site-backdrop__pink {
     animation-name: holo-floor-travel;
@@ -506,7 +506,7 @@ html[data-intro="on"] .site-backdrop[data-floor="holo"] .site-backdrop__horizon 
   }
   .site-backdrop[data-floor="holo"] .site-backdrop__dive {
     animation-name: holo-floor-dive;
-    animation-range: contain 70% contain 100%;
+    animation-range: contain 60% contain 88%;
   }
 }
 @keyframes holo-floor-tilt {
@@ -817,6 +817,66 @@ html[data-intro="on"] .site-intro {
 }
 
 /* ==========================================================================
+   Motifs flottants (FloatingPattern, repris de la v1) : discrets, dérive lente + bref glitch
+   ========================================================================== */
+.floater {
+  position: absolute;
+  opacity: 0.14;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 20px color-mix(in srgb, currentColor 40%, transparent));
+  animation: floater-drift 10s ease-in-out var(--delay, 0s) infinite;
+  will-change: transform;
+}
+.floater__glitch {
+  position: absolute;
+  inset: 0;
+  color: var(--color-ink);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  animation: floater-glitch 4.6s steps(1) var(--delay, 0s) infinite;
+}
+@keyframes floater-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0) scale(1);
+  }
+  33% {
+    transform: translateY(-20px) rotate(5deg) scale(1.05);
+  }
+  66% {
+    transform: translateY(-8px) rotate(-5deg) scale(1.02);
+  }
+}
+@keyframes floater-glitch {
+  0%,
+  94% {
+    opacity: 0;
+    transform: none;
+    filter: none;
+  }
+  95% {
+    opacity: 1;
+    transform: translateX(-10px) scale(1.1);
+    filter: hue-rotate(90deg);
+  }
+  97% {
+    opacity: 1;
+    transform: translateX(10px);
+    filter: hue-rotate(-90deg);
+  }
+  99% {
+    opacity: 0;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floater,
+  .floater__glitch {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
    Hero hologramme (accueil) — docs/hero-hologramme/HERO_HOLOGRAMME.md
    Section de 260svh, étage collant de 100svh ; la sortie est pilotée par la view-timeline --hero,
    déclarée sur <body> (timeline-scope) pour que le sol du fond fixe (SiteBackdrop) puisse la suivre.
@@ -849,7 +909,8 @@ body {
   :root {
     --holo-r: min(52svh, 34vw);
     --holo-top: calc(var(--spacing-header) + 0.5rem);
-    --holo-cx: calc(52vw + var(--holo-r) / 2);
+    /* Bord droit du radar sur le bord droit de la colonne du site (comme le bouton Menu). */
+    --holo-cx: calc(100vw - max(var(--spacing-gutter), (100vw - var(--container-site)) / 2) - var(--holo-r) / 2);
     --holo-horizon: calc(var(--holo-top) + var(--holo-r));
     --holo-scale: 1.15;
   }
@@ -868,7 +929,7 @@ body {
   .holo-hero[data-variant="soiree"] {
     --holo-r: min(62svh, 39vw);
     --holo-top: calc(50svh - var(--holo-r) / 2 + var(--spacing-header) / 3);
-    --holo-cx: calc(55vw + var(--holo-r) / 2);
+    --holo-cx: calc(100vw - max(var(--spacing-gutter), (100vw - var(--container-site)) / 2) - var(--holo-r) / 2);
   }
 }
 
@@ -876,7 +937,9 @@ body {
   position: relative;
   /* Mobile : la barre du navigateur se replie au défilement et la fenêtre grandit. L'étage prend la grande hauteur
      (lvh) pour couvrir tout l'écran dans tous les cas ; le contenu reste calé sur la petite (svh), toujours visible. */
-  height: calc(100lvh + 8rem + 160svh);
+  height: calc(100lvh + 8rem + 110svh);
+  /* La section suivante remonte sur la fin de la sortie : pas de long écran noir, la page enchaîne. */
+  margin-bottom: calc(-30svh - 8rem);
   view-timeline: --hero block;
   /* Sans cela, la timeline reprend le scroll-padding-top (hauteur de l'en-tête) : la sortie démarrerait avant le haut de page. */
   view-timeline-inset: 0;
@@ -1287,11 +1350,13 @@ body {
 }
 /* Grand écran : colonne de gauche, centrée dans la hauteur, qui s'arrête avant le radar (jamais de chevauchement). */
 @media (min-width: 64rem) {
+  /* Bord gauche aligné sur la colonne du site (comme le logo de l'en-tête et les sections). */
   .holo-hero__copy,
   .holo-hero[data-variant="soiree"] .holo-hero__copy {
-    inset: var(--spacing-header) auto auto max(var(--spacing-gutter), 7.5vw);
+    --holo-left: max(var(--spacing-gutter), (100% - var(--container-site)) / 2);
+    inset: var(--spacing-header) auto auto var(--holo-left);
     height: calc(100svh - var(--spacing-header));
-    width: calc(var(--holo-cx) - var(--holo-r) / 2 - max(var(--spacing-gutter), 7.5vw) - 2rem);
+    width: calc(var(--holo-cx) - var(--holo-r) / 2 - var(--holo-left) - 2rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1522,27 +1587,32 @@ body {
   }
   .holo-hero__text {
     animation-name: holo-glitch-out;
-    animation-range: contain 6% contain 30%;
+    animation-range: contain 4% contain 26%;
   }
   .holo-hero__rgb {
     animation-name: holo-rgb;
-    animation-range: contain 6% contain 30%;
+    animation-range: contain 4% contain 26%;
   }
   .holo-hero__radar {
     animation-name: holo-move;
-    animation-range: contain 4% contain 42%;
+    animation-range: contain 4% contain 34%;
   }
   .holo-hero__radar-off {
     animation-name: holo-off;
-    animation-range: contain 50% contain 80%;
+    animation-range: contain 40% contain 66%;
   }
   .holo-hero__dot {
     animation-name: holo-dot;
-    animation-range: contain 72% contain 92%;
+    animation-range: contain 60% contain 80%;
   }
   .holo-hero__dark {
     animation-name: holo-dark;
-    animation-range: contain 82% contain 100%;
+    animation-range: contain 68% contain 90%;
+  }
+  /* Ce qui suit le hero passe au-dessus de son étage collant pendant le chevauchement. */
+  .holo-hero ~ * {
+    position: relative;
+    z-index: 1;
   }
 }
 @keyframes holo-bg-zoom {
@@ -1680,9 +1750,10 @@ body {
     transform: translate(-50%, -50%) scale(0.1);
   }
 }
+/* Voile plafonné : l'étage reste discrètement visible pendant que la suite de la page remonte par-dessus. */
 @keyframes holo-dark {
   to {
-    opacity: 1;
+    opacity: 0.8;
   }
 }
 
@@ -1708,12 +1779,14 @@ body {
   .holo-hero,
   .holo-hero__stage {
     height: 100lvh;
+    margin-bottom: 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .holo-hero,
   .holo-hero__stage {
     height: 100lvh;
+    margin-bottom: 0;
   }
   .holo-hero *,
   .holo-hero *::before,

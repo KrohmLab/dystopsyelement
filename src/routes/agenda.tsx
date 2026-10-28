@@ -11,6 +11,7 @@ import { toSummary } from "../content/summaries";
 import { getPast, getUpcoming } from "../lib/events";
 import { pageMeta } from "../lib/seo";
 import type { Route } from "./+types/agenda";
+import { FloatingPattern } from "../components/motion/FloatingPattern";
 
 const TABS = ["À venir", "Passés"] as const;
 
@@ -23,8 +24,7 @@ export function loader() {
   };
 }
 
-export const meta: Route.MetaFunction = () =>
-  pageMeta({ title: "Agenda", description: "Les prochaines dates de Dystopsy Element et les événements passés.", path: "/agenda" });
+export const meta: Route.MetaFunction = () => pageMeta({ title: "Agenda", description: "Les prochaines dates de Dystopsy Element et les événements passés.", path: "/agenda" });
 
 /** Agenda (SITE_PLAN §5) : onglets À venir / Passés sans rechargement, état dans l'URL (?vue=passes). */
 export default function Agenda({ loaderData }: Route.ComponentProps) {
@@ -37,7 +37,16 @@ export default function Agenda({ loaderData }: Route.ComponentProps) {
     <>
       <PageHero eyebrow="Billetterie" title="Agenda" lead="Texte provisoire : une phrase d'introduction à l'agenda." image="events/nexens-home-2026-banner" />
       <Ticker items={["Open air festival", "Psytrance · Techno · Bass · Chill"]} />
-      <Section labelledBy="agenda-liste" floor="calm">
+      <Section
+        labelledBy="agenda-liste"
+        floor="calm"
+        decor={
+          <>
+            <FloatingPattern variant={3} tone="cyan" className="-right-16 top-8 size-56 md:size-96" delay={1} />
+            <FloatingPattern variant={2} tone="pink" className="-left-20 bottom-0 size-48 md:size-80" delay={3} />
+          </>
+        }
+      >
         <h2 id="agenda-liste" className="sr-only">
           Événements {tab.toLowerCase()}
         </h2>

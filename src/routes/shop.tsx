@@ -7,6 +7,7 @@ import { FilterBar } from "../components/ui/FilterBar";
 import { products, site } from "../content/load.server";
 import { pageMeta } from "../lib/seo";
 import type { Route } from "./+types/shop";
+import { FloatingPattern } from "../components/motion/FloatingPattern";
 
 const CATEGORIES = ["Tous", "T-shirts", "Pulls", "Autres"] as const;
 type Category = (typeof CATEGORIES)[number];
@@ -15,8 +16,7 @@ export function loader() {
   return { products, shopUrl: site.shopUrl };
 }
 
-export const meta: Route.MetaFunction = () =>
-  pageMeta({ title: "Shop", description: "La boutique de Dystopsy Element, en vente sur Vinted.", path: "/shop" });
+export const meta: Route.MetaFunction = () => pageMeta({ title: "Shop", description: "La boutique de Dystopsy Element, en vente sur Vinted.", path: "/shop" });
 
 /** Boutique vitrine (SITE_PLAN §7) : filtres sans rechargement, chaque produit renvoie vers son annonce Vinted. */
 export default function Shop({ loaderData }: Route.ComponentProps) {
@@ -29,7 +29,16 @@ export default function Shop({ loaderData }: Route.ComponentProps) {
       <PageHero eyebrow="Supportez l'asso" title="Black market" lead="Texte provisoire : une phrase sur la boutique, en vente sur Vinted.">
         {shopUrl && <Button href={shopUrl}>Voir la boutique Vinted</Button>}
       </PageHero>
-      <Section labelledBy="produits-titre" floor="pink">
+      <Section
+        labelledBy="produits-titre"
+        floor="pink"
+        decor={
+          <>
+            <FloatingPattern variant={1} tone="pink" className="-left-10 top-1/4 size-48 md:size-72" delay={0.5} />
+            <FloatingPattern variant={2} tone="cyan" className="-right-10 bottom-4 size-56 md:size-80" delay={2.5} />
+          </>
+        }
+      >
         <h2 id="produits-titre" className="sr-only">
           Produits
         </h2>
