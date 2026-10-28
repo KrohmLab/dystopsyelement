@@ -638,15 +638,15 @@ html[data-intro="on"] .site-intro {
   inset-inline: 0;
   height: 50.5%;
   background: var(--color-void);
-  animation: 0.7s cubic-bezier(0.7, 0, 0.2, 1) 3s forwards;
 }
+/* Animation écrite en entier pour chaque volet : un raccourci sans nom est réécrit en « animation: none » à la minification. */
 .site-intro__half--top {
   top: 0;
-  animation-name: intro-half-up;
+  animation: intro-half-up 0.7s cubic-bezier(0.7, 0, 0.2, 1) 3s forwards;
 }
 .site-intro__half--bottom {
   bottom: 0;
-  animation-name: intro-half-down;
+  animation: intro-half-down 0.7s cubic-bezier(0.7, 0, 0.2, 1) 3s forwards;
 }
 @keyframes intro-half-up {
   to {
