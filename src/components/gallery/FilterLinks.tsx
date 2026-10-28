@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { cn } from "../../lib/cn";
 
@@ -8,10 +9,22 @@ type Item = { label: string; href: string; count?: number; current: boolean };
  * partageable et indexable. Défile horizontalement sur mobile au lieu de passer à la ligne.
  */
 export function FilterLinks({ label, items }: { label: string; items: Item[] }) {
+  const list = useRef<HTMLUListElement>(null);
+  const current = items.findIndex((item) => item.current);
+
+  // Mobile : le choix actif est ramené dans la zone visible du défilement horizontal (sans bouger la page).
+  useEffect(() => {
+    const ul = list.current;
+    const active = ul?.children[current] as HTMLElement | undefined;
+    if (!ul || !active || ul.scrollWidth <= ul.clientWidth) return;
+    const box = active.getBoundingClientRect();
+    ul.scrollLeft += box.left - ul.getBoundingClientRect().left - (ul.clientWidth - box.width) / 2;
+  }, [current]);
+
   return (
     <nav aria-label={label} className="flex min-w-0 flex-col gap-1.5">
       <span className="font-display text-eyebrow font-bold text-ink-muted uppercase">{label}</span>
-      <ul className="rail-x -mx-gutter flex gap-2 overflow-x-auto px-gutter pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
+      <ul ref={list} className="rail-x -mx-gutter flex gap-2 overflow-x-auto px-gutter pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
         {items.map((item) => (
           <li key={item.href} className="shrink-0">
             <Link

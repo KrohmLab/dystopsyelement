@@ -39,7 +39,7 @@ export default function Galerie({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <PageHero eyebrow="Nexen Festival" title={year ? `Galerie ${year}` : "Galerie"} lead={`${total} photos de ${years.length} éditions, par les photographes du festival.`} image="festival/photo-don" />
+      <PageHero eyebrow="Nexen Festival" title={year ? `Galerie ${year}` : "Galerie"} lead={`${total} photos de ${years.length > 1 ? `${years.length} éditions` : "l'édition " + years[0]}, par les photographes du festival.`} image="festival/photo-don" />
       <Section labelledBy="albums-titre" floor="lilac">
         <h2 id="albums-titre" className="sr-only">
           Albums
