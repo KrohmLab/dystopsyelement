@@ -56,17 +56,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     <>
       {featured && <HomeHero event={featured} fallbackImage="festival/fond" instagramUrl={instagramUrl} />}
 
-      <Section
-        tone="abyss"
-        labelledBy="portails-titre"
-        floor="pink"
-        decor={
-          <>
-            <FloatingPattern variant={3} tone="cyan" className="-right-16 top-8 size-56 md:size-96" delay={1} />
-            <FloatingPattern variant={4} tone="pink" className="-left-20 bottom-0 size-48 md:size-80" delay={3} />
-          </>
-        }
-      >
+      <Section tone="abyss" labelledBy="portails-titre" floor="pink" decor={<FloatingPattern variant={3} tone="cyan" className="-right-16 top-8 size-96" delay={1} />}>
         <h2 id="portails-titre" className="sr-only">
           Explorer le site
         </h2>
@@ -85,17 +75,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       {nexen && <NexenFeature dates={nexen.dates} place={nexen.place} ticketUrl={nexen.ticketUrl} />}
 
       {upcoming.length > 0 && (
-        <Section
-          grid
-          labelledBy="dates-titre"
-          floor="calm"
-          decor={
-            <>
-              <FloatingPattern variant={1} tone="pink" className="-left-16 top-12 size-48 md:size-72" delay={0.5} />
-              <FloatingPattern variant={2} tone="cyan" className="-right-12 bottom-8 size-56 md:size-80" delay={2.5} />
-            </>
-          }
-        >
+        <Section grid labelledBy="dates-titre" floor="calm">
           <SectionHeader
             id="dates-titre"
             eyebrow="Agenda"
@@ -117,17 +97,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </Section>
       )}
 
-      <Section
-        tone="abyss"
-        labelledBy="boutique-titre"
-        floor="pink"
-        decor={
-          <>
-            <FloatingPattern variant={1} tone="pink" className="-left-10 top-1/4 size-48 md:size-72" delay={0.5} />
-            <FloatingPattern variant={2} tone="cyan" className="-right-10 bottom-4 size-56 md:size-80" delay={2.5} />
-          </>
-        }
-      >
+      <Section tone="abyss" labelledBy="boutique-titre" floor="pink" decor={<FloatingPattern variant={1} tone="pink" className="-left-16 top-1/4 size-72" delay={0.5} />}>
         <SectionHeader
           id="boutique-titre"
           eyebrow="Supportez l'asso"

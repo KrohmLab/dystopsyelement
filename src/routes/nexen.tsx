@@ -143,17 +143,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </section>
 
       {/* L'expérience */}
-      <Section
-        id="univers"
-        labelledBy="experience-titre"
-        floor="lilac"
-        decor={
-          <>
-            <FloatingPattern variant={2} tone="cyan" className="-right-16 top-8 size-56 md:size-96" delay={1} />
-            <FloatingPattern variant={3} tone="pink" className="-left-20 bottom-0 size-48 md:size-80" delay={3} />
-          </>
-        }
-      >
+      <Section id="univers" labelledBy="experience-titre" floor="lilac" decor={<FloatingPattern variant={2} tone="cyan" className="-right-16 top-8 size-80" delay={1} />}>
         <SectionHeader id="experience-titre" eyebrow="L'expérience" tone="lilac" title="Trois jours hors du temps" />
         <ul className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
           {festival.experience.map((item, i) => {
@@ -260,17 +250,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       </Section>
 
       {/* Village, restauration, galerie d'art */}
-      <Section
-        id="village"
-        labelledBy="village-titre"
-        floor="lilac"
-        decor={
-          <>
-            <FloatingPattern variant={1} tone="pink" className="-left-16 top-12 size-48 md:size-72" delay={0.5} />
-            <FloatingPattern variant={4} tone="cyan" className="-right-16 bottom-0 size-56 md:size-80" delay={2} />
-          </>
-        }
-      >
+      <Section id="village" labelledBy="village-titre" floor="lilac">
         <SectionHeader id="village-titre" eyebrow="Le village" tone="lilac" title="Market, food & art" />
         <div className="grid gap-12 lg:grid-cols-[3fr_2fr]">
           <div>

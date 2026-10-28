@@ -8,7 +8,7 @@ type Props = {
   labelledBy?: string;
   /** Ambiance du sol quadrillé global quand la section est au centre de l'écran (SiteBackdrop). */
   floor?: "hero" | "hero-lilac" | "pink" | "lilac" | "peach" | "calm" | "horizon" | "off";
-  /** Décor discret derrière le contenu (motifs flottants), coupé aux bords de la section. */
+  /** Décor discret derrière le contenu (motif flottant), coupé aux bords de la section ; masqué sur mobile. */
   decor?: ReactNode;
   className?: string;
   children: ReactNode;
@@ -30,7 +30,7 @@ export function Section({ tone = "void", grid = false, id, labelledBy, floor, de
       )}
     >
       {decor && (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden overflow-hidden md:block">
           {decor}
         </div>
       )}

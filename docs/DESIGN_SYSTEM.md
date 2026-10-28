@@ -337,7 +337,7 @@ Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu
 | `GridFloor` | Grille cyan en perspective qui défile au sol (fond du hero) |
 | `NeonFlicker` | Allumage d'un néon qui grésille (logo Nexen) |
 | `CountUp` | Chiffre qui défile jusqu'à sa valeur au premier passage dans le viewport |
-| `FloatingPattern` | Motif technique de la v1 (cible, hexagone, circuit, code-barres) posé en coin de section via `Section decor` : 14 % d'opacité, halo néon, dérive lente (10 s) et bref glitch toutes les ≈ 4,6 s. Deux par section au plus, sur quelques sections seulement (accueil : portails, dates, boutique ; Nexen : expérience, village ; agenda ; shop) |
+| `FloatingPattern` | Motif technique de la v1 (cible, hexagone, circuit, code-barres) posé en coin de section via `Section decor` : 14 % d'opacité, halo néon, dérive lente (10 s) et bref glitch toutes les ≈ 4,6 s. **Un seul par section, sur trois sections** (accueil : portails et boutique ; Nexen : expérience), à partir de la tablette (masqué sur mobile). Ne pas en ajouter partout : c'est un clin d'œil, pas un motif de fond |
 
 ### 7.18 `Portal` (tuile de navigation)
 
