@@ -17,11 +17,12 @@ export const INTRO_SCRIPT = `try{var k="dystopsy:intro",d=document.documentEleme
  * en deux sur la page. En CSS pur (styles dans theme.css), décoratif, ne bloque aucun clic.
  */
 export function SiteIntro() {
-  // Fin de l'intro : les pages visitées ensuite ne décalent plus leurs animations.
+  // Fin de l'intro et de l'entrée du hero (allumage du radar, glitch du texte : ≈ 1,4 s après l'intro) : les pages
+  // visitées ensuite ne décalent plus leurs animations. Plus tôt, remettre --intro-offset à 0 couperait l'entrée net.
   useEffect(() => {
     const root = document.documentElement;
     if (root.dataset.intro !== "on") return;
-    const timer = window.setTimeout(() => (root.dataset.intro = "done"), INTRO_MS + 700);
+    const timer = window.setTimeout(() => (root.dataset.intro = "done"), INTRO_MS + 1800);
     return () => window.clearTimeout(timer);
   }, []);
 

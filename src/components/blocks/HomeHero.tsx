@@ -44,7 +44,7 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
     const Title = ghost ? "p" : "h1";
     return (
       <>
-        <div className="holo-enter" style={at(0.25)}>
+        <div>
           {event.upcoming ? (
             <Badge variant="live">{event.status === "dernieres-places" ? "Dernières places" : "Prochain événement"}</Badge>
           ) : (
@@ -52,7 +52,7 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
           )}
         </div>
         <Title id={ghost ? undefined : "hero-titre"} className="holo-title">
-          <span className="holo-reveal" style={at(0.3)}>
+          <span className="block">
             <span className="holo-title__main glitch text-glow-cyan" data-text={title.first}>
               {title.first}
             </span>
@@ -60,13 +60,13 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
           {title.rest && (
             <>
               {" "}
-              <span className="holo-reveal" style={at(0.45)}>
+              <span className="block">
                 <span className="holo-title__rest">{title.rest}</span>
               </span>
             </>
           )}
         </Title>
-        <p className="holo-enter holo-meta" style={at(0.6)}>
+        <p className="holo-meta">
           {event.upcoming && (
             <span>
               <CalendarIcon className="text-cyan" />
@@ -79,7 +79,7 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
           </span>
         </p>
         {!ghost && (
-          <div className="holo-enter holo-actions" style={at(0.75)}>
+          <div className="holo-actions">
             {event.upcoming && event.ticketUrl ? (
               <Button size="lg" icon={TicketIcon} href={event.ticketUrl}>
                 Billetterie
@@ -117,9 +117,10 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
         {variant === "soiree" && <span aria-hidden="true" className="holo-hero__grid bg-grid" />}
         <span aria-hidden="true" className="holo-hero__scanlines bg-scanlines" />
 
-        {/* Radar : glisse au centre (h-move) › s'éteint (h-off) › se déploie à l'arrivée (temps). */}
+        {/* Radar : glisse au centre (h-move) › s'éteint (h-off) au défilement ; s'allume après l'intro (h-off à l'envers). */}
         <div aria-hidden="true" className="holo-hero__radar holo-scroll">
           <div className="holo-hero__radar-off holo-scroll">
+            <span className="holo-hero__ignite" />
             <div className="holo-hero__radar-in">
               <HoloRadar center={center} />
             </div>
@@ -127,9 +128,16 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
         </div>
 
         <div className="holo-hero__copy">
-          <div className="holo-hero__text holo-scroll">{copy(false)}</div>
+          {/* Le texte entre en glitch après l'intro (temps, enveloppe intérieure) et sort en glitch au défilement (enveloppe
+              extérieure) : la même animation, jouée à l'envers puis à l'endroit. Un calque RGB accompagne chaque glitch. */}
+          <div className="holo-hero__text holo-scroll">
+            <div className="holo-hero__flow holo-glitch-in">{copy(false)}</div>
+          </div>
+          <div aria-hidden="true" inert className="holo-hero__ghost">
+            <div className="holo-hero__flow">{copy(true)}</div>
+          </div>
           <div aria-hidden="true" inert className="holo-hero__rgb holo-scroll">
-            {copy(true)}
+            <div className="holo-hero__flow">{copy(true)}</div>
           </div>
         </div>
 

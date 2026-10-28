@@ -963,14 +963,29 @@ body {
   width: 100%;
   height: 100%;
 }
-.holo-hero__radar-in {
-  animation: holo-radar-in 1.4s var(--ease-out-expo) var(--intro-offset) both;
+/* Allumage après l'intro : l'extinction de la sortie (holo-off) jouée à l'envers, sans le passage au centre :
+   un point, une ligne lumineuse qui s'étire, un grésillement, puis le radar entier. */
+.holo-hero__radar-off {
+  position: relative;
 }
-@keyframes holo-radar-in {
-  from {
-    opacity: 0;
-    transform: scale(0.4) rotate(-90deg);
-  }
+.holo-hero__radar-in {
+  animation: holo-off 1.3s linear calc(var(--intro-offset) + 0.3s) reverse both;
+}
+/* Point lumineux d'allumage (la rémanence de la sortie, à l'envers) : il s'allume puis s'écrase dans la ligne du radar. */
+.holo-hero__ignite {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  box-shadow:
+    0 0 20px 8px var(--color-cyan),
+    0 0 60px 20px color-mix(in srgb, var(--color-cyan) 50%, transparent);
+  opacity: 0;
+  animation: holo-dot 0.5s ease-out var(--intro-offset) both;
 }
 .holo-radar {
   position: relative;
@@ -1286,32 +1301,41 @@ body {
     height: calc(var(--holo-horizon) - var(--spacing-header));
   }
 }
-.holo-hero__text,
-.holo-hero__rgb {
+.holo-hero__flow {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: clamp(0.875rem, 2.2svh, 1.375rem);
 }
 @media (min-width: 64rem) {
-  .holo-hero__text,
-  .holo-hero__rgb {
+  .holo-hero__flow {
     align-items: flex-start;
   }
 }
-.holo-hero__rgb {
+/* Calques RGB des glitchs : celui de la sortie (.holo-hero__rgb, au défilement) et celui de l'entrée (.holo-hero__ghost). */
+.holo-hero__rgb,
+.holo-hero__ghost {
   position: absolute;
   inset: 0;
-  justify-content: inherit;
+  display: flex;
+  flex-direction: column;
   pointer-events: none;
   mix-blend-mode: screen;
   filter: sepia(1) hue-rotate(130deg) saturate(6);
   opacity: 0;
 }
 @media (min-width: 64rem) {
-  .holo-hero__rgb {
+  .holo-hero__rgb,
+  .holo-hero__ghost {
     justify-content: center;
   }
+}
+/* Entrée après l'intro : le glitch de sortie joué à l'envers (ligne écrasée → tranches décalées → texte entier). */
+.holo-glitch-in {
+  animation: holo-glitch-out 0.9s linear calc(var(--intro-offset) + 0.75s) reverse both;
+}
+.holo-hero__ghost {
+  animation: holo-rgb 0.9s linear calc(var(--intro-offset) + 0.75s) reverse both;
 }
 .holo-title {
   display: flex;
@@ -1389,27 +1413,15 @@ body {
   }
 }
 
-/* Entrées après l'intro : fondu montant, titre dévoilé de gauche à droite. */
+/* Entrée de l'indication « Défiler » après l'intro. */
 .holo-enter {
   animation: holo-enter 0.9s var(--ease-out-expo) calc(var(--intro-offset) + var(--enter-delay, 0s)) both;
-}
-.holo-reveal {
-  display: block;
-  animation: holo-reveal 1s cubic-bezier(0.7, 0, 0.2, 1) calc(var(--intro-offset) + var(--enter-delay, 0s)) both;
 }
 @keyframes holo-enter {
   from {
     opacity: 0;
     transform: translateY(26px);
     filter: blur(8px);
-  }
-}
-@keyframes holo-reveal {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
   }
 }
 
@@ -1679,7 +1691,8 @@ body {
   .holo-radar__particles > span:nth-child(n + 9) {
     display: none;
   }
-  .holo-hero__rgb {
+  .holo-hero__rgb,
+  .holo-hero__ghost {
     filter: none;
   }
   @keyframes holo-enter {
