@@ -876,7 +876,7 @@ body {
   position: relative;
   /* Mobile : la barre du navigateur se replie au défilement et la fenêtre grandit. L'étage prend la grande hauteur
      (lvh) pour couvrir tout l'écran dans tous les cas ; le contenu reste calé sur la petite (svh), toujours visible. */
-  height: calc(100lvh + 160svh);
+  height: calc(100lvh + 8rem + 160svh);
   view-timeline: --hero block;
   /* Sans cela, la timeline reprend le scroll-padding-top (hauteur de l'en-tête) : la sortie démarrerait avant le haut de page. */
   view-timeline-inset: 0;
@@ -884,7 +884,9 @@ body {
 .holo-hero__stage {
   position: sticky;
   top: 0;
-  height: 100lvh;
+  /* +8rem sous l'écran : Brave et Chrome sur iPhone redimensionnent la vue quand leur barre se replie, sans mettre
+     à jour lvh ; ce débord couvre la zone libérée (il reste hors champ le reste du temps). */
+  height: calc(100lvh + 8rem);
   overflow: hidden;
   isolation: isolate;
 }
@@ -1272,7 +1274,8 @@ body {
 @media (min-width: 64rem) {
   .holo-hero__copy,
   .holo-hero[data-variant="soiree"] .holo-hero__copy {
-    inset: var(--spacing-header) auto 0 max(var(--spacing-gutter), 7.5vw);
+    inset: var(--spacing-header) auto auto max(var(--spacing-gutter), 7.5vw);
+    height: calc(100svh - var(--spacing-header));
     width: calc(var(--holo-cx) - var(--holo-r) / 2 - max(var(--spacing-gutter), 7.5vw) - 2rem);
     display: flex;
     flex-direction: column;
@@ -1280,7 +1283,7 @@ body {
     text-align: left;
   }
   .holo-hero[data-variant="festival"] .holo-hero__copy {
-    bottom: calc(100svh - var(--holo-horizon));
+    height: calc(var(--holo-horizon) - var(--spacing-header));
   }
 }
 .holo-hero__text,
@@ -1413,7 +1416,7 @@ body {
 /* ---------- Indication « Défiler », point de rémanence, voile de fin ---------- */
 .holo-hero__cue {
   position: absolute;
-  inset: auto 0 2rem;
+  inset: calc(100svh - 6rem) 0 auto;
   z-index: 5;
   display: none;
   justify-content: center;
@@ -1689,12 +1692,14 @@ body {
 
 /* Sans animations liées au défilement, ou en mouvement réduit : hero statique d'un écran, propre. */
 @supports not (animation-timeline: view()) {
-  .holo-hero {
+  .holo-hero,
+  .holo-hero__stage {
     height: 100lvh;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .holo-hero {
+  .holo-hero,
+  .holo-hero__stage {
     height: 100lvh;
   }
   .holo-hero *,

@@ -109,8 +109,9 @@ export function Menu({ open, onClose, nav, ticket, next, socials, email, headerR
         </nav>
 
         <div className="menu__aside flex flex-col gap-6 lg:max-w-sm lg:justify-self-end">
+          {/* Mobile : prochain événement et e-mail masqués, pour que le menu tienne sur un écran. */}
           {next && (
-            <div className="relative bg-surface/80 p-5 inset-ring inset-ring-cyan-line chamfer-md">
+            <div className="relative hidden bg-surface/80 p-5 inset-ring inset-ring-cyan-line chamfer-md md:block">
               <p className="mb-2 font-display text-eyebrow font-bold text-cyan uppercase">// Prochain événement</p>
               <Link to={`/agenda/${next.slug}`} className="block font-display text-h3 font-bold text-ink uppercase no-underline hover:text-cyan">
                 {next.title}
@@ -137,7 +138,7 @@ export function Menu({ open, onClose, nav, ticket, next, socials, email, headerR
             })}
           </ul>
           {email && (
-            <a href={`mailto:${email}`} className="text-small text-ink-muted underline hover:text-cyan">
+            <a href={`mailto:${email}`} className="hidden text-small text-ink-muted underline hover:text-cyan md:block">
               {email}
             </a>
           )}
