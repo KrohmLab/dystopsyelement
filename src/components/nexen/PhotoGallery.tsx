@@ -1,12 +1,15 @@
 import { useState } from "react";
 import type { Album } from "../../content/schemas";
 import { albumPath, photoSrc } from "../../lib/gallery";
+import { FilterButtons } from "../gallery/FilterLinks";
 import { ProfileLink } from "../gallery/ProfileLink";
 import { Reveal } from "../motion/Reveal";
 import { Button } from "../ui/Button";
-import { Segmented } from "../ui/Segmented";
 
-type Preview = Pick<Album, "year" | "slug" | "photographer" | "profile"> & { count: number; photos: string[] };
+type Preview = Pick<Album, "year" | "slug" | "photographer" | "profile"> & {
+  count: number;
+  photos: string[];
+};
 
 /**
  * Aperçu de la galerie sur la page Nexen : un album par photographe, au choix, quelques photos réparties
@@ -20,17 +23,28 @@ export function PhotoGallery({ albums }: { albums: Preview[] }) {
   return (
     <div className="flex flex-col gap-8">
       {albums.length > 1 && (
-        <Segmented
+        <FilterButtons
           label="Photographe"
-          options={albums.map((a) => ({ value: a.slug, label: a.photographer, activeClass: "bg-nexen-lilac text-on-accent" }))}
+          options={albums.map((a) => ({
+            value: a.slug,
+            label: a.photographer,
+          }))}
           value={album.slug}
           onChange={setCurrent}
-          className="sm:max-w-xl"
         />
       )}
-      <ul key={album.slug} className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4" aria-label={`Photos de ${album.photographer}`}>
+      <ul
+        key={album.slug}
+        className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4"
+        aria-label={`Photos de ${album.photographer}`}
+      >
         {album.photos.map((id, i) => (
-          <Reveal as="li" key={id} delay={(i % 4) * 60} className={i === 0 ? "col-span-2 row-span-2" : undefined}>
+          <Reveal
+            as="li"
+            key={id}
+            delay={(i % 4) * 60}
+            className={i === 0 ? "col-span-2 row-span-2" : undefined}
+          >
             <div className="group aspect-square overflow-hidden bg-surface chamfer-md">
               <img
                 src={photoSrc(album, id, i === 0 ? "l" : "s")}
@@ -48,7 +62,8 @@ export function PhotoGallery({ albums }: { albums: Preview[] }) {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="flex flex-wrap items-center gap-3 text-small text-ink-muted">
           <span>
-            Photos : <span className="font-semibold text-ink">{album.photographer}</span>
+            Photos :{" "}
+            <span className="font-semibold text-ink">{album.photographer}</span>
           </span>
           <ProfileLink name={album.photographer} url={album.profile} />
         </p>
