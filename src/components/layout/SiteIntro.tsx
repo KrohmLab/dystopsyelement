@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { site } from "../../site";
 import { Logo } from "./Logo";
 
 /** Durée de l'intro avant l'entrée du hero (ms), synchronisée avec --intro-offset dans theme.css. */
@@ -16,7 +15,7 @@ export const INTRO_SCRIPT = `try{var k="dystopsy:intro",d=document.documentEleme
 
 /**
  * Intro de lancement (DESIGN_SYSTEM §6.2, docs/hero-hologramme §4) : ligne cathodique qui s'allume et flashe,
- * logo en scintillement néon, « {site.name} présente » qui se resserre, trois ondes de choc, puis l'écran s'ouvre
+ * logo en scintillement néon, trois ondes de choc, puis l'écran s'ouvre
  * en deux sur la page. En CSS pur (styles dans theme.css), décoratif, ne bloque aucun clic.
  */
 export function SiteIntro() {
@@ -51,7 +50,6 @@ export function SiteIntro() {
       <span className="site-intro__half site-intro__half--bottom" />
       <span className="site-intro__crt" />
       <Logo className="site-intro__logo text-ink" />
-      <p className="site-intro__text">{site.name} présente</p>
       <span className="site-intro__burst" />
       <span className="site-intro__burst site-intro__burst--pink" />
       <span className="site-intro__burst" />

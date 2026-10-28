@@ -4,11 +4,16 @@
   "description": "Texte provisoire : description du site pour les moteurs de recherche.",
   "email": "dystopsyelements@gmail.com",
   "shopUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
+  "donateUrl": "https://www.helloasso.com/associations/dystopsy-elements",
+  "booking": {
+    "label": "Booking artistes 2027",
+    "url": "https://forms.gle/g1kU5JzD33RUbr9L9"
+  },
   "socials": {
-    "instagram": "https://www.instagram.com",
-    "facebook": "https://www.facebook.com",
-    "soundcloud": "https://soundcloud.com",
-    "youtube": "https://www.youtube.com"
+    "instagram": "https://www.instagram.com/dystopsy_element_nexen/",
+    "facebook": "https://www.facebook.com/DystopsyElement",
+    "soundcloud": null,
+    "youtube": null
   },
   "tagline": "Texte provisoire du pied de page.",
   "city": "Ville 1",
@@ -25,10 +30,6 @@
   },
   "placeholders": [
     "description",
-    "socials.instagram",
-    "socials.facebook",
-    "socials.soundcloud",
-    "socials.youtube",
     "tagline",
     "city",
     "contactSubjects"

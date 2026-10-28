@@ -8,7 +8,6 @@ Remplacer un contenu = modifier le fichier indiqué, sans toucher au code. `npm 
 | Élément | Fichier | Aujourd'hui |
 |---|---|---|
 | Phrase de présentation pour Google et les partages (≤ 155 caractères) | `content/site.json` → `description` | Texte provisoire |
-| URLs Instagram, Facebook, SoundCloud, YouTube | `content/site.json` → `socials` | accueil de chaque réseau |
 | Phrase du pied de page | `content/site.json` → `tagline` | Texte provisoire |
 | Ville (bloc « QG ») | `content/site.json` → `city` | « Ville 1 » |
 | Sujets du formulaire de contact | `content/site.json` → `contactSubjects` | « Sujet 1 », « Sujet 2 », « Prestation » |
@@ -22,6 +21,9 @@ Remplacer un contenu = modifier le fichier indiqué, sans toucher au code. `npm 
 
 - **Événements** (`content/events/*.md`) : les 17 événements de la page Facebook de Dystopsy Element (NEXEN 2023 à 2026, teasers, Nexus Alchemy, Engine Reload…), avec dates, lieux, line-up tels que publiés, visuels officiels et un résumé reformulé de leur description. À relire par l'asso : résumés, styles et labels des artistes. Pas de prochaine date annoncée à ce jour : l'accueil met en avant le dernier événement (Engine Reload — Chapitre II).
 - **Boutique** (`content/products.json`) : T-shirt et Sweat officiels Nexen Festival, avec chaque annonce Vinted (coupe H/F × taille). **À tenir à jour à la main** : Vinted n'a pas d'API publique et interdit l'aspiration automatique. Quand une pièce est vendue, retirer sa ligne dans `variants` ; quand une annonce est ajoutée, ajouter une ligne `{ "cut", "size", "vintedUrl" }`. Un produit sans annonce s'affiche « Épuisé ».
+
+- **Réseaux et liens** (`content/site.json`) : Instagram `@dystopsy_element_nexen`, page Facebook, page de dons HelloAsso et formulaire « Booking artistes 2027 » (repris du Linktree). SoundCloud et YouTube : aucun compte trouvé, icônes masquées ; ajouter l'URL dans `socials` si l'asso en a un. Le libellé du portail Booking (avec l'année) se change dans `booking.label`.
+- **Visuels de l'accueil** : flyer Nexen 2026 et visuel merch (Instagram), photo de Pamp' (Nexen 2026) et visuel « Booking artistes 2027 » (Linktree).
 
 ## Déjà renseigné (événement Facebook officiel, relevé du 27/10/2026)
 

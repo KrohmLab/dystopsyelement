@@ -19,6 +19,10 @@ export const siteSchema = z.strictObject({
   email: nullable(z.email()),
   /** Boutique Vinted (bouton « Voir la boutique Vinted »). */
   shopUrl: nullable(url),
+  /** Page de dons HelloAsso de l'asso (portail « Nous faire un don »). */
+  donateUrl: nullable(url),
+  /** Candidatures des artistes pour la prochaine édition (portail de l'accueil) : libellé (avec l'année) et formulaire. */
+  booking: nullable(z.strictObject({ label: z.string().min(1).max(28), url })),
   socials: z.strictObject({
     instagram: nullable(url),
     facebook: nullable(url),

@@ -10,9 +10,9 @@ import { SectionHeader } from "../components/layout/SectionHeader";
 import { Reveal } from "../components/motion/Reveal";
 import { Button } from "../components/ui/Button";
 import { RailDots } from "../components/ui/RailDots";
-import { events, getEvent, products, services, site } from "../content/load.server";
+import { events, getEvent, nexen2026, products, services, site } from "../content/load.server";
 import { toSummary } from "../content/summaries";
-import { formatDateRange, getFeatured, getUpcoming } from "../lib/events";
+import { formatDateRange, getFeatured, getPast, getUpcoming } from "../lib/events";
 import { pageMeta } from "../lib/seo";
 import type { Route } from "./+types/home";
 import { FloatingPattern } from "../components/motion/FloatingPattern";
@@ -23,21 +23,38 @@ const TICKER = ["Open air festival", "Psytrance · Techno · Bass · Chill"];
 export function loader() {
   const now = new Date();
   const featured = getFeatured(events, now);
-  const nexen = getEvent("nexen-festival-2026");
+  const nexen = getEvent(nexen2026.event);
   const portals = [
-    { label: "Nexen", href: "/nexen", image: "festival/fond" },
+    { label: "Nexen", href: "/nexen", image: "festival/flyer-2026" },
     { label: "Agenda", href: "/agenda", image: "events/nexens-home-2026-banner" },
     ...(services.length > 0 ? [{ label: "Prestations", href: "/prestations", image: "festival/photo-jour" }] : []),
-    { label: "Shop", href: "/shop", image: null },
+    { label: "Shop", href: "/shop", image: "shop/merch-2026" },
     { label: "Contact", href: "/contact", image: "festival/ecailles" },
-    ...(site.socials.instagram ? [{ label: "Instagram", href: site.socials.instagram, image: null }] : []),
+    ...(site.donateUrl ? [{ label: "Nous faire un don", href: site.donateUrl, image: "festival/photo-don" }] : []),
+    ...(site.booking ? [{ label: site.booking.label, href: site.booking.url, image: "festival/booking-2027" }] : []),
   ];
+  // Rien à venir : la section agenda montre les dernières dates passées (hors celle déjà mise en avant dans le hero).
+  const upcoming = getUpcoming(events, now);
+  const dates = upcoming.length > 0 ? upcoming : getPast(events, now).filter((e) => e.slug !== featured?.event.slug);
   return {
     featured: featured ? toSummary(featured.event, now) : null,
-    upcoming: getUpcoming(events, now)
-      .slice(0, 3)
-      .map((e) => toSummary(e, now)),
-    nexen: nexen && { dates: formatDateRange(nexen), place: nexen.venue, ticketUrl: toSummary(nexen, now).upcoming ? nexen.ticketUrl : null },
+    dates: dates.slice(0, 3).map((e) => toSummary(e, now)),
+    datesUpcoming: upcoming.length > 0,
+    nexen: nexen && {
+      title: nexen.title,
+      dates: formatDateRange(nexen),
+      place: nexen.venue,
+      ticketUrl: toSummary(nexen, now).upcoming ? nexen.ticketUrl : null,
+      tagline: nexen2026.tagline,
+      facts: nexen2026.facts.slice(0, 4),
+      stages: nexen2026.stages.map(({ slug, name, role, families }) => ({
+        slug,
+        name,
+        role,
+        families,
+        artists: [...new Set(nexen2026.sets.filter((set) => set.stage === slug).map((set) => set.artist))],
+      })),
+    },
     portals,
     products: products.slice(0, 4),
     instagramUrl: site.socials.instagram,
@@ -51,7 +68,7 @@ const wide = (i: number, count: number) => i === 0 || (i === count - 1 && (count
 
 /** Accueil « mode spectacle » (SITE_PLAN §3) : visuels et liens, aucune section de présentation. */
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { featured, upcoming, nexen, portals, products, instagramUrl } = loaderData;
+  const { featured, dates, datesUpcoming, nexen, portals, products, instagramUrl } = loaderData;
   return (
     <>
       {featured && <HomeHero event={featured} fallbackImage="festival/fond" />}
@@ -72,14 +89,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
       <Ticker items={TICKER} />
 
-      {nexen && <NexenFeature dates={nexen.dates} place={nexen.place} ticketUrl={nexen.ticketUrl} />}
+      {nexen && <NexenFeature {...nexen} />}
 
-      {upcoming.length > 0 && (
+      {dates.length > 0 && (
         <Section grid labelledBy="dates-titre" floor="calm">
           <SectionHeader
             id="dates-titre"
             eyebrow="Agenda"
-            title="Prochaines dates"
+            title={datesUpcoming ? "Prochaines dates" : "Dernières dates"}
             action={
               <Button variant="ghost" href="/agenda">
                 Tout l'agenda
@@ -87,13 +104,13 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             }
           />
           <ul id="dates-rail" className="rail grid gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
-            {upcoming.map((event, i) => (
+            {dates.map((event, i) => (
               <Reveal as="li" key={event.slug} delay={i * 120}>
                 <EventCard event={event} />
               </Reveal>
             ))}
           </ul>
-          <RailDots target="dates-rail" count={upcoming.length} label="Prochaines dates" />
+          <RailDots target="dates-rail" count={dates.length} label={datesUpcoming ? "Prochaines dates" : "Dernières dates"} />
         </Section>
       )}
 

@@ -343,6 +343,10 @@ Dans `src/components/motion/`. Toutes respectent `prefers-reduced-motion` (rendu
 
 Grande tuile visuelle vers une page du site ou un lien externe. **Sur grand écran, les tuiles forment une rangée** : la première est étirée par défaut, celle survolée (ou au focus clavier) s'étire à son tour et les autres se replient en bande verticale avec leur libellé à la verticale. Sur tablette : grille 2 colonnes. Sur mobile : carrousel (§7.19). Visuel en fond (gris → couleur au survol), libellé `text-h3` d'un ou deux mots, sur-titre code optionnel, flèche → ou ↗ (externe). Survol / focus : barre de scan qui descend, liseré néon cyan → rose en bas, glitch RGB sur le libellé, balayage lumineux, visuel qui passe en couleur, `Brackets` qui s'agrandissent. Tuile entière cliquable, `chamfer-lg`. Une tuile dont la destination n'existe pas (URL non fournie, collection vide) n'est pas rendue.
 
+### 7.18 bis `NexenFeature` (bloc festival de l'accueil)
+
+Portail vers `/nexen`, aux couleurs des scènes. Colonne gauche : logo néon dans un **sceau** (anneaux pointillés et hexagone de l'affiche 2026) qui tourne lentement, s'ouvre au défilement (échelle + rotation, logo qui arrive en glitch) et, sur PC, s'incline vers le curseur (le sceau part à l'opposé : profondeur). Dates · lieu en `DecodeText`, styles en dessous. Colonne droite : titre de l'édition, 4 chiffres en `CountUp`, puis une carte par scène (Nexus lilas, Engine pêche) avec ses familles de styles et ses artistes qui défilent ; survoler une scène teinte la lueur du bloc et le sceau à sa couleur et met le défilé en pause. Puis le bouton festival (billetterie si l'édition est à venir) et trois raccourcis (Line-up, L'univers, Infos pratiques). Données : `content/festival/nexen-2026.json`. Mouvement réduit : tout est immobile.
+
 ### 7.19 Carrousel mobile (`.rail` + `RailDots`)
 
 Sur mobile (< `md`), les listes de cartes de l'accueil (portails, prochaines dates, boutique) deviennent un **défilement horizontal aimanté** (`scroll-snap`, CSS natif, aucune librairie) : bord à bord, l'élément suivant dépasse pour inviter au glissé (84 % de largeur, 62 % pour les produits). Pagination `RailDots` dessous : un trait par élément, l'actif s'allonge en cyan, cliquable. À partir de `md`, la même liste redevient une grille. Les pages catalogue (shop, line-up) restent en grille : on y compare, on ne feuillette pas.
@@ -399,7 +403,7 @@ Lighthouse mobile ≥ 95 sur les 4 axes (accueil : Performance ≥ 90, compte te
 | Composant v1 | Devient | Note |
 |---|---|---|
 | `HeroSlider` | `Hero` | Plus de carrousel, prochain événement |
-| `FestivalSection` (scroll à 4 étapes) | Supprimée | Remplacée par le bloc `NexenFeature` (logo + 3 CTA) |
+| `FestivalSection` (scroll à 4 étapes) | Supprimée | Remplacée par le bloc `NexenFeature` (§7.18 bis) |
 | `NexenSection` | `NexenFeature` | Liens vers `/nexen#line-up`, `#infos` (les routes v1 `/programmation` etc. n'existaient pas) |
 | `ActivitiesSection` | `ServiceTile` | Textes v1 supprimés, contenu à fournir par l'asso |
 | `MerchSection` (react-slick) + pages Shop | `ProductCard` (accueil + `/shop`) | Vitrine, chaque produit renvoie vers Vinted ; produits v1 supprimés |

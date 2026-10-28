@@ -608,7 +608,7 @@ html[data-intro="on"] .site-backdrop[data-floor="holo"] .site-backdrop__horizon 
 
 /* ==========================================================================
    Intro de lancement (SiteIntro) — html[data-intro="on"], une fois par session
-   Séquence de docs/hero-hologramme §4 : ligne cathodique, éclair, logo + « présente », ondes, ouverture en deux.
+   Séquence de docs/hero-hologramme §4 : ligne cathodique, éclair, logo, ondes, ouverture en deux.
    ========================================================================== */
 :root {
   --intro-offset: 0s;
@@ -738,39 +738,6 @@ html[data-intro="on"] .site-intro {
   89%,
   100% {
     opacity: 0;
-  }
-}
-.site-intro__text {
-  position: absolute;
-  inset-inline: 0;
-  top: calc(50% + clamp(2.5rem, 6vmin, 3.5rem));
-  font-family: var(--font-display);
-  font-size: clamp(0.75rem, 1.6vw, 1rem);
-  font-weight: 700;
-  text-align: center;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--color-ink);
-  opacity: 0;
-  animation: intro-text 1.9s var(--ease-out-expo) 1.05s forwards;
-}
-@keyframes intro-text {
-  0% {
-    opacity: 0;
-    letter-spacing: 1.2em;
-    filter: blur(10px);
-  }
-  30% {
-    opacity: 1;
-    filter: blur(0);
-  }
-  80% {
-    opacity: 1;
-    letter-spacing: 0.32em;
-  }
-  100% {
-    opacity: 0;
-    letter-spacing: 0.3em;
   }
 }
 .site-intro__burst {
@@ -1918,7 +1885,8 @@ body {
     transition:
       opacity var(--duration-base),
       transform var(--duration-slow) var(--ease-out-expo);
-    white-space: nowrap;
+    /* Libellés longs (« Booking artistes 2027 ») : retour à la ligne plutôt que débordement */
+    text-wrap: balance;
   }
   .portals > li:is([data-default], :hover, :focus-within) .portal__vlabel {
     opacity: 0;
@@ -2505,4 +2473,155 @@ body {
 /* Visuel de hero qui s'efface vers le bas pour laisser voir le sol quadrillé global */
 .hero-fade {
   mask-image: linear-gradient(to bottom, black 50%, transparent 92%);
+}
+
+/* ==========================================================================
+   Bloc Nexen de l'accueil (NexenFeature) : sceau tournant qui s'ouvre au défilement, logo incliné vers
+   le curseur (--tx / --ty de -1 à 1, écrits par le composant), lueur à la couleur de la scène survolée,
+   artistes qui défilent dans chaque scène.
+   ========================================================================== */
+.nexen-feature {
+  --tx: 0;
+  --ty: 0;
+  view-timeline: --nexen block;
+  view-timeline-inset: 0;
+}
+.nexen-feature__aura {
+  position: absolute;
+  inset: 0;
+  z-index: -20;
+  pointer-events: none;
+  transition: opacity var(--duration-slow) var(--ease-out-expo);
+}
+.nexen-feature__aura--nexus {
+  background:
+    radial-gradient(50% 60% at 28% 50%, color-mix(in srgb, var(--color-nexen-lilac) 22%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 85% 90%, color-mix(in srgb, var(--color-pink) 14%, transparent), transparent 70%);
+}
+.nexen-feature__aura--engine {
+  opacity: 0;
+  background:
+    radial-gradient(50% 60% at 28% 50%, color-mix(in srgb, var(--color-nexen-peach) 24%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 85% 20%, color-mix(in srgb, var(--color-nexen-violet) 22%, transparent), transparent 70%);
+}
+.nexen-feature:has([data-stage="engine"]:is(:hover, :focus-visible)) .nexen-feature__aura--engine {
+  opacity: 1;
+}
+.nexen-feature:has([data-stage="engine"]:is(:hover, :focus-visible)) .nexen-feature__aura--nexus {
+  opacity: 0;
+}
+
+/* Sceau : centré derrière le logo, il suit le curseur à l'opposé du logo (profondeur) */
+.nexen-feature__sigil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(34rem, 120%);
+  aspect-ratio: 1;
+  translate: calc(-50% + var(--tx) * -18px) calc(-50% + var(--ty) * -14px);
+  color: var(--color-nexen-lilac);
+  opacity: 0.45;
+  pointer-events: none;
+  transition:
+    color var(--duration-slow),
+    opacity var(--duration-slow),
+    scale var(--duration-slow) var(--ease-out-expo),
+    translate 0.6s var(--ease-out-expo);
+}
+.nexen-feature:has([data-stage="engine"]:is(:hover, :focus-visible)) .nexen-feature__sigil {
+  color: var(--color-nexen-peach);
+}
+/* Une scène survolée rallume et rapproche le sceau */
+.nexen-feature:has(.nexen-stage:is(:hover, :focus-visible)) .nexen-feature__sigil {
+  opacity: 0.75;
+  scale: 1.06;
+}
+.nexen-sigil__ring {
+  transform-origin: 200px 200px;
+  animation: nexen-spin 90s linear infinite;
+}
+.nexen-sigil__ring--reverse {
+  animation-duration: 60s;
+  animation-direction: reverse;
+}
+.nexen-sigil__ring--fast {
+  animation-duration: 24s;
+}
+@keyframes nexen-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.nexen-feature__tilt {
+  transform: perspective(900px) rotateY(calc(var(--tx) * 14deg)) rotateX(calc(var(--ty) * -10deg));
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+/* Artistes de chaque scène : deux copies de la liste, translation de -50 % */
+.nexen-stage__marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+.nexen-stage__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 60s linear infinite;
+}
+.nexen-stage__track > * {
+  padding-right: 1.5rem;
+}
+.nexen-stage__track--reverse {
+  animation-direction: reverse;
+}
+.nexen-stage:is(:hover, :focus-visible) .nexen-stage__track {
+  animation-play-state: paused;
+}
+.nexen-stage:is(:hover, :focus-visible) {
+  box-shadow: 0 0 32px -8px currentColor;
+}
+.nexen-stage[data-stage="nexus"] {
+  color: var(--color-nexen-lilac);
+}
+.nexen-stage[data-stage="engine"] {
+  color: var(--color-nexen-peach);
+}
+
+/* Au défilement : le sceau s'ouvre (échelle + rotation), le logo arrive en glitch */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .nexen-feature__core {
+      animation: nexen-open linear both;
+      animation-timeline: --nexen;
+      animation-range: entry 10% cover 45%;
+    }
+    .nexen-feature__logo picture {
+      display: block;
+      animation: holo-glitch-out linear reverse both;
+      animation-timeline: --nexen;
+      animation-range: entry 30% cover 42%;
+    }
+  }
+}
+@keyframes nexen-open {
+  from {
+    opacity: 0;
+    scale: 0.7;
+    rotate: -12deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nexen-sigil__ring,
+  .nexen-stage__track {
+    animation: none;
+  }
+  .nexen-feature__tilt,
+  .nexen-feature__sigil {
+    transform: none;
+    translate: -50% -50%;
+  }
+  .nexen-feature__tilt {
+    translate: none;
+  }
 }

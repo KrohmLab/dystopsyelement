@@ -243,5 +243,41 @@
       480,
       600
     ]
+  },
+  "festival/flyer-2026": {
+    "width": 1350,
+    "height": 1688,
+    "widths": [
+      480,
+      960,
+      1350
+    ]
+  },
+  "festival/photo-don": {
+    "width": 1920,
+    "height": 1078,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "festival/booking-2027": {
+    "width": 1080,
+    "height": 1080,
+    "widths": [
+      480,
+      960,
+      1080
+    ]
+  },
+  "shop/merch-2026": {
+    "width": 698,
+    "height": 930,
+    "widths": [
+      480,
+      698
+    ]
   }
 }
