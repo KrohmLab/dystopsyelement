@@ -25,6 +25,8 @@ Remplacer un contenu = modifier le fichier indiqué, sans toucher au code. `npm 
 - **Réseaux et liens** (`content/site.json`) : Instagram `@dystopsy_element_nexen`, page Facebook, page de dons HelloAsso et formulaire « Booking artistes 2027 » (repris du Linktree). SoundCloud et YouTube : aucun compte trouvé, icônes masquées ; ajouter l'URL dans `socials` si l'asso en a un. Le libellé du portail Booking (avec l'année) se change dans `booking.label`.
 - **Visuels de l'accueil** : flyer Nexen 2026 et visuel merch (Instagram), photo de Pamp' (Nexen 2026) et visuel « Booking artistes 2027 » (Linktree).
 
+- **Galerie Nexen 2026** (`content/festival/nexen-2026.json` → `gallery`) : 12 photos par album Facebook « NEXEN 2026 par … » (Lila, Noémie, Pamp', Sovisual), crédit et lien vers l'album complet. À faire valider par l'asso et les photographes ; pour changer une photo, remplacer le fichier dans `assets/festival/galerie-2026-*` et son texte `alt`.
+
 ## Déjà renseigné (événement Facebook officiel, relevé du 27/10/2026)
 
 E-mail de contact, profil Vinted, et pour le Nexen Festival 2026 : description, infos pratiques, line-up et timetable des deux scènes, carte du site, village, restauration, galerie d'art et crédits (`content/festival/nexen-2026.json`). À faire relire par l'asso.

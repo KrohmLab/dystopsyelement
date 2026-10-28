@@ -34,7 +34,7 @@ export function Segmented<T extends string>({ label, options, value, onChange, c
               aria-pressed={active}
               onClick={() => onChange(option.value)}
               className={cn(
-                "min-h-10 min-w-0 flex-1 basis-0 cursor-pointer px-1.5 font-display sm:basis-auto sm:px-3 text-label-sm font-bold whitespace-nowrap uppercase transition-colors duration-base chamfer-sm",
+                "min-h-10 min-w-0 flex-auto cursor-pointer px-1.5 font-display sm:px-3 text-label-sm font-bold whitespace-nowrap uppercase transition-colors duration-base chamfer-sm",
                 active ? (option.activeClass ?? "bg-cyan text-on-accent") : "text-ink-soft hover:text-ink",
               )}
             >
