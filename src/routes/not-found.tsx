@@ -16,8 +16,8 @@ const ROUTES = [
 ];
 
 /**
- * Page 404 (pré-rendue en 404.html, servie avec le statut 404 par Cloudflare) : « signal perdu », grand 404
- * en glitch, retour à l'accueil et raccourcis vers les pages principales.
+ * Page 404 (pré-rendue en 404.html, servie avec le statut 404 par Cloudflare) : « signal perdu », titre en glitch,
+ * retour à l'accueil et raccourcis vers les pages principales.
  */
 export default function NotFound() {
   return (
@@ -28,10 +28,7 @@ export default function NotFound() {
       </span>
       <div className="mx-auto flex w-full max-w-site flex-col items-start gap-6">
         <p className="font-display text-eyebrow font-bold text-cyan uppercase">// Erreur 404 · signal perdu</p>
-        <p aria-hidden="true" className="glitch font-display text-display font-black text-ink text-glow-cyan" data-text="404">
-          404
-        </p>
-        <h1 id="introuvable-titre" className="text-h1 font-black">
+        <h1 id="introuvable-titre" className="glitch text-display font-black" data-text="Page introuvable">
           Page introuvable
         </h1>
         <p className="max-w-xl text-lead text-ink-soft">Cette page n'existe pas ou a été déplacée. Reprenez la transmission depuis l'accueil.</p>
