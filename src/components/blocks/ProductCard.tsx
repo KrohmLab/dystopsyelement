@@ -119,7 +119,7 @@ function ProductPicker({ product }: { product: Product }) {
         </div>
 
         {cuts.length === 0 ? (
-          <p className="text-body text-ink-muted">Toutes les pièces ont trouvé preneur. Retrouvez la boutique sur Vinted.</p>
+          <p className="text-body text-ink-muted">Toutes les pièces ont trouvé preneur. Retrouvez le shop sur Vinted.</p>
         ) : (
           <>
             {cuts.length > 1 && (
@@ -166,7 +166,7 @@ function ProductPicker({ product }: { product: Product }) {
           ) : (
             site.shopUrl && (
               <Button variant="secondary" fullWidth href={site.shopUrl}>
-                Voir la boutique Vinted
+                Voir le shop Vinted
               </Button>
             )
           )}

@@ -42,10 +42,10 @@ Objectif CLAUDE.md §9 : Perf ≥ 95 (≥ 90 sur l'accueil). **Non atteint.** En
 3. **Reconstruction nocturne en échec** : secret GitHub `CF_DEPLOY_HOOK` manquant ; le « prochain événement » ne bascule pas tout seul.
 4. **Prestations** : page entière en provisoire (« Prestation 1 à 3 ») mais présente dans le menu et en portail d'accueil.
 5. **Bouton rose « Billetterie »** (en-tête, menu) : sans événement en vente, il mène à l'agenda des dates passées ; le sur-titre de l'agenda dit aussi « Billetterie ».
-6. **Nommage de la boutique** : « Shop » (menu), « Boutique » (accueil), « Black market » (titre de page), « Merch » (Nexen).
-7. **Portails** : « Nous faire un don » et « Booking artistes 2027 » dépassent la règle « un ou deux mots » (DESIGN_SYSTEM §7.18).
-8. **Partage sur les réseaux** : aucune image d'aperçu (Open Graph) hors albums photo ; pas de données structurées `MusicEvent` sur les fiches événement (prévu phase 4).
-9. **Page 404** minimale (titre + lien), encore marquée provisoire dans le code.
+6. ~~Nommage de la boutique~~ : tout est « Shop » (corrigé).
+7. Portails renommés « Faire un don » et « Nexen Application 2027 ».
+8. ~~Partage sur les réseaux~~ : images d'aperçu sur toutes les pages (`npm run og`), JSON-LD `MusicEvent` sur les fiches et `Organization` sur l'accueil (corrigé).
+9. ~~Page 404 minimale~~ : page finale avec raccourcis (corrigé).
 10. Photos de la galerie en AVIF uniquement (iOS ≤ 15 sans affichage).
 11. Doublons iCloud « … 2 » dans le dossier local : ils cassent le build local (pas la production).
 
@@ -62,7 +62,6 @@ Objectif CLAUDE.md §9 : Perf ≥ 95 (≥ 90 sur l'accueil). **Non atteint.** En
 | Prestations (3) | `content/services.json` | « Prestation 1 à 3 » |
 | FAQ / infos pratiques (4) | `content/faq.json` | « Question 1 à 4 » |
 | Phrases d'intro Agenda, Contact, Prestations | `src/routes/*.tsx` | Texte provisoire |
-| Profil de Pamp' | `content/gallery.json` → `profile` | pas de lien |
 | Auteurs des affiches | mentions légales | « à préciser » |
 | Validation des photos par les photographes | — | à faire |
 | Domaine définitif | `site.json` → `url` | workers.dev |
@@ -72,8 +71,7 @@ Objectif CLAUDE.md §9 : Perf ≥ 95 (≥ 90 sur l'accueil). **Non atteint.** En
 - Ajouter la clé Web3Forms (variable de build `VITE_WEB3FORMS_KEY` dans Workers Builds) puis tester un envoi de bout en bout.
 - Créer le Deploy Hook Cloudflare et le secret GitHub `CF_DEPLOY_HOOK`.
 - Activer Cloudflare Web Analytics, ou retirer la phrase des mentions légales.
-- Images Open Graph (par défaut + par page/événement) et JSON-LD `MusicEvent`.
 - Performance : polices préchargées / CSS critique en ligne, intro plus courte ou non bloquante pour le LCP, découpe du JS au chargement.
-- Page 404 finale ; décider du sort de Prestations (masquer tant que vide ?) et du bouton Billetterie hors saison.
+- Décider du sort de Prestations (masquer tant que vide ?) et du bouton Billetterie hors saison.
 - CSP + HSTS une fois le domaine branché ; Lighthouse à refaire.
 - Tests manuels restants : navigation complète au clavier, mouvement réduit dans un vrai navigateur, rendu 1920 px.

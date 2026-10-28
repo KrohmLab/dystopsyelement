@@ -3,8 +3,8 @@ import { FilterLinks } from "../components/gallery/FilterLinks";
 import { PhotoGrid } from "../components/gallery/PhotoGrid";
 import { CreditName, ProfileLink } from "../components/gallery/ProfileLink";
 import { Eyebrow } from "../components/layout/SectionHeader";
-import { albums } from "../content/load.server";
-import { albumPath, photoSrc } from "../lib/gallery";
+import { albums, ogImage } from "../content/load.server";
+import { albumPath } from "../lib/gallery";
 import { pageMeta } from "../lib/seo";
 import type { Route } from "./+types/galerie-album";
 
@@ -14,6 +14,7 @@ export function loader({ params }: Route.LoaderArgs) {
   if (!album) throw data("Album introuvable", { status: 404 });
   const years = [...new Set(albums.map((a) => a.year))];
   return {
+    og: ogImage(`/og/galerie/${album.year}-${album.slug}.jpg`),
     album: { year: album.year, slug: album.slug, photographer: album.photographer, profile: album.profile, photos: album.photos },
     // Filtre année : chaque année mène à sa page ; filtre photographe : les albums de la même année.
     years: years.map((y) => ({ label: String(y), href: `/galerie/${y}`, current: y === year })),
@@ -29,12 +30,11 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({ currentUrl, nextUrl
 export const meta: Route.MetaFunction = ({ data }) => {
   if (!data) return pageMeta({ title: "Galerie", path: "/galerie" });
   const { album } = data;
-  const first = album.photos[0];
   return pageMeta({
     title: `Nexen ${album.year} · Photos de ${album.photographer}`,
     description: `${album.photos.length} photos du Nexen Festival ${album.year} par ${album.photographer}.`,
     path: albumPath(album),
-    image: first ? photoSrc(album, first.id, "l") : undefined,
+    image: data.og,
   });
 };
 

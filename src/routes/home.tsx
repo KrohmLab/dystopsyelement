@@ -14,6 +14,7 @@ import { albums, events, getEvent, nexen2026, products, services, site } from ".
 import { toSummary } from "../content/summaries";
 import { formatDateRange, getFeatured, getPast, getUpcoming } from "../lib/events";
 import { pageMeta } from "../lib/seo";
+import { site as siteSettings } from "../site";
 import type { Route } from "./+types/home";
 import { FloatingPattern } from "../components/motion/FloatingPattern";
 
@@ -30,7 +31,7 @@ export function loader() {
     ...(albums.length > 0 ? [{ label: "Galerie", href: "/galerie", image: "festival/portail-galerie" }] : []),
     ...(services.length > 0 ? [{ label: "Prestations", href: "/prestations", image: "festival/photo-jour" }] : []),
     { label: "Shop", href: "/shop", image: "shop/merch-2026" },
-    ...(site.donateUrl ? [{ label: "Nous faire un don", href: site.donateUrl, image: "festival/photo-don" }] : []),
+    ...(site.donateUrl ? [{ label: "Faire un don", href: site.donateUrl, image: "festival/photo-don" }] : []),
     ...(site.booking ? [{ label: site.booking.label, href: site.booking.url, image: "festival/booking-2027" }] : []),
   ];
   // Rien à venir : la section agenda montre les dernières dates passées (hors celle déjà mise en avant dans le hero).
@@ -66,7 +67,18 @@ export function loader() {
   };
 }
 
-export const meta: Route.MetaFunction = () => pageMeta({ path: "/" });
+export const meta: Route.MetaFunction = () =>
+  pageMeta({
+    path: "/",
+    // L'association, ses réseaux et son festival (fiche des moteurs de recherche).
+    jsonLd: {
+      "@type": "Organization",
+      name: siteSettings.name,
+      url: siteSettings.url,
+      ...(siteSettings.email ? { email: siteSettings.email } : {}),
+      sameAs: Object.values(siteSettings.socials).filter(Boolean),
+    },
+  });
 
 // Grille 2 colonnes (sous lg) : le premier portail est large, et le dernier aussi s'il resterait seul sur sa ligne.
 const wide = (i: number, count: number) => i === 0 || (i === count - 1 && (count - 1) % 2 === 1);
@@ -119,26 +131,26 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </Section>
       )}
 
-      <Section tone="abyss" labelledBy="boutique-titre" floor="pink" decor={<FloatingPattern variant={1} tone="pink" className="-left-16 top-1/4 size-72" delay={0.5} />}>
+      <Section tone="abyss" labelledBy="shop-titre" floor="pink" decor={<FloatingPattern variant={1} tone="pink" className="-left-16 top-1/4 size-72" delay={0.5} />}>
         <SectionHeader
-          id="boutique-titre"
+          id="shop-titre"
           eyebrow="Supportez l'asso"
           tone="pink"
-          title="Boutique"
+          title="Shop"
           action={
             <Button variant="secondary" href="/shop">
               Voir tout le shop
             </Button>
           }
         />
-        <ul id="boutique-rail" className="rail rail--narrow grid grid-cols-2 gap-4 md:max-w-3xl md:gap-6">
+        <ul id="shop-rail" className="rail rail--narrow grid grid-cols-2 gap-4 md:max-w-3xl md:gap-6">
           {products.map((product, i) => (
             <Reveal as="li" key={product.slug} delay={i * 80}>
               <ProductCard product={product} />
             </Reveal>
           ))}
         </ul>
-        <RailDots target="boutique-rail" count={products.length} label="Boutique" />
+        <RailDots target="shop-rail" count={products.length} label="Shop" />
       </Section>
 
       <CtaBanner

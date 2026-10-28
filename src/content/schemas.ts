@@ -17,7 +17,7 @@ export const siteSchema = z.strictObject({
   /** Meta description par défaut (≤ 155 caractères). */
   description: nullable(z.string().max(155)),
   email: nullable(z.email()),
-  /** Boutique Vinted (bouton « Voir la boutique Vinted »). */
+  /** Shop Vinted (bouton « Voir le shop Vinted »). */
   shopUrl: nullable(url),
   /** Page de dons HelloAsso de l'asso (portail « Nous faire un don »). */
   donateUrl: nullable(url),

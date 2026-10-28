@@ -62,7 +62,7 @@ export default function MentionsLegales({ loaderData }: Route.ComponentProps) {
         </Block>
         <Block id="liens" title="Liens externes">
           <p>
-            Billetterie (HelloAsso), boutique (Vinted), réseaux sociaux, formulaire de candidature et écoutes (SoundCloud) s'ouvrent sur les sites de ces services, qui
+            Billetterie (HelloAsso), shop (Vinted), réseaux sociaux, formulaire de candidature et écoutes (SoundCloud) s'ouvrent sur les sites de ces services, qui
             appliquent leurs propres règles de confidentialité et de cookies. Aucun de leurs contenus n'est chargé sur ce site.
           </p>
         </Block>

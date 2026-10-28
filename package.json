@@ -8,7 +8,8 @@
     "preview": "npm run build && wrangler dev",
     "typecheck": "react-router typegen && tsc",
     "lint": "eslint .",
-    "test": "node --test src/lib/*.test.ts"
+    "test": "node --test src/lib/*.test.ts",
+    "og": "node scripts/og-images.mjs"
   },
   "engines": {
     "node": ">=24"

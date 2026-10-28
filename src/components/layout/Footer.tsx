@@ -44,7 +44,7 @@ export function Footer({ nav, ticket }: { nav: NavItem[]; ticket: Ticket }) {
   const contact: NavItem[] = [
     { label: "Formulaire", href: "/contact" },
     { label: "Billetterie", href: ticket.href, external: ticket.external },
-    { label: "Boutique", href: "/shop" },
+    { label: "Shop", href: "/shop" },
     ...(site.email ? [{ label: site.email, href: `mailto:${site.email}` }] : []),
   ];
   const columns = [

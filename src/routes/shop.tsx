@@ -14,10 +14,10 @@ export function loader() {
 }
 
 export const meta: Route.MetaFunction = () =>
-  pageMeta({ title: "Shop", description: "Le merch officiel Dystopsy Element et Nexen Festival, en vente sur Vinted.", path: "/shop" });
+  pageMeta({ title: "Shop", description: "Le merch officiel Dystopsy Element et Nexen Festival, en vente sur Vinted.", path: "/shop", image: "/og/shop.jpg" });
 
 /**
- * Boutique vitrine (SITE_PLAN §7) : une carte par produit ; filtres par type et par taille disponible, sans
+ * Shop vitrine (SITE_PLAN §7) : une carte par produit ; filtres par type et par taille disponible, sans
  * rechargement. Chaque produit ouvre le choix coupe + taille, qui renvoie vers l'annonce Vinted correspondante.
  */
 export default function Shop({ loaderData }: Route.ComponentProps) {
@@ -30,8 +30,8 @@ export default function Shop({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <PageHero eyebrow="Supportez l'asso" title="Black market" lead="Le merch officiel du Nexen Festival, en vente sur Vinted : chaque pièce soutient l'association.">
-        {shopUrl && <Button href={shopUrl}>Voir la boutique Vinted</Button>}
+      <PageHero eyebrow="Supportez l'asso" title="Shop" lead="Le merch officiel du Nexen Festival, en vente sur Vinted : chaque pièce soutient l'association.">
+        {shopUrl && <Button href={shopUrl}>Voir le shop Vinted</Button>}
       </PageHero>
       <Section labelledBy="produits-titre" floor="pink">
         <h2 id="produits-titre" className="sr-only">

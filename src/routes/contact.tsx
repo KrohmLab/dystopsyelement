@@ -26,7 +26,7 @@ export function loader() {
 }
 
 export const meta: Route.MetaFunction = () =>
-  pageMeta({ title: "Contact", description: "Écrire à Dystopsy Element : billetterie, boutique, prestations, et l'équipe de l'asso.", path: "/contact" });
+  pageMeta({ title: "Contact", description: "Écrire à Dystopsy Element : billetterie, shop, prestations, et l'équipe de l'asso.", path: "/contact" });
 
 const NETWORKS = [
   { key: "instagram", label: "Instagram", Icon: InstagramIcon },
@@ -53,7 +53,7 @@ export default function Contact({ loaderData }: Route.ComponentProps) {
           </Button>
         )}
         <Button variant="secondary" href="/shop">
-          Boutique
+          Shop
         </Button>
         <Button variant="secondary" href="/contact?sujet=Prestation#formulaire">
           Devis prestation

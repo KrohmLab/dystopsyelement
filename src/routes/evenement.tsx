@@ -12,7 +12,7 @@ import { Reveal } from "../components/motion/Reveal";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
 import { ResponsiveImage } from "../components/ui/ResponsiveImage";
-import { events, getEvent, nexen2026 } from "../content/load.server";
+import { events, getEvent, nexen2026, ogImage, site } from "../content/load.server";
 import { toSummary } from "../content/summaries";
 import { formatDateRange, getUpcoming } from "../lib/events";
 import { pageMeta } from "../lib/seo";
@@ -24,6 +24,7 @@ export function loader({ params }: Route.LoaderArgs) {
   const now = new Date();
   const summary = toSummary(event, now);
   // Deux autres événements : à venir d'abord, sinon les plus récents.
+  const og = ogImage(`/og/agenda/${event.slug}.jpg`);
   const others = [...getUpcoming(events, now), ...events].filter((e, i, all) => e.slug !== event.slug && all.indexOf(e) === i).slice(0, 2);
   return {
     event: summary,
@@ -35,12 +36,53 @@ export function loader({ params }: Route.LoaderArgs) {
     others: others.map((e) => toSummary(e, now)),
     /** Festival détaillé (line-up, timetable, carte) sur sa propre page. */
     festivalPage: event.slug === nexen2026.event ? "/nexen" : null,
+    og,
+    jsonLd: { ...musicEvent(event, site.url), image: [`${site.url}${og ?? "/og/site.jpg"}`] },
+  };
+}
+
+/** Données structurées schema.org MusicEvent (résultats enrichis des moteurs de recherche). Aucun prix : non publié. */
+function musicEvent(event: NonNullable<ReturnType<typeof getEvent>>, origin: string) {
+  const text = event.summaryHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  return {
+    "@type": "MusicEvent",
+    name: event.title,
+    startDate: event.startDate,
+    endDate: event.endDate,
+    eventStatus: event.status === "annule" ? "https://schema.org/EventCancelled" : "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: event.venue,
+      address: { "@type": "PostalAddress", ...(event.city ? { addressLocality: event.city } : {}), addressCountry: "FR" },
+    },
+    ...(text ? { description: text.length > 300 ? `${text.slice(0, 297)}…` : text } : {}),
+    url: `${origin}/agenda/${event.slug}`,
+    organizer: { "@type": "Organization", name: site.name, url: origin },
+    ...(event.lineup.length > 0 ? { performer: event.lineup.map((entry) => ({ "@type": "PerformingGroup", name: entry.name })) } : {}),
+    ...(event.ticketUrl
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: event.ticketUrl,
+            availability: event.status === "complet" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+          },
+        }
+      : {}),
   };
 }
 
 export const meta: Route.MetaFunction = ({ data }) =>
   data
-    ? pageMeta({ title: data.event.title, description: `${data.dates} · ${[data.event.venue, data.event.city].filter(Boolean).join(", ")}`, path: `/agenda/${data.event.slug}`, type: "article" })
+    ? pageMeta({
+        title: data.event.title,
+        description: `${data.dates} · ${[data.event.venue, data.event.city].filter(Boolean).join(", ")}`,
+        path: `/agenda/${data.event.slug}`,
+        type: "article",
+        image: data.og,
+        imageAlt: `Visuel de ${data.event.title}`,
+        jsonLd: data.jsonLd,
+      })
     : [{ title: "Événement introuvable" }];
 
 /** Fiche événement (SITE_PLAN §5) : hero, résumé dépliable, line-up + modales, autres événements. */

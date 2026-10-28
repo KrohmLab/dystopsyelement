@@ -27,8 +27,8 @@ export function loader({ params }: Route.LoaderArgs) {
 
 export const meta: Route.MetaFunction = ({ data }) =>
   data?.year
-    ? pageMeta({ title: `Galerie Nexen ${data.year}`, description: `Les photos du Nexen Festival ${data.year}, par photographe.`, path: `/galerie/${data.year}` })
-    : pageMeta({ title: "Galerie", description: "Toutes les photos du Nexen Festival, édition par édition et photographe par photographe.", path: "/galerie" });
+    ? pageMeta({ title: `Galerie Nexen ${data.year}`, description: `Les photos du Nexen Festival ${data.year}, par photographe.`, path: `/galerie/${data.year}`, image: "/og/galerie.jpg" })
+    : pageMeta({ title: "Galerie", description: "Toutes les photos du Nexen Festival, édition par édition et photographe par photographe.", path: "/galerie", image: "/og/galerie.jpg" });
 
 /** Galerie : albums de toutes les éditions (/galerie) ou d'une année (/galerie/2025) ; chaque album a sa page. */
 export default function Galerie({ loaderData }: Route.ComponentProps) {

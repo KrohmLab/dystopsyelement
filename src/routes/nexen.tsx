@@ -56,6 +56,7 @@ export const meta: Route.MetaFunction = ({ data }) =>
     title: "Nexen Festival",
     description: data ? `${data.festival.title} · ${data.dates} · ${data.place}. Deux scènes, 48 h de son non-stop en open air.` : undefined,
     path: "/nexen",
+    image: "/og/nexen.jpg",
   });
 
 const EXPERIENCE_ICONS: Record<string, ComponentType<{ size?: 32; className?: string }>> = {
@@ -341,7 +342,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
             </Button>
           )}
           <Button variant="secondary" size="lg" href={links.merch}>
-            Merch sur Vinted
+            Shop sur Vinted
           </Button>
           <Button variant="secondary" size="lg" href={links.carpool}>
             Covoiturage

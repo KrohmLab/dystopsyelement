@@ -1,5 +1,6 @@
 // Chargement et validation des contenus, exécuté au build (loaders pré-rendus) : jamais envoyé au navigateur.
 // Une erreur de validation lève une exception et fait échouer `npm run build`.
+import { existsSync } from "node:fs";
 import { marked } from "marked";
 import { parse as parseYaml } from "yaml";
 import type { z } from "zod";
@@ -97,3 +98,7 @@ if (provisional.length > 0 && !(globalThis as { __provisionalReported?: boolean 
   (globalThis as { __provisionalReported?: boolean }).__provisionalReported = true;
   console.warn(`⚠ ${provisional.length} contenus provisoires (placeholder) à remplacer avant la mise en ligne publique.`);
 }
+
+/** Image de partage d'une page (public/og/…, générée par `npm run og`) si elle existe, sinon celle du site. */
+// Chemin relatif au dossier du projet : le build (et donc le pré-rendu) tourne à sa racine.
+export const ogImage = (path: string): string | undefined => (existsSync(`${process.cwd()}/public${path}`) ? path : undefined);

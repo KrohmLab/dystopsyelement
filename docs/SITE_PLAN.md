@@ -43,7 +43,7 @@ Reprise de la v1 (`dystopsyelements.pages.dev`), avec les pages que la v1 annon�
 | `/agenda/[slug]` | Fiche événement | `/events/:id` |
 | `/galerie`, `/galerie/[année]`, `/galerie/[année]/[photographe]` | Galerie photo du Nexen, par édition puis par photographe | n'existait pas |
 | `/prestations` | Prestations (décoration, arts vivants, production…) | lien « Prestations » (pointait vers `/`) |
-| `/shop` | Boutique : vitrine, chaque produit renvoie vers son annonce **Vinted** | `/shop` (« Black Market ») |
+| `/shop` | Shop : vitrine, chaque produit renvoie vers son annonce **Vinted** | `/shop` (« Black Market ») |
 | `/contact` | Contact + L'Équipe | `/contact` |
 | `/mentions-legales` | Mentions légales + confidentialité | n'existait pas (obligatoire) |
 | `/404` | Page introuvable | |
@@ -95,7 +95,7 @@ CTA `festival` **Billetterie** → `ticketUrl` si à venir, sinon **Voir le fest
 
 **3.5 Prochaines dates** — `// AGENDA` · « Prochaines dates » · **Tout l'agenda** → `/agenda` · 3 `EventCard` max
 
-**3.6 Boutique** — comme la v1 : `// SUPPORTEZ L'ASSO` · « Boutique » · 4 `ProductCard` (survol, catégorie, prix) → annonce Vinted · **Voir tout le shop** → `/shop`
+**3.6 Shop** — comme la v1 : `// SUPPORTEZ L'ASSO` · « Shop » · 4 `ProductCard` (survol, catégorie, prix) → annonce Vinted · **Voir tout le shop** → `/shop`
 
 **3.7 CtaBanner** — **Nous écrire** → `/contact` · **Suivre sur Instagram** ↗ (si URL) · réseaux
 
@@ -115,7 +115,7 @@ CTA `festival` **Billetterie** → `ticketUrl` si à venir, sinon **Voir le fest
 8. **`#village`** : artisans-créateurs, restauration, galerie d'art.
 9. **Crédits** : mapping, visual artist, scénographie, fireshow, photo.
 10. **`#galerie`** + affiche officielle du line-up.
-11. **Liens** : Billetterie (si à venir), merch Vinted, covoiturage, événement Facebook.
+11. **Liens** : Billetterie (si à venir), Shop sur Vinted, covoiturage, événement Facebook.
 
 La localisation exacte n'est jamais publiée (envoyée aux détenteurs de billets).
 
@@ -159,7 +159,7 @@ Vitrine (v1 « Black Market ») : H1, **filtres** par catégorie (Tous · T-shir
 ## 8. Contact `/contact`
 
 H1 « CONTACT ».
-Raccourcis : **Billetterie** ↗ · **Boutique** → `/shop` · **Devis prestation** (pré-sélectionne le sujet).
+Raccourcis : **Billetterie** ↗ · **Shop** → `/shop` · **Devis prestation** (pré-sélectionne le sujet).
 Formulaire : Prénom · Nom · E-mail · Sujet (`site.contactSubjects`, prérempli via `?sujet=`) · Message · case RGPD · honeypot. Bouton **Envoyer**.
 Bloc coordonnées (v1 « QG ») : e-mail, réseaux, ville.
 **L'Équipe** : filtres par pôle (Tous · Direction · Organisation · Technique), grille de `MemberCard` ; clic → **modale membre** (photo, rôle, pôle, courte présentation).
