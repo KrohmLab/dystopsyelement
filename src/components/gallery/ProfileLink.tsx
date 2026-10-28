@@ -19,7 +19,7 @@ export function ProfileLink({ name, url, className }: Props) {
       <FacebookIcon size={20} className="text-nexen-lilac" />
       Profil
       <ExternalIcon size={16} />
-      <span className="sr-only">de {name} sur Facebook (nouvel onglet)</span>
+      <span className="sr-only"> de {name} sur Facebook (nouvel onglet)</span>
     </a>
   );
 }

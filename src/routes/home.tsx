@@ -30,7 +30,6 @@ export function loader() {
     ...(albums.length > 0 ? [{ label: "Galerie", href: "/galerie", image: "festival/portail-galerie" }] : []),
     ...(services.length > 0 ? [{ label: "Prestations", href: "/prestations", image: "festival/photo-jour" }] : []),
     { label: "Shop", href: "/shop", image: "shop/merch-2026" },
-    { label: "Contact", href: "/contact", image: "festival/ecailles" },
     ...(site.donateUrl ? [{ label: "Nous faire un don", href: site.donateUrl, image: "festival/photo-don" }] : []),
     ...(site.booking ? [{ label: site.booking.label, href: site.booking.url, image: "festival/booking-2027" }] : []),
   ];
