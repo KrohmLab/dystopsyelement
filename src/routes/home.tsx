@@ -10,7 +10,7 @@ import { SectionHeader } from "../components/layout/SectionHeader";
 import { Reveal } from "../components/motion/Reveal";
 import { Button } from "../components/ui/Button";
 import { RailDots } from "../components/ui/RailDots";
-import { events, getEvent, nexen2026, products, services, site } from "../content/load.server";
+import { albums, events, getEvent, nexen2026, products, services, site } from "../content/load.server";
 import { toSummary } from "../content/summaries";
 import { formatDateRange, getFeatured, getPast, getUpcoming } from "../lib/events";
 import { pageMeta } from "../lib/seo";
@@ -27,6 +27,7 @@ export function loader() {
   const portals = [
     { label: "Nexen", href: "/nexen", image: "festival/flyer-2026" },
     { label: "Agenda", href: "/agenda", image: "events/nexens-home-2026-banner" },
+    ...(albums.length > 0 ? [{ label: "Galerie", href: "/galerie", image: "festival/portail-galerie" }] : []),
     ...(services.length > 0 ? [{ label: "Prestations", href: "/prestations", image: "festival/photo-jour" }] : []),
     { label: "Shop", href: "/shop", image: "shop/merch-2026" },
     { label: "Contact", href: "/contact", image: "festival/ecailles" },

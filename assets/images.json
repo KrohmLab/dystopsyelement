@@ -279,5 +279,15 @@
       480,
       698
     ]
+  },
+  "festival/portail-galerie": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
   }
 }

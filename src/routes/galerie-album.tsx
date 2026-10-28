@@ -1,6 +1,7 @@
 import { data, Link, type ShouldRevalidateFunction } from "react-router";
 import { FilterLinks } from "../components/gallery/FilterLinks";
 import { PhotoGrid } from "../components/gallery/PhotoGrid";
+import { CreditName, ProfileLink } from "../components/gallery/ProfileLink";
 import { Eyebrow } from "../components/layout/SectionHeader";
 import { albums } from "../content/load.server";
 import { albumPath, photoSrc } from "../lib/gallery";
@@ -13,7 +14,7 @@ export function loader({ params }: Route.LoaderArgs) {
   if (!album) throw data("Album introuvable", { status: 404 });
   const years = [...new Set(albums.map((a) => a.year))];
   return {
-    album: { year: album.year, slug: album.slug, photographer: album.photographer, photos: album.photos },
+    album: { year: album.year, slug: album.slug, photographer: album.photographer, profile: album.profile, photos: album.photos },
     // Filtre année : chaque année mène à sa page ; filtre photographe : les albums de la même année.
     years: years.map((y) => ({ label: String(y), href: `/galerie/${y}`, current: y === year })),
     photographers: albums
@@ -54,9 +55,12 @@ export default function GalerieAlbum({ loaderData }: Route.ComponentProps) {
           / <span aria-current="page">{album.photographer}</span>
         </nav>
         <Eyebrow tone="lilac">Nexen {album.year}</Eyebrow>
-        <h1 id="album-titre" className="text-h1 font-black">
-          {album.photographer}
-        </h1>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <h1 id="album-titre" className="text-h1 font-black">
+            {album.photographer}
+          </h1>
+          <ProfileLink name={album.photographer} url={album.profile} />
+        </div>
         <p className="mt-2 text-lead text-ink-soft">{album.photos.length} photos</p>
 
         <div className="my-10 flex flex-col gap-6">
@@ -66,7 +70,7 @@ export default function GalerieAlbum({ loaderData }: Route.ComponentProps) {
 
         <PhotoGrid key={albumPath(album)} album={album} />
         <p className="mt-10 text-small text-ink-muted">
-          Photos : {album.photographer}.
+          Photos : <CreditName name={album.photographer} url={album.profile} />.
         </p>
       </div>
     </section>

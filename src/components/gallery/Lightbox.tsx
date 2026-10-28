@@ -4,11 +4,12 @@ import type { Album } from "../../content/schemas";
 import { photoSrc } from "../../lib/gallery";
 import { useModal } from "../../lib/useModal";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "../icons";
+import { CreditName } from "./ProfileLink";
 
 type Photo = Album["photos"][number];
 
 type Props = {
-  album: Pick<Album, "year" | "slug" | "photographer">;
+  album: Pick<Album, "year" | "slug" | "photographer" | "profile">;
   photos: Photo[];
   index: number;
   onIndex: (index: number) => void;
@@ -67,7 +68,7 @@ export function Lightbox({ album, photos, index, onIndex, onClose }: Props) {
     <div ref={ref} role="dialog" aria-modal="true" aria-label={`Photo ${index + 1} sur ${photos.length}, ${album.photographer}`} className="lightbox fixed inset-0 z-50 flex flex-col bg-void/95 backdrop-blur-sm">
       <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-gutter">
         <p className="font-display text-label-sm font-bold text-ink-soft uppercase" aria-live="polite">
-          <span className="text-ink tabular-nums">{index + 1}</span> / {photos.length} · {album.photographer} · Nexen {album.year}
+          <span className="text-ink tabular-nums">{index + 1}</span> / {photos.length} · <CreditName name={album.photographer} url={album.profile} /> · Nexen {album.year}
         </p>
         <button ref={closeRef} type="button" onClick={onClose} aria-label="Fermer la visionneuse" className={NAV}>
           <CloseIcon size={24} />

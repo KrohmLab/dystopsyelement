@@ -47,7 +47,7 @@ export function loader() {
   // Aperçu de la galerie : 12 photos réparties sur chaque album de l'édition.
   const gallery = albums
     .filter((a) => a.year === year)
-    .map((a) => ({ year: a.year, slug: a.slug, photographer: a.photographer, count: a.photos.length, photos: spread(a.photos, 12).map((p) => p.id) }));
+    .map((a) => ({ year: a.year, slug: a.slug, photographer: a.photographer, profile: a.profile, count: a.photos.length, photos: spread(a.photos, 12).map((p) => p.id) }));
   return { festival: nexen2026, dates: formatDateRange(event), place: event.venue, cover: event.cover, upcoming, year, gallery };
 }
 

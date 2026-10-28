@@ -1,11 +1,12 @@
 import { useState } from "react";
 import type { Album } from "../../content/schemas";
 import { albumPath, photoSrc } from "../../lib/gallery";
+import { ProfileLink } from "../gallery/ProfileLink";
 import { Reveal } from "../motion/Reveal";
 import { Button } from "../ui/Button";
 import { Segmented } from "../ui/Segmented";
 
-type Preview = Pick<Album, "year" | "slug" | "photographer"> & { count: number; photos: string[] };
+type Preview = Pick<Album, "year" | "slug" | "photographer" | "profile"> & { count: number; photos: string[] };
 
 /**
  * Aperçu de la galerie sur la page Nexen : un album par photographe, au choix, quelques photos réparties
@@ -45,8 +46,11 @@ export function PhotoGallery({ albums }: { albums: Preview[] }) {
         ))}
       </ul>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-small text-ink-muted">
-          Photos : <span className="font-semibold text-ink">{album.photographer}</span>
+        <p className="flex flex-wrap items-center gap-3 text-small text-ink-muted">
+          <span>
+            Photos : <span className="font-semibold text-ink">{album.photographer}</span>
+          </span>
+          <ProfileLink name={album.photographer} url={album.profile} />
         </p>
         <Button variant="secondary" href={albumPath(album)}>
           Voir les {album.count} photos

@@ -55,6 +55,8 @@ export const albumSchema = z.strictObject({
   photographer: z.string().min(1),
   /** Segment d'URL : /galerie/{année}/{slug}. */
   slug,
+  /** Profil public du photographe (crédit, lien à côté de son nom) ; null si non fourni. */
+  profile: nullable(url),
   /** Album d'origine (page Facebook de l'asso), pour mémoire : le site n'y renvoie pas. */
   source: url,
   photos: z.array(z.strictObject({ id: z.string().regex(/^\d+$/), w: z.number().int().positive(), h: z.number().int().positive() })).min(1),

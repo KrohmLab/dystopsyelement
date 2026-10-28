@@ -6,7 +6,7 @@ import { photoSrc } from "../../lib/gallery";
 // La visionneuse n'est chargée qu'au premier clic sur une photo.
 const Lightbox = lazy(() => import("./Lightbox").then((m) => ({ default: m.Lightbox })));
 
-type Props = { album: Pick<Album, "year" | "slug" | "photographer" | "photos"> };
+type Props = { album: Pick<Album, "year" | "slug" | "photographer" | "profile" | "photos"> };
 
 /** Vignettes rendues d'abord (pré-rendu), puis par paquets au défilement : HTML léger, DOM qui grandit à la demande. */
 const BATCH = 40;

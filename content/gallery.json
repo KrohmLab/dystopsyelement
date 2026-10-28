@@ -3,6 +3,7 @@
     "year": 2026,
     "photographer": "Lila",
     "slug": "lila",
+    "profile": "https://www.facebook.com/lila.desgarnier",
     "source": "https://www.facebook.com/media/set/?set=a.1045514411502726",
     "photos": [
       {
@@ -599,8 +600,9 @@
   },
   {
     "year": 2026,
-    "photographer": "Sovisual",
+    "photographer": "So Visual",
     "slug": "sovisual",
+    "profile": "https://www.facebook.com/profile.php?id=100008260569720",
     "source": "https://www.facebook.com/media/set/?set=a.1044801771573990",
     "photos": [
       {
@@ -847,8 +849,9 @@
   },
   {
     "year": 2026,
-    "photographer": "Noémie",
-    "slug": "noemie",
+    "photographer": "No. VP - MiiNeo",
+    "slug": "nvp-miineo",
+    "profile": "https://www.facebook.com/nvp.miineo",
     "source": "https://www.facebook.com/media/set/?set=a.1027872956600205",
     "photos": [
       {
@@ -1592,6 +1595,7 @@
     "year": 2026,
     "photographer": "Pamp'",
     "slug": "pamp",
+    "profile": null,
     "source": "https://www.facebook.com/media/set/?set=a.1021086137278887",
     "photos": [
       {
@@ -2410,6 +2414,7 @@
     "year": 2025,
     "photographer": "Andrés",
     "slug": "andres",
+    "profile": "https://www.facebook.com/beranger.godeau",
     "source": "https://www.facebook.com/media/set/?set=a.772636098790560",
     "photos": [
       {
@@ -2513,6 +2518,7 @@
     "year": 2025,
     "photographer": "Pamp'",
     "slug": "pamp",
+    "profile": null,
     "source": "https://www.facebook.com/media/set/?set=a.771817842205719",
     "photos": [
       {
@@ -3409,8 +3415,9 @@
   },
   {
     "year": 2025,
-    "photographer": "Noémie",
-    "slug": "noemie",
+    "photographer": "No. VP - MiiNeo",
+    "slug": "nvp-miineo",
+    "profile": "https://www.facebook.com/nvp.miineo",
     "source": "https://www.facebook.com/media/set/?set=a.769383465782490",
     "photos": [
       {
@@ -4732,8 +4739,9 @@
   },
   {
     "year": 2025,
-    "photographer": "Sovisual",
+    "photographer": "So Visual",
     "slug": "sovisual",
+    "profile": "https://www.facebook.com/profile.php?id=100008260569720",
     "source": "https://www.facebook.com/media/set/?set=a.766118699442300",
     "photos": [
       {
@@ -5057,6 +5065,7 @@
     "year": 2025,
     "photographer": "Lila",
     "slug": "lila",
+    "profile": "https://www.facebook.com/lila.desgarnier",
     "source": "https://www.facebook.com/media/set/?set=a.744852038235633",
     "photos": [
       {
@@ -5628,8 +5637,9 @@
   },
   {
     "year": 2024,
-    "photographer": "Noémie",
-    "slug": "noemie",
+    "photographer": "No. VP - MiiNeo",
+    "slug": "nvp-miineo",
+    "profile": "https://www.facebook.com/nvp.miineo",
     "source": "https://www.facebook.com/media/set/?set=a.475754588478714",
     "photos": [
       {
@@ -6358,6 +6368,7 @@
     "year": 2024,
     "photographer": "Lila",
     "slug": "lila",
+    "profile": "https://www.facebook.com/lila.desgarnier",
     "source": "https://www.facebook.com/media/set/?set=a.475746735146166",
     "photos": [
       {
