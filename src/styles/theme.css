@@ -2551,6 +2551,13 @@ body {
   }
 }
 
+/* Le PNG du logo a ≈ 25 % de vide transparent au-dessus et 30 % en dessous : recadré sur le dessin (lignes 80 à 285
+   sur 384), pour que les dates restent près du logo dans le sceau. */
+.nexen-feature__logo img {
+  aspect-ratio: 480 / 205;
+  object-fit: cover;
+  object-position: 50% 47.5%;
+}
 .nexen-feature__tilt {
   transform: perspective(900px) rotateY(calc(var(--tx) * 14deg)) rotateX(calc(var(--ty) * -10deg));
   transition: transform 0.6s var(--ease-out-expo);
