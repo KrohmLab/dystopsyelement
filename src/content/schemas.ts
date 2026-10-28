@@ -189,6 +189,15 @@ export const festivalSchema = z.strictObject({
     gallery: z.array(z.string()),
   }),
   crew: z.array(z.strictObject({ role: z.string(), names: z.array(z.string()) })),
+  /** Albums photo de l'édition, un par photographe : sélection affichée sur le site, album complet sur Facebook. */
+  gallery: z.array(
+    z.strictObject({
+      photographer: z.string(),
+      albumUrl: url,
+      count: z.number().int().positive(),
+      photos: z.array(z.strictObject({ image: imageKey, alt: z.string().min(1) })).min(1),
+    }),
+  ),
   links: z.strictObject({ ticket: url, merch: url, carpool: url, facebook: url }),
   source: z.string(),
 });

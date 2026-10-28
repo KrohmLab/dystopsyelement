@@ -1224,11 +1224,233 @@
       ]
     }
   ],
+  "gallery": [
+    {
+      "photographer": "Lila",
+      "albumUrl": "https://www.facebook.com/media/set/?set=a.1045514411502726",
+      "count": 118,
+      "photos": [
+        {
+          "image": "festival/galerie-2026-lila-01",
+          "alt": "Séance de yoga sous la structure triangulaire en bois"
+        },
+        {
+          "image": "festival/galerie-2026-lila-02",
+          "alt": "Festivaliers au camping, entre les tentes"
+        },
+        {
+          "image": "festival/galerie-2026-lila-03",
+          "alt": "Artiste aux platines sous une lumière rouge"
+        },
+        {
+          "image": "festival/galerie-2026-lila-04",
+          "alt": "Stand de bijoux et de sacs au market"
+        },
+        {
+          "image": "festival/galerie-2026-lila-05",
+          "alt": "Festivaliers dans la lumière du matin, en forêt"
+        },
+        {
+          "image": "festival/galerie-2026-lila-06",
+          "alt": "Festivalières souriantes au village"
+        },
+        {
+          "image": "festival/galerie-2026-lila-07",
+          "alt": "Yoga au pied du triangle en bois"
+        },
+        {
+          "image": "festival/galerie-2026-lila-08",
+          "alt": "Festivaliers devant un stand du village"
+        },
+        {
+          "image": "festival/galerie-2026-lila-09",
+          "alt": "Duo de festivaliers sous les lumières UV"
+        },
+        {
+          "image": "festival/galerie-2026-lila-10",
+          "alt": "Séance de tatouage au village"
+        },
+        {
+          "image": "festival/galerie-2026-lila-11",
+          "alt": "Fireshow : artiste qui fait tourner le feu"
+        },
+        {
+          "image": "festival/galerie-2026-lila-12",
+          "alt": "Jongleur de feu dans la nuit"
+        }
+      ]
+    },
+    {
+      "photographer": "Noémie",
+      "albumUrl": "https://www.facebook.com/media/set/?set=a.1027872956600205",
+      "count": 147,
+      "photos": [
+        {
+          "image": "festival/galerie-2026-noemie-01",
+          "alt": "Festivaliers allongés sous la toile de l'espace chill"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-02",
+          "alt": "Performeuse lumineuse dans la nuit"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-03",
+          "alt": "Foule devant la scène illuminée, de nuit"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-04",
+          "alt": "Fireshow au sol dans l'herbe"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-05",
+          "alt": "Artiste aux platines sous la scène en bois"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-06",
+          "alt": "Deux artistes aux platines"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-07",
+          "alt": "Festivalier en forêt, en pleine journée"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-08",
+          "alt": "Artiste aux platines devant le public"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-09",
+          "alt": "Artiste aux platines sous une lumière verte"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-10",
+          "alt": "Décor hexagonal lumineux de la scène"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-11",
+          "alt": "Mapping lumineux sur la scène, de nuit"
+        },
+        {
+          "image": "festival/galerie-2026-noemie-12",
+          "alt": "Galerie d'art installée en forêt"
+        }
+      ]
+    },
+    {
+      "photographer": "Pamp'",
+      "albumUrl": "https://www.facebook.com/media/set/?set=a.1021086137278887",
+      "count": 162,
+      "photos": [
+        {
+          "image": "festival/galerie-2026-pamp-01",
+          "alt": "Festivaliers en forêt"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-02",
+          "alt": "Stand de vêtements au market artisanal"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-03",
+          "alt": "Œuvres exposées à la galerie d'art"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-04",
+          "alt": "Scénographie en bois découpé autour de l'artiste"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-05",
+          "alt": "Scène illuminée de nuit devant la foule"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-06",
+          "alt": "Festivaliers à la tombée de la nuit"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-07",
+          "alt": "Artiste de feu dans l'obscurité"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-08",
+          "alt": "Festivaliers sur le dancefloor en journée"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-09",
+          "alt": "Décor néon de la scène, de nuit"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-10",
+          "alt": "Silhouette sous une lumière bleue"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-11",
+          "alt": "Artiste aux platines sous une lumière verte"
+        },
+        {
+          "image": "festival/galerie-2026-pamp-12",
+          "alt": "Artiste aux platines sous une lumière rouge"
+        }
+      ]
+    },
+    {
+      "photographer": "Sovisual",
+      "albumUrl": "https://www.facebook.com/media/set/?set=a.1044801771573990",
+      "count": 48,
+      "photos": [
+        {
+          "image": "festival/galerie-2026-sovisual-01",
+          "alt": "Festivaliers au village"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-02",
+          "alt": "Stand d'un producteur local"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-03",
+          "alt": "Boucles d'oreilles au market artisanal"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-04",
+          "alt": "Régie visuelle face à la scène"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-05",
+          "alt": "Décor hexagonal orange de la scène"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-06",
+          "alt": "Main sous la lumière UV"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-07",
+          "alt": "Festivaliers souriants devant le décor"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-08",
+          "alt": "Festivaliers sur le dancefloor en journée"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-09",
+          "alt": "Festivalier sur le site"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-10",
+          "alt": "Duo aux platines sous une lumière rouge"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-11",
+          "alt": "Triangle lumineux habillé de végétation"
+        },
+        {
+          "image": "festival/galerie-2026-sovisual-12",
+          "alt": "Festivaliers qui rient en forêt"
+        }
+      ]
+    }
+  ],
   "links": {
     "ticket": "https://www.helloasso.com/associations/dystopsy-elements/evenements/nexen-festival-2026",
     "merch": "https://www.vinted.fr/member/3161686337-dystopsyelements",
     "carpool": "https://www.facebook.com/groups/962779532220719/",
     "facebook": "https://www.facebook.com/events/1363260745173238"
   },
-  "source": "Événement Facebook officiel, description et publications « Timetable » et « Map festival » (relevé du 27/10/2026)"
+  "source": "Événement Facebook officiel, description et publications « Timetable » et « Map festival » (relevé du 27/10/2026) ; albums photo « NEXEN 2026 par … » de la page Facebook (relevé du 28/10/2026)"
 }

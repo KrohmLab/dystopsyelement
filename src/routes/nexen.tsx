@@ -24,6 +24,7 @@ import { NeonFlicker } from "../components/motion/NeonFlicker";
 import { Parallax } from "../components/motion/Parallax";
 import { Reveal } from "../components/motion/Reveal";
 import { LineupExplorer, STAGE_TONE, ViewToggle } from "../components/nexen/LineupExplorer";
+import { PhotoGallery } from "../components/nexen/PhotoGallery";
 import { SiteMap3D } from "../components/nexen/SiteMap3D";
 import { Badge } from "../components/ui/Badge";
 import { Brackets } from "../components/ui/Brackets";
@@ -41,7 +42,7 @@ export function loader() {
   const event = getEvent(nexen2026.event);
   if (!event) throw new Response("Édition introuvable", { status: 404 });
   const upcoming = toSummary(event, new Date()).upcoming;
-  return { festival: nexen2026, dates: formatDateRange(event), place: event.venue, cover: event.cover, upcoming };
+  return { festival: nexen2026, dates: formatDateRange(event), place: event.venue, cover: event.cover, upcoming, year: event.startDate.slice(0, 4) };
 }
 
 export const meta: Route.MetaFunction = ({ data }) =>
@@ -63,21 +64,12 @@ const EXPERIENCE_ICONS: Record<string, ComponentType<{ size?: 32; className?: st
 };
 
 // Galerie : photo de jour réelle + emplacements provisoires numérotés.
-const GALLERY: { image: string | null; alt: string }[] = [
-  { image: "festival/photo-jour", alt: "Nexen Festival, photo de jour" },
-  { image: "festival/fond", alt: "Visuel du Nexen Festival 2026" },
-  { image: null, alt: "" },
-  { image: null, alt: "" },
-  { image: null, alt: "" },
-  { image: null, alt: "" },
-];
-
 /**
  * Page du festival (SITE_PLAN §4) : présentation interactive complète de l'édition 2026, aux couleurs de
  * l'événement (lilas Nexus, pêche Engine, violet de la carte). Données : content/festival/nexen-2026.json.
  */
 export default function Nexen({ loaderData }: Route.ComponentProps) {
-  const { festival, dates, place, cover, upcoming } = loaderData;
+  const { festival, dates, place, cover, upcoming, year } = loaderData;
   const { links } = festival;
   const setsByStage = (slug: string) => festival.sets.filter((s) => s.stage === slug).length;
 
@@ -121,9 +113,11 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
                 Explorer le line-up
               </Button>
             )}
-            <Button variant="secondary" size="lg" href={links.facebook}>
-              Revivre l'événement
-            </Button>
+            {festival.gallery.length > 0 && (
+              <Button variant="secondary" size="lg" href="#galerie">
+                Galerie photos {year}
+              </Button>
+            )}
           </div>
         </div>
       </section>
@@ -315,22 +309,8 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
 
       {/* Galerie */}
       <Section id="galerie" labelledBy="galerie-titre" floor="lilac">
-        <SectionHeader id="galerie-titre" eyebrow="Galerie" tone="lilac" title="En images" />
-        <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
-          {GALLERY.map(({ image, alt }, i) => (
-            <Reveal as="li" key={i} delay={(i % 3) * 80} className={i === 0 ? "col-span-2 row-span-2" : undefined}>
-              <div className="group aspect-square overflow-hidden chamfer-md">
-                <ResponsiveImage
-                  image={image}
-                  alt={alt}
-                  sizes="(min-width: 48rem) 33vw, 50vw"
-                  fallbackLabel={`Photo ${i + 1}`}
-                  className="transition duration-slow ease-out-expo group-hover:scale-105"
-                />
-              </div>
-            </Reveal>
-          ))}
-        </ul>
+        <SectionHeader id="galerie-titre" eyebrow="Galerie" tone="lilac" title={`Galerie photos ${year}`} />
+        {festival.gallery.length > 0 && <PhotoGallery albums={festival.gallery} />}
         <Reveal className="mx-auto mt-14 max-w-md overflow-hidden chamfer-lg">
           <ResponsiveImage image="festival/lineup-2026" alt="Affiche officielle du line-up du Nexen Festival 2026" sizes="28rem" />
         </Reveal>
