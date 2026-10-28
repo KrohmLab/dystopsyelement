@@ -37,12 +37,14 @@ export function loader({ params }: Route.LoaderArgs) {
     /** Festival détaillé (line-up, timetable, carte) sur sa propre page. */
     festivalPage: event.slug === nexen2026.event ? "/nexen" : null,
     og,
-    jsonLd: { ...musicEvent(event, site.url), image: [`${site.url}${og ?? "/og/site.jpg"}`] },
+    jsonLd: { ...musicEvent(event, site.url, summary.upcoming), image: [`${site.url}${og ?? "/og/site.jpg"}`] },
   };
 }
 
 /** Données structurées schema.org MusicEvent (résultats enrichis des moteurs de recherche). Aucun prix : non publié. */
-function musicEvent(event: NonNullable<ReturnType<typeof getEvent>>, origin: string) {
+function musicEvent(event: NonNullable<ReturnType<typeof getEvent>>, origin: string, upcoming: boolean) {
+  // Festival détaillé : son line-up est dans content/festival (timetable), pas dans la fiche.
+  const performers = event.slug === nexen2026.event ? [...new Set(nexen2026.sets.map((set) => set.artist))] : event.lineup.map((entry) => entry.name);
   const text = event.summaryHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
   return {
     "@type": "MusicEvent",
@@ -59,8 +61,9 @@ function musicEvent(event: NonNullable<ReturnType<typeof getEvent>>, origin: str
     ...(text ? { description: text.length > 300 ? `${text.slice(0, 297)}…` : text } : {}),
     url: `${origin}/agenda/${event.slug}`,
     organizer: { "@type": "Organization", name: site.name, url: origin },
-    ...(event.lineup.length > 0 ? { performer: event.lineup.map((entry) => ({ "@type": "PerformingGroup", name: entry.name })) } : {}),
-    ...(event.ticketUrl
+    ...(performers.length > 0 ? { performer: performers.map((name) => ({ "@type": "PerformingGroup", name })) } : {}),
+    // Billetterie : seulement tant que l'événement est à venir.
+    ...(upcoming && event.ticketUrl
       ? {
           offers: {
             "@type": "Offer",
