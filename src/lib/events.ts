@@ -23,16 +23,12 @@ export function getPast<T extends Dated>(events: T[], now: Date): T[] {
   return events.filter((e) => isPast(e, now)).sort((a, b) => b.startDate.localeCompare(a.startDate));
 }
 
-/**
- * Événement mis en avant : le prochain à venir ; sinon le dernier festival passé (repli « prochaine
- * édition à venir »), sinon le dernier événement passé.
- */
-export function getFeatured<T extends Dated & { kind: string }>(events: T[], now: Date): { event: T; upcoming: boolean } | null {
+/** Événement mis en avant : le prochain à venir ; sinon le dernier qui a eu lieu, quel qu'il soit. */
+export function getFeatured<T extends Dated>(events: T[], now: Date): { event: T; upcoming: boolean } | null {
   const next = getUpcoming(events, now)[0];
   if (next) return { event: next, upcoming: true };
-  const past = getPast(events, now);
-  const fallback = past.find((e) => e.kind === "festival") ?? past[0];
-  return fallback ? { event: fallback, upcoming: false } : null;
+  const last = getPast(events, now)[0];
+  return last ? { event: last, upcoming: false } : null;
 }
 
 const DAY = new Intl.DateTimeFormat("fr-FR", { day: "numeric", timeZone: "UTC" });

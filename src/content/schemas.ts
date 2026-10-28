@@ -42,6 +42,14 @@ export const siteSchema = z.strictObject({
   legacyRedirects: z.record(z.string().startsWith("/"), z.string().startsWith("/")),
 });
 
+export const lineupEntrySchema = z.strictObject({
+  name: z.string().min(1),
+  style: z.string().optional(),
+  label: z.string().optional(),
+  /** Scène (festivals) : « Nexus », « Engine »… */
+  stage: z.string().optional(),
+});
+
 export const eventFrontmatterSchema = z
   .strictObject({
     slug,
@@ -62,22 +70,12 @@ export const eventFrontmatterSchema = z
     ticketUrl: nullable(url),
     facebookUrl: nullable(url),
     status: nullable(z.enum(["complet", "dernieres-places", "annule"])),
-    /** Slugs des artistes de content/artists.json. */
-    lineup: z.array(slug),
+
+    /** Line-up : nom, style, label, scène (festivals). Vide si non communiqué. */
+    lineup: z.array(lineupEntrySchema).default([]),
     placeholder,
   })
   .refine((e) => e.endDate >= e.startDate, { message: "endDate doit suivre startDate" });
-
-export const artistSchema = z.strictObject({
-  slug,
-  name: z.string().min(1),
-  format: z.enum(["Live", "DJ Set"]),
-  genre: z.string(),
-  photo: nullable(imageKey),
-  bio: nullable(z.string().max(400)),
-  links: z.strictObject({ soundcloud: nullable(url), instagram: nullable(url) }),
-  placeholder,
-});
 
 export const memberSchema = z.strictObject({
   slug,
@@ -89,14 +87,25 @@ export const memberSchema = z.strictObject({
   placeholder,
 });
 
+/** Une annonce Vinted = une coupe et une taille d'un produit (la boutique vend chaque pièce séparément). */
+export const productVariantSchema = z.strictObject({
+  cut: z.enum(["H", "F"]),
+  size: z.enum(["XS", "S", "M", "L", "XL", "XXL"]),
+  vintedUrl: url,
+});
+
 export const productSchema = z.strictObject({
   slug,
   name: z.string().min(1),
-  category: z.enum(["T-shirts", "Pulls", "Autres"]),
+  category: z.enum(["T-shirts", "Sweats", "Accessoires"]),
   price: z.string(),
+  /** Visuel principal (dos), puis visuel au survol (face). */
   image: nullable(imageKey),
-  /** Annonce Vinted du produit. */
-  vintedUrl: url,
+  imageAlt: nullable(imageKey),
+  /** Courte description (≤ 220 caractères). */
+  description: nullable(z.string().max(220)),
+  /** Annonces disponibles ; vide = produit épuisé (lien vers la boutique). */
+  variants: z.array(productVariantSchema),
   placeholder,
 });
 
@@ -183,7 +192,6 @@ export const festivalSchema = z.strictObject({
 export type Site = z.infer<typeof siteSchema>;
 export type Festival = z.infer<typeof festivalSchema>;
 export type FestivalSet = Festival["sets"][number];
-export type Artist = z.infer<typeof artistSchema>;
 export type Member = z.infer<typeof memberSchema>;
 export type Product = z.infer<typeof productSchema>;
 export type Service = z.infer<typeof serviceSchema>;

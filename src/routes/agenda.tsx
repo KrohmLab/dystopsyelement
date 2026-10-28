@@ -29,7 +29,9 @@ export const meta: Route.MetaFunction = () => pageMeta({ title: "Agenda", descri
 export default function Agenda({ loaderData }: Route.ComponentProps) {
   const { upcoming, past, instagramUrl } = loaderData;
   const [params, setParams] = useSearchParams();
-  const tab = params.get("vue") === "passes" ? "Passés" : "À venir";
+  // Sans date annoncée, l'agenda s'ouvre sur les événements passés.
+  const vue = params.get("vue") ?? (upcoming.length === 0 ? "passes" : "a-venir");
+  const tab = vue === "passes" ? "Passés" : "À venir";
   const list = tab === "Passés" ? past : upcoming;
 
   return (
@@ -44,7 +46,7 @@ export default function Agenda({ loaderData }: Route.ComponentProps) {
           label="Afficher les événements"
           options={TABS}
           value={tab}
-          onChange={(value) => setParams(value === "Passés" ? { vue: "passes" } : {}, { replace: true, preventScrollReset: true })}
+          onChange={(value) => setParams({ vue: value === "Passés" ? "passes" : "a-venir" }, { replace: true, preventScrollReset: true })}
           className="mb-12"
         />
         {list.length > 0 ? (

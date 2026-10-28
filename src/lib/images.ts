@@ -1,7 +1,7 @@
 // Visuels réels de assets/ (AVIF + WebP aux largeurs de assets/images.json), pour <ResponsiveImage>.
 import manifest from "../../assets/images.json";
 
-const files = import.meta.glob<string>("../../assets/{events,festival}/*.{avif,webp}", { import: "default", eager: true, query: "?url" });
+const files = import.meta.glob<string>("../../assets/{events,festival,shop}/*.{avif,webp}", { import: "default", eager: true, query: "?url" });
 
 export type ImageSources = { avif: string; webp: string; src: string; width: number; height: number };
 

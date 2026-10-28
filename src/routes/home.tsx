@@ -54,7 +54,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const { featured, upcoming, nexen, portals, products, instagramUrl } = loaderData;
   return (
     <>
-      {featured && <HomeHero event={featured} fallbackImage="festival/fond" instagramUrl={instagramUrl} />}
+      {featured && <HomeHero event={featured} fallbackImage="festival/fond" />}
 
       <Section tone="abyss" labelledBy="portails-titre" floor="pink" decor={<FloatingPattern variant={3} tone="cyan" className="-right-16 top-8 size-96" delay={1} />}>
         <h2 id="portails-titre" className="sr-only">
@@ -109,7 +109,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             </Button>
           }
         />
-        <ul id="boutique-rail" className="rail rail--narrow grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        <ul id="boutique-rail" className="rail rail--narrow grid grid-cols-2 gap-4 md:max-w-3xl md:gap-6">
           {products.map((product, i) => (
             <Reveal as="li" key={product.slug} delay={i * 80}>
               <ProductCard product={product} />

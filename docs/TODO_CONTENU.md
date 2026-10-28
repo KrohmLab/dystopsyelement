@@ -5,8 +5,6 @@ Remplacer un contenu = modifier le fichier indiqué, sans toucher au code. `npm 
 
 ## Contenus provisoires à remplacer
 
-- **Événement simulé « Nexen's Home 2 »** (`content/events/nexens-home-2.md`, ajouté le 28/10/2026 pour présenter le hero hologramme) : date (12/12/2026), lieu, horaires et billetterie **fictifs**, visuel repris de Nexen's Home. À confirmer ou à supprimer par l'asso avant la mise en ligne publique.
-
 | Élément | Fichier | Aujourd'hui |
 |---|---|---|
 | Phrase de présentation pour Google et les partages (≤ 155 caractères) | `content/site.json` → `description` | Texte provisoire |
@@ -14,15 +12,16 @@ Remplacer un contenu = modifier le fichier indiqué, sans toucher au code. `npm 
 | Phrase du pied de page | `content/site.json` → `tagline` | Texte provisoire |
 | Ville (bloc « QG ») | `content/site.json` → `city` | « Ville 1 » |
 | Sujets du formulaire de contact | `content/site.json` → `contactSubjects` | « Sujet 1 », « Sujet 2 », « Prestation » |
-| Prochains événements | `content/events/*.md` | « Événement 1 » à « Événement 4 » |
-| Résumés des événements réels (Nexen Festival 2026, Nexen's Home) | `content/events/nexen-festival-2026.md`, `nexens-home.md` (corps du fichier) | Texte provisoire |
-| Line-up (noms, format, genre, photo, bio, liens) | `content/artists.json` + `lineup` de chaque événement | « Artiste 1 » à « Artiste 8 » |
 | Équipe (nom, rôle, pôle, photo, présentation) | `content/team.json` | « Membre 1 » à « Membre 8 » |
-| Produits de la boutique (nom, catégorie, prix, photo, lien de l'annonce Vinted) | `content/products.json` | « Produit 1 » à « Produit 8 », liés au profil Vinted de l'asso |
 | Prestations (titre, accroche, 3 points, photo) | `content/services.json` | « Prestation 1 » à « Prestation 3 » |
 | Infos pratiques du festival (questions / réponses ≤ 40 mots) | `content/faq.json` | « Question 1 » à « Question 4 » |
 | Phrases d'introduction (agenda, prestations, boutique, contact, univers Nexen) | `src/routes/*.tsx` (props `lead`) | Texte provisoire |
 | Photos de la galerie Nexen | `assets/festival/` + `src/routes/nexen.tsx` | photo de jour + emplacements |
+
+## Renseigné le 28/10/2026
+
+- **Événements** (`content/events/*.md`) : les 17 événements de la page Facebook de Dystopsy Element (NEXEN 2023 à 2026, teasers, Nexus Alchemy, Engine Reload…), avec dates, lieux, line-up tels que publiés, visuels officiels et un résumé reformulé de leur description. À relire par l'asso : résumés, styles et labels des artistes. Pas de prochaine date annoncée à ce jour : l'accueil met en avant le dernier événement (Engine Reload — Chapitre II).
+- **Boutique** (`content/products.json`) : T-shirt et Sweat officiels Nexen Festival, avec chaque annonce Vinted (coupe H/F × taille). **À tenir à jour à la main** : Vinted n'a pas d'API publique et interdit l'aspiration automatique. Quand une pièce est vendue, retirer sa ligne dans `variants` ; quand une annonce est ajoutée, ajouter une ligne `{ "cut", "size", "vintedUrl" }`. Un produit sans annonce s'affiche « Épuisé ».
 
 ## Déjà renseigné (événement Facebook officiel, relevé du 27/10/2026)
 

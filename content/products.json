@@ -1,74 +1,89 @@
 [
   {
-    "slug": "produit-1",
-    "name": "Produit 1",
+    "slug": "tshirt-nexen-festival",
+    "name": "T-shirt officiel Nexen Festival",
     "category": "T-shirts",
-    "price": "00,00 €",
-    "image": null,
-    "vintedUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
-    "placeholder": true
+    "price": "30 €",
+    "image": "shop/tshirt-nexen-dos",
+    "imageAlt": "shop/tshirt-nexen-face",
+    "description": "Design par Baakka, sérigraphié par Ultra Violet (Marseille). Coupe oversize unisexe, merch du Nexen Festival 2026.",
+    "variants": [
+      {
+        "cut": "H",
+        "size": "S",
+        "vintedUrl": "https://www.vinted.fr/items/9362156685"
+      },
+      {
+        "cut": "H",
+        "size": "M",
+        "vintedUrl": "https://www.vinted.fr/items/9364224277"
+      },
+      {
+        "cut": "H",
+        "size": "XL",
+        "vintedUrl": "https://www.vinted.fr/items/9173376014"
+      },
+      {
+        "cut": "F",
+        "size": "XS",
+        "vintedUrl": "https://www.vinted.fr/items/9173168370"
+      },
+      {
+        "cut": "F",
+        "size": "S",
+        "vintedUrl": "https://www.vinted.fr/items/9173206379"
+      },
+      {
+        "cut": "F",
+        "size": "M",
+        "vintedUrl": "https://www.vinted.fr/items/9362359687"
+      },
+      {
+        "cut": "F",
+        "size": "XL",
+        "vintedUrl": "https://www.vinted.fr/items/9362404937"
+      }
+    ]
   },
   {
-    "slug": "produit-2",
-    "name": "Produit 2",
-    "category": "Pulls",
-    "price": "00,00 €",
-    "image": null,
-    "vintedUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
-    "placeholder": true
-  },
-  {
-    "slug": "produit-3",
-    "name": "Produit 3",
-    "category": "Autres",
-    "price": "00,00 €",
-    "image": null,
-    "vintedUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
-    "placeholder": true
-  },
-  {
-    "slug": "produit-4",
-    "name": "Produit 4",
-    "category": "T-shirts",
-    "price": "00,00 €",
-    "image": null,
-    "vintedUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
-    "placeholder": true
-  },
-  {
-    "slug": "produit-5",
-    "name": "Produit 5",
-    "category": "Pulls",
-    "price": "00,00 €",
-    "image": null,
-    "vintedUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
-    "placeholder": true
-  },
-  {
-    "slug": "produit-6",
-    "name": "Produit 6",
-    "category": "Autres",
-    "price": "00,00 €",
-    "image": null,
-    "vintedUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
-    "placeholder": true
-  },
-  {
-    "slug": "produit-7",
-    "name": "Produit 7",
-    "category": "T-shirts",
-    "price": "00,00 €",
-    "image": null,
-    "vintedUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
-    "placeholder": true
-  },
-  {
-    "slug": "produit-8",
-    "name": "Produit 8",
-    "category": "Pulls",
-    "price": "00,00 €",
-    "image": null,
-    "vintedUrl": "https://www.vinted.fr/member/3161686337-dystopsyelements",
-    "placeholder": true
+    "slug": "sweat-nexen-festival",
+    "name": "Sweat officiel Nexen Festival",
+    "category": "Sweats",
+    "price": "60 €",
+    "image": "shop/sweat-nexen-dos",
+    "imageAlt": "shop/sweat-nexen-face",
+    "description": "Design par Baakka, sérigraphié par Ultra Violet (Marseille). Coupe oversize unisexe, merch du Nexen Festival 2026.",
+    "variants": [
+      {
+        "cut": "H",
+        "size": "XS",
+        "vintedUrl": "https://www.vinted.fr/items/9172734845"
+      },
+      {
+        "cut": "H",
+        "size": "S",
+        "vintedUrl": "https://www.vinted.fr/items/9172768431"
+      },
+      {
+        "cut": "H",
+        "size": "M",
+        "vintedUrl": "https://www.vinted.fr/items/9173038240"
+      },
+      {
+        "cut": "F",
+        "size": "XS",
+        "vintedUrl": "https://www.vinted.fr/items/9172632258"
+      },
+      {
+        "cut": "F",
+        "size": "S",
+        "vintedUrl": "https://www.vinted.fr/items/9172703635"
+      },
+      {
+        "cut": "F",
+        "size": "M",
+        "vintedUrl": "https://www.vinted.fr/items/9172792475"
+      }
+    ]
   }
 ]

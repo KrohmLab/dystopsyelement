@@ -14,7 +14,6 @@ type Props = {
   event: EventSummary;
   /** Visuel de repli quand l'événement n'en a pas encore (fond Nexen). */
   fallbackImage: string;
-  instagramUrl: string | null;
 };
 
 /** Délai d'entrée après l'intro (s), en plus de --intro-offset. */
@@ -26,7 +25,7 @@ const at = (delay: number) => ({ "--enter-delay": `${delay}s` }) as CSSPropertie
  * son étage collant se défait au défilement (glitch du texte, radar qui s'éteint en point, sol qui plonge, voile noir),
  * en CSS pur piloté par la view-timeline --hero (styles « Hero hologramme » de theme.css).
  */
-export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
+export function HomeHero({ event, fallbackImage }: Props) {
   const variant = event.kind === "festival" ? "festival" : "soiree";
   const place = [event.venue, event.city].filter(Boolean).join(", ");
   const title = splitHeroTitle(event.title);
@@ -48,7 +47,7 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
           {event.upcoming ? (
             <Badge variant="live">{event.status === "dernieres-places" ? "Dernières places" : "Prochain événement"}</Badge>
           ) : (
-            <Badge variant="neutral">Prochaine édition à venir</Badge>
+            <Badge variant="neutral">Dernier événement</Badge>
           )}
         </div>
         <Title id={ghost ? undefined : "hero-titre"} className="holo-title">
@@ -67,12 +66,10 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
           )}
         </Title>
         <p className="holo-meta">
-          {event.upcoming && (
-            <span>
-              <CalendarIcon className="text-cyan" />
-              {formatDateRange(event)}
-            </span>
-          )}
+          <span>
+            <CalendarIcon className="text-cyan" />
+            {formatDateRange(event)}
+          </span>
           <span>
             <MapPinIcon className="text-cyan" />
             {place}
@@ -89,15 +86,9 @@ export function HomeHero({ event, fallbackImage, instagramUrl }: Props) {
                 Voir l'agenda
               </Button>
             )}
-            {event.upcoming || !instagramUrl ? (
-              <Button variant="secondary" size="lg" href={`/agenda/${event.slug}`}>
-                Voir l'événement
-              </Button>
-            ) : (
-              <Button variant="secondary" size="lg" href={instagramUrl}>
-                Suivre sur Instagram
-              </Button>
-            )}
+            <Button variant="secondary" size="lg" href={`/agenda/${event.slug}`}>
+              Voir l'événement
+            </Button>
           </div>
         )}
       </>

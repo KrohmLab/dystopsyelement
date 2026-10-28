@@ -3,7 +3,6 @@
 import { marked } from "marked";
 import { parse as parseYaml } from "yaml";
 import type { z } from "zod";
-import artistsJson from "../../content/artists.json";
 import faqJson from "../../content/faq.json";
 import nexen2026Json from "../../content/festival/nexen-2026.json";
 import productsJson from "../../content/products.json";
@@ -12,7 +11,6 @@ import siteJson from "../../content/site.json";
 import teamJson from "../../content/team.json";
 import imagesJson from "../../assets/images.json";
 import {
-  artistSchema,
   eventFrontmatterSchema,
   faqSchema,
   festivalSchema,
@@ -33,7 +31,6 @@ function validate<T extends z.ZodType>(schema: T, data: unknown, source: string)
 }
 
 export const site = validate(siteSchema, siteJson, "content/site.json");
-export const artists = validate(artistSchema.array(), artistsJson, "content/artists.json");
 export const team = validate(memberSchema.array(), teamJson, "content/team.json");
 export const products = validate(productSchema.array(), productsJson, "content/products.json");
 export const services = validate(serviceSchema.array(), servicesJson, "content/services.json");
@@ -66,16 +63,12 @@ export const events = loadEvents();
 // Contrôles croisés : chaque référence pointe vers un contenu existant.
 if (!events.some((e) => e.slug === nexen2026.event)) throw new Error(`content/festival/nexen-2026.json : événement inconnu (${nexen2026.event})`);
 const images = imagesJson as Record<string, unknown>;
-const artistSlugs = new Set(artists.map((a) => a.slug));
 for (const event of events) {
-  for (const slug of event.lineup) {
-    if (!artistSlugs.has(slug)) throw new Error(`content/events/${event.slug}.md : artiste inconnu dans le line-up (${slug})`);
-  }
   if (event.cover && !(event.cover in images)) throw new Error(`content/events/${event.slug}.md : visuel inconnu (${event.cover})`);
 }
-for (const item of [...artists, ...team, ...products, ...services]) {
-  const key = "photo" in item ? item.photo : item.image;
-  if (key && !(key in images)) throw new Error(`content : visuel inconnu (${key})`);
+for (const item of [...team, ...products, ...services]) {
+  const keys = "photo" in item ? [item.photo] : "imageAlt" in item ? [item.image, item.imageAlt] : [item.image];
+  for (const key of keys) if (key && !(key in images)) throw new Error(`content : visuel inconnu (${key})`);
 }
 
 export function getEvent(slug: string): DystopsyEvent | undefined {
@@ -86,7 +79,7 @@ export function getEvent(slug: string): DystopsyEvent | undefined {
 const provisional = [
   ...site.placeholders.map((field) => `site.${field}`),
   ...events.filter((e) => e.placeholder || e.summaryHtml.includes("provisoire")).map((e) => `événement ${e.slug}`),
-  ...[artists, team, products, services, faq].flat().filter((item) => item.placeholder).map((item) => ("slug" in item ? item.slug : item.question)),
+  ...[team, products, services, faq].flat().filter((item) => item.placeholder).map((item) => ("slug" in item ? item.slug : item.question)),
 ];
 if (provisional.length > 0 && !(globalThis as { __provisionalReported?: boolean }).__provisionalReported) {
   (globalThis as { __provisionalReported?: boolean }).__provisionalReported = true;

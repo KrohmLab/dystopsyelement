@@ -30,9 +30,10 @@ test("mis en avant : le prochain événement s'il existe", () => {
   assert.deepEqual(getFeatured([home, nexen, next], at("2026-10-27T10:00:00Z")), { event: next, upcoming: true });
 });
 
-test("mis en avant : sinon le dernier festival passé, même si une soirée est plus récente", () => {
+test("mis en avant : sinon le dernier événement qui a eu lieu, festival ou soirée", () => {
   const recentParty = { slug: "party", kind: "soiree", startDate: "2026-09-01", endDate: "2026-09-01" };
-  assert.deepEqual(getFeatured([home, nexen, recentParty], at("2026-10-27T10:00:00Z")), { event: nexen, upcoming: false });
+  assert.deepEqual(getFeatured([home, nexen, recentParty], at("2026-10-27T10:00:00Z")), { event: recentParty, upcoming: false });
+  assert.deepEqual(getFeatured([home, nexen], at("2026-10-27T10:00:00Z")), { event: nexen, upcoming: false });
 });
 
 test("mis en avant : rien sans événement", () => {

@@ -275,7 +275,7 @@ Toute la carte est cliquable (lien étendu via pseudo-élément), le bouton Bill
 
 ### 7.7 `ProductCard` (boutique vitrine)
 
-Visuel carré `chamfer-md` (niveaux de gris → couleur au survol), badge catégorie, nom `text-h3`, prix en `font-display` cyan avec lueur. Toute la carte est un lien externe vers l'annonce **Vinted** (nouvel onglet, icône ↗) : aucune fiche produit ni panier sur le site.
+**Une carte par produit**, quelle que soit la taille : visuel dos (face au survol), catégorie, nom, prix, tailles disponibles. Chaque pièce est vendue séparément sur Vinted (une annonce par coupe et par taille) : la carte ouvre une fenêtre (`Modal`) avec visuels dos / face, description, choix de la coupe (homme / femme) puis de la taille disponible, et un bouton rose « Acheter sur Vinted » vers l'annonce exacte. Sans annonce disponible : « Épuisé », lien vers la boutique. Page Shop : filtres Type et Taille.
 
 ### 7.8 `ServiceTile`
 

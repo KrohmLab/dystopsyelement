@@ -62,5 +62,186 @@
       960,
       1080
     ]
+  },
+  "events/engine-reload-2026": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/outrance-lab-nexen-teaser-2026": {
+    "width": 1920,
+    "height": 1080,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/banana-split-27": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/nexus-alchemy-2026": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/arketyp-211-nexen-teaser-2026": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/nexus-alchemy-2025": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/engines-home-2025": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/engine-reload-2025": {
+    "width": 1080,
+    "height": 1350,
+    "widths": [
+      480,
+      960,
+      1080
+    ]
+  },
+  "events/nexen-2025-banner": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/dynastys-remains-2025": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/engine-process-2025": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/multiversal-nexen-teaser-2025": {
+    "width": 1920,
+    "height": 1076,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/dont-mess-with-nexen-2025": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/nexen-2024-banner": {
+    "width": 1920,
+    "height": 1006,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "events/nexen-2023-banner": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
+  },
+  "shop/tshirt-nexen-dos": {
+    "width": 600,
+    "height": 800,
+    "widths": [
+      480,
+      600
+    ]
+  },
+  "shop/tshirt-nexen-face": {
+    "width": 600,
+    "height": 800,
+    "widths": [
+      480,
+      600
+    ]
+  },
+  "shop/sweat-nexen-dos": {
+    "width": 600,
+    "height": 800,
+    "widths": [
+      480,
+      600
+    ]
+  },
+  "shop/sweat-nexen-face": {
+    "width": 600,
+    "height": 800,
+    "widths": [
+      480,
+      600
+    ]
   }
 }

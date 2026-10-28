@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { ArtistGrid } from "../components/blocks/ArtistGrid";
+import { EventLineup } from "../components/blocks/EventLineup";
 import { EventCard } from "../components/blocks/EventCard";
 import { ReadMore } from "../components/blocks/ReadMore";
 import { ShareButton } from "../components/blocks/ShareButton";
@@ -12,7 +12,7 @@ import { Reveal } from "../components/motion/Reveal";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
 import { ResponsiveImage } from "../components/ui/ResponsiveImage";
-import { artists, events, getEvent, nexen2026 } from "../content/load.server";
+import { events, getEvent, nexen2026 } from "../content/load.server";
 import { toSummary } from "../content/summaries";
 import { formatDateRange, getUpcoming } from "../lib/events";
 import { pageMeta } from "../lib/seo";
@@ -31,7 +31,7 @@ export function loader({ params }: Route.LoaderArgs) {
     timeRange: event.timeRange,
     facebookUrl: event.facebookUrl,
     summaryHtml: event.summaryHtml,
-    lineup: event.lineup.flatMap((slug) => artists.filter((a) => a.slug === slug)),
+    lineup: event.lineup,
     others: others.map((e) => toSummary(e, now)),
     /** Festival détaillé (line-up, timetable, carte) sur sa propre page. */
     festivalPage: event.slug === nexen2026.event ? "/nexen" : null,
@@ -116,7 +116,7 @@ export default function Evenement({ loaderData }: Route.ComponentProps) {
       {lineup.length > 0 && (
         <Section tone="abyss" labelledBy="lineup-titre">
           <SectionHeader id="lineup-titre" eyebrow="Programmation" title="Line-up" />
-          <ArtistGrid artists={lineup} />
+          <EventLineup lineup={lineup} />
         </Section>
       )}
 
