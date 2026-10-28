@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { parse as parseYaml } from "yaml";
 import type { z } from "zod";
 import faqJson from "../../content/faq.json";
+import galleryJson from "../../content/gallery.json";
 import nexen2026Json from "../../content/festival/nexen-2026.json";
 import productsJson from "../../content/products.json";
 import servicesJson from "../../content/services.json";
@@ -11,6 +12,7 @@ import siteJson from "../../content/site.json";
 import teamJson from "../../content/team.json";
 import imagesJson from "../../assets/images.json";
 import {
+  albumSchema,
   eventFrontmatterSchema,
   faqSchema,
   festivalSchema,
@@ -36,6 +38,16 @@ export const products = validate(productSchema.array(), productsJson, "content/p
 export const services = validate(serviceSchema.array(), servicesJson, "content/services.json");
 export const faq = validate(faqSchema.array(), faqJson, "content/faq.json");
 export const nexen2026 = validate(festivalSchema, nexen2026Json, "content/festival/nexen-2026.json");
+/** Albums photo, du plus récent au plus ancien (ordre du fichier conservé dans une même année). */
+export const albums = validate(albumSchema.array(), galleryJson, "content/gallery.json").sort((a, b) => b.year - a.year);
+{
+  const seen = new Set<string>();
+  for (const album of albums) {
+    const key = `${album.year}/${album.slug}`;
+    if (seen.has(key)) throw new Error(`content/gallery.json : album en double (${key})`);
+    seen.add(key);
+  }
+}
 
 const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)([\s\S]*)$/;
 const eventFiles = import.meta.glob<string>("../../content/events/*.md", { query: "?raw", import: "default", eager: true });

@@ -355,6 +355,12 @@ Sur mobile (< `md`), les listes de cartes de l'accueil (portails, prochaines dat
 
 Au niveau de mouvement `full` (≥ 1024 px, souris), les lueurs du `SiteBackdrop` glissent avec le curseur (chacune à sa profondeur) et un halo doux le suit, cyan à gauche de l'écran, rose à droite. Comme les sections sont transparentes ou voilées, leurs fonds bougent avec. Mouvement lissé ; rien sur tactile ni en mouvement réduit.
 
+
+### 7.21 Galerie (`PhotoGrid`, `Lightbox`, `FilterLinks`)
+
+- `FilterLinks` : filtres en liens (année, photographe), puces biseautées ; active en lilas plein avec `aria-current="page"`, nombre de photos en petit. Défilement horizontal sans barre sur mobile, retour à la ligne à partir de `sm`.
+- `PhotoGrid` : vignettes carrées en grille (2 → 5 colonnes), 40 par paquet, chargement différé, `content-visibility: auto`. Survol : léger zoom. Chaque vignette est un bouton « Agrandir la photo N sur M ».
+- `Lightbox` : plein écran sur fond `void` voilé, compteur « N / M · photographe · Nexen année », boutons précédente / suivante (sur les côtés en `sm+`, sous la photo sur mobile), flèches du clavier, glissé au doigt, Échap, focus piégé (`useModal`). Indicateur de chargement lilas ; fondu d'apparition coupé en mouvement réduit.
 ## 8. Contenu : la règle « moins de texte »
 
 **Rien de réel n'est inventé.** Tous les textes, noms, chiffres et coordonnées réels viennent de l'asso. En attendant, les sections sont construites avec des **contenus provisoires numérotés** (SITE_PLAN §0), qui respectent les budgets ci-dessous. Les contenus générés par IA dans Figma Make (artistes, membres, articles, descriptions, coordonnées) sont supprimés (voir SITE_PLAN §0).

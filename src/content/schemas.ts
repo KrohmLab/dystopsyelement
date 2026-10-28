@@ -46,6 +46,20 @@ export const siteSchema = z.strictObject({
   legacyRedirects: z.record(z.string().startsWith("/"), z.string().startsWith("/")),
 });
 
+/**
+ * Album photo d'une édition (content/gallery.json), un par photographe. Les fichiers sont dans
+ * public/photos/{année}/{slug}/{id}-s.avif (vignette carrée 480 px) et {id}-l.avif (grand format, 1600 px).
+ */
+export const albumSchema = z.strictObject({
+  year: z.number().int().min(2000),
+  photographer: z.string().min(1),
+  /** Segment d'URL : /galerie/{année}/{slug}. */
+  slug,
+  /** Album d'origine (page Facebook de l'asso), pour mémoire : le site n'y renvoie pas. */
+  source: url,
+  photos: z.array(z.strictObject({ id: z.string().regex(/^\d+$/), w: z.number().int().positive(), h: z.number().int().positive() })).min(1),
+});
+
 export const lineupEntrySchema = z.strictObject({
   name: z.string().min(1),
   style: z.string().optional(),
@@ -189,21 +203,13 @@ export const festivalSchema = z.strictObject({
     gallery: z.array(z.string()),
   }),
   crew: z.array(z.strictObject({ role: z.string(), names: z.array(z.string()) })),
-  /** Albums photo de l'édition, un par photographe : sélection affichée sur le site, album complet sur Facebook. */
-  gallery: z.array(
-    z.strictObject({
-      photographer: z.string(),
-      albumUrl: url,
-      count: z.number().int().positive(),
-      photos: z.array(z.strictObject({ image: imageKey, alt: z.string().min(1) })).min(1),
-    }),
-  ),
   links: z.strictObject({ ticket: url, merch: url, carpool: url, facebook: url }),
   source: z.string(),
 });
 
 export type Site = z.infer<typeof siteSchema>;
 export type Festival = z.infer<typeof festivalSchema>;
+export type Album = z.infer<typeof albumSchema>;
 export type FestivalSet = Festival["sets"][number];
 export type Member = z.infer<typeof memberSchema>;
 export type Product = z.infer<typeof productSchema>;

@@ -4,13 +4,14 @@ export type NavItem = { label: string; href: string; external?: boolean };
 export type Ticket = { href: string; external: boolean };
 
 /**
- * Navigation principale (SITE_PLAN §1) : Nexen · Agenda · Prestations · Shop · Contact.
+ * Navigation principale (SITE_PLAN §1) : Nexen · Agenda · Galerie · Prestations · Shop · Contact.
  * Prestations n'apparaît que si des prestations existent dans content/services.json.
  */
 export function getNavigation({ hasServices = false } = {}): NavItem[] {
   const items: (NavItem | false)[] = [
     { label: "Nexen", href: "/nexen" },
     { label: "Agenda", href: "/agenda" },
+    { label: "Galerie", href: "/galerie" },
     hasServices && { label: "Prestations", href: "/prestations" },
     { label: "Shop", href: "/shop" },
     { label: "Contact", href: "/contact" },

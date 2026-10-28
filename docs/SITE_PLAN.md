@@ -41,13 +41,14 @@ Reprise de la v1 (`dystopsyelements.pages.dev`), avec les pages que la v1 annon�
 | `/nexen` | Nexen Festival | lien « Nexen Festival 2026 » (pointait vers `/`) |
 | `/agenda` | Agenda : onglets À venir / Passés | `/events` (« Billetterie ») |
 | `/agenda/[slug]` | Fiche événement | `/events/:id` |
+| `/galerie`, `/galerie/[année]`, `/galerie/[année]/[photographe]` | Galerie photo du Nexen, par édition puis par photographe | n'existait pas |
 | `/prestations` | Prestations (décoration, arts vivants, production…) | lien « Prestations » (pointait vers `/`) |
 | `/shop` | Boutique : vitrine, chaque produit renvoie vers son annonce **Vinted** | `/shop` (« Black Market ») |
 | `/contact` | Contact + L'Équipe | `/contact` |
 | `/mentions-legales` | Mentions légales + confidentialité | n'existait pas (obligatoire) |
 | `/404` | Page introuvable | |
 
-Navigation principale, dans le **menu plein écran** (bouton Menu, à toutes les tailles d'écran) : **Accueil · Nexen · Agenda · Prestations · Shop · Contact**. En-tête : logo, bouton rose **Billetterie** et bouton Menu.
+Navigation principale, dans le **menu plein écran** (bouton Menu, à toutes les tailles d'écran) : **Accueil · Nexen · Agenda · Galerie · Prestations · Shop · Contact**. En-tête : logo, bouton rose **Billetterie** et bouton Menu.
 Le bouton Billetterie pointe vers le `ticketUrl` du prochain événement qui en a un ; sinon vers `/agenda`.
 **Billetterie : HelloAsso** et **achats : Vinted**, toujours en liens externes (nouvel onglet, icône ↗). Aucun panier ni paiement sur le site.
 
@@ -132,6 +133,16 @@ Barre d'actions collante sur mobile : **Billetterie** (si à venir et `ticketUrl
 Pied : 2 autres événements + CtaBanner.
 
 ---
+
+## 5 bis. Galerie `/galerie`
+
+Toutes les photos des albums « NEXEN [année] par [photographe] » de la page Facebook de l'asso, hébergées sur le site (aucun renvoi vers Facebook). Données : `content/gallery.json` ; fichiers : `public/photos/[année]/[photographe]/[id]-s.avif` (vignette carrée 480 px, recadrage automatique sur le sujet) et `-l.avif` (grand format, 1600 px de côté maximum).
+
+- `/galerie` : tous les albums, regroupés par édition (carte = mosaïque de 4 vignettes, photographe, nombre de photos). Filtre **Année** (liens).
+- `/galerie/[année]` : les albums d'une édition.
+- `/galerie/[année]/[photographe]` : fil d'Ariane, filtres **Année** puis **Photographe** (liens vers des pages pré-rendues, partageables), grille de toutes les photos, crédit. Clic → visionneuse plein écran (flèches, clavier, glissé, Échap), photo ouverte dans l'URL (`?photo=`).
+- Performance : vignettes seules dans la grille (≈ 20 Ko, différées sauf la première rangée), 40 par paquet ajoutées au défilement, grand format (≈ 85 Ko) chargé à l'ouverture avec préchargement des voisines, visionneuse chargée au premier clic, fichiers en cache 1 an (`/photos/*`).
+- Page Nexen : aperçu de 12 photos par photographe de l'édition, bouton « Voir les N photos » vers l'album de la galerie.
 
 ## 6. Prestations `/prestations`
 

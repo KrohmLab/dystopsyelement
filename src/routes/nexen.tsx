@@ -30,10 +30,11 @@ import { Badge } from "../components/ui/Badge";
 import { Brackets } from "../components/ui/Brackets";
 import { Button } from "../components/ui/Button";
 import { ResponsiveImage } from "../components/ui/ResponsiveImage";
-import { getEvent, nexen2026 } from "../content/load.server";
+import { albums, getEvent, nexen2026 } from "../content/load.server";
 import { toSummary } from "../content/summaries";
 import { cn } from "../lib/cn";
 import { formatDateRange } from "../lib/events";
+import { spread } from "../lib/gallery";
 import { pageMeta } from "../lib/seo";
 import type { Route } from "./+types/nexen";
 import { FloatingPattern } from "../components/motion/FloatingPattern";
@@ -42,7 +43,12 @@ export function loader() {
   const event = getEvent(nexen2026.event);
   if (!event) throw new Response("Édition introuvable", { status: 404 });
   const upcoming = toSummary(event, new Date()).upcoming;
-  return { festival: nexen2026, dates: formatDateRange(event), place: event.venue, cover: event.cover, upcoming, year: event.startDate.slice(0, 4) };
+  const year = Number(event.startDate.slice(0, 4));
+  // Aperçu de la galerie : 12 photos réparties sur chaque album de l'édition.
+  const gallery = albums
+    .filter((a) => a.year === year)
+    .map((a) => ({ year: a.year, slug: a.slug, photographer: a.photographer, count: a.photos.length, photos: spread(a.photos, 12).map((p) => p.id) }));
+  return { festival: nexen2026, dates: formatDateRange(event), place: event.venue, cover: event.cover, upcoming, year, gallery };
 }
 
 export const meta: Route.MetaFunction = ({ data }) =>
@@ -69,7 +75,7 @@ const EXPERIENCE_ICONS: Record<string, ComponentType<{ size?: 32; className?: st
  * l'événement (lilas Nexus, pêche Engine, violet de la carte). Données : content/festival/nexen-2026.json.
  */
 export default function Nexen({ loaderData }: Route.ComponentProps) {
-  const { festival, dates, place, cover, upcoming, year } = loaderData;
+  const { festival, dates, place, cover, upcoming, year, gallery } = loaderData;
   const { links } = festival;
   const setsByStage = (slug: string) => festival.sets.filter((s) => s.stage === slug).length;
 
@@ -113,7 +119,7 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
                 Explorer le line-up
               </Button>
             )}
-            {festival.gallery.length > 0 && (
+            {gallery.length > 0 && (
               <Button variant="secondary" size="lg" href="#galerie">
                 Galerie photos {year}
               </Button>
@@ -310,7 +316,13 @@ export default function Nexen({ loaderData }: Route.ComponentProps) {
       {/* Galerie */}
       <Section id="galerie" labelledBy="galerie-titre" floor="lilac">
         <SectionHeader id="galerie-titre" eyebrow="Galerie" tone="lilac" title={`Galerie photos ${year}`} />
-        {festival.gallery.length > 0 && <PhotoGallery albums={festival.gallery} />}
+        {gallery.length > 0 ? (
+          <PhotoGallery albums={gallery} />
+        ) : (
+          <Button variant="secondary" href="/galerie">
+            Voir la galerie
+          </Button>
+        )}
         <Reveal className="mx-auto mt-14 max-w-md overflow-hidden chamfer-lg">
           <ResponsiveImage image="festival/lineup-2026" alt="Affiche officielle du line-up du Nexen Festival 2026" sizes="28rem" />
         </Reveal>

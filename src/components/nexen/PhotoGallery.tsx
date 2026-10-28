@@ -1,19 +1,19 @@
 import { useState } from "react";
-import type { Festival } from "../../content/schemas";
+import type { Album } from "../../content/schemas";
+import { albumPath, photoSrc } from "../../lib/gallery";
 import { Reveal } from "../motion/Reveal";
 import { Button } from "../ui/Button";
-import { ResponsiveImage } from "../ui/ResponsiveImage";
 import { Segmented } from "../ui/Segmented";
 
-type Album = Festival["gallery"][number];
+type Preview = Pick<Album, "year" | "slug" | "photographer"> & { count: number; photos: string[] };
 
 /**
- * Galerie de l'édition (page Nexen) : un album par photographe, au choix. Une sélection de photos sur le site,
- * l'album complet sur la page Facebook de l'asso. Crédit du photographe sous la grille.
+ * Aperçu de la galerie sur la page Nexen : un album par photographe, au choix, quelques photos réparties
+ * sur tout l'album, puis le lien vers l'album complet dans la page Galerie.
  */
-export function PhotoGallery({ albums }: { albums: Album[] }) {
-  const [current, setCurrent] = useState(albums[0]?.photographer ?? "");
-  const album = albums.find((a) => a.photographer === current) ?? albums[0];
+export function PhotoGallery({ albums }: { albums: Preview[] }) {
+  const [current, setCurrent] = useState(albums[0]?.slug ?? "");
+  const album = albums.find((a) => a.slug === current) ?? albums[0];
   if (!album) return null;
 
   return (
@@ -21,21 +21,24 @@ export function PhotoGallery({ albums }: { albums: Album[] }) {
       {albums.length > 1 && (
         <Segmented
           label="Photographe"
-          options={albums.map((a) => ({ value: a.photographer, label: a.photographer, activeClass: "bg-nexen-lilac text-on-accent" }))}
-          value={album.photographer}
+          options={albums.map((a) => ({ value: a.slug, label: a.photographer, activeClass: "bg-nexen-lilac text-on-accent" }))}
+          value={album.slug}
           onChange={setCurrent}
           className="sm:max-w-xl"
         />
       )}
-      <ul key={album.photographer} className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4" aria-label={`Photos de ${album.photographer}`}>
-        {album.photos.map(({ image, alt }, i) => (
-          <Reveal as="li" key={image} delay={(i % 4) * 60} className={i === 0 ? "col-span-2 row-span-2" : undefined}>
-            <div className="group aspect-square overflow-hidden chamfer-md">
-              <ResponsiveImage
-                image={image}
-                alt={alt}
-                sizes={i === 0 ? "(min-width: 48rem) 50vw, 100vw" : "(min-width: 48rem) 25vw, 50vw"}
-                className="transition duration-slow ease-out-expo group-hover:scale-105"
+      <ul key={album.slug} className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4" aria-label={`Photos de ${album.photographer}`}>
+        {album.photos.map((id, i) => (
+          <Reveal as="li" key={id} delay={(i % 4) * 60} className={i === 0 ? "col-span-2 row-span-2" : undefined}>
+            <div className="group aspect-square overflow-hidden bg-surface chamfer-md">
+              <img
+                src={photoSrc(album, id, i === 0 ? "l" : "s")}
+                width={480}
+                height={480}
+                alt={`Nexen Festival ${album.year}, photo de ${album.photographer}`}
+                loading="lazy"
+                decoding="async"
+                className="size-full object-cover transition duration-slow ease-out-expo group-hover:scale-105"
               />
             </div>
           </Reveal>
@@ -43,10 +46,10 @@ export function PhotoGallery({ albums }: { albums: Album[] }) {
       </ul>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-small text-ink-muted">
-          Photos : <span className="font-semibold text-ink">{album.photographer}</span> · {album.photos.length} sur {album.count}
+          Photos : <span className="font-semibold text-ink">{album.photographer}</span>
         </p>
-        <Button variant="secondary" href={album.albumUrl}>
-          Tout l'album ({album.count} photos)
+        <Button variant="secondary" href={albumPath(album)}>
+          Voir les {album.count} photos
         </Button>
       </div>
     </div>

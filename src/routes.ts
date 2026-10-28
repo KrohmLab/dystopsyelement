@@ -5,6 +5,8 @@ export default [
   route("nexen", "routes/nexen.tsx"),
   route("agenda", "routes/agenda.tsx"),
   route("agenda/:slug", "routes/evenement.tsx"),
+  route("galerie/:annee?", "routes/galerie.tsx"),
+  route("galerie/:annee/:photographe", "routes/galerie-album.tsx"),
   route("prestations", "routes/prestations.tsx"),
   route("shop", "routes/shop.tsx"),
   route("contact", "routes/contact.tsx"),
