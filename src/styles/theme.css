@@ -707,7 +707,7 @@ html[data-intro="on"] .site-intro {
   left: 50%;
   width: clamp(5.5rem, 14vmin, 8rem);
   aspect-ratio: 1;
-  translate: -50% -96%;
+  translate: -50% -50%;
   opacity: 0;
   filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-cyan) 90%, transparent));
   animation: intro-logo 2.4s steps(1) 0.75s forwards;
