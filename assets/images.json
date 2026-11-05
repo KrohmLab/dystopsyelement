@@ -289,5 +289,15 @@
       1440,
       1920
     ]
+  },
+  "events/nexus-alchemy-novembre-2026": {
+    "width": 1920,
+    "height": 1005,
+    "widths": [
+      480,
+      960,
+      1440,
+      1920
+    ]
   }
 }
